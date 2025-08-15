@@ -40,15 +40,7 @@ GitHub CLI를 사용하지 않으려면:
 
 ### 5. 필수 Secrets 목록
 
-#### Firebase 설정 (클라이언트 사이드용 - GATSBY_ 접두사)
-- `GATSBY_FIREBASE_API_KEY`
-- `GATSBY_FIREBASE_AUTH_DOMAIN`
-- `GATSBY_FIREBASE_PROJECT_ID`
-- `GATSBY_FIREBASE_STORAGE_BUCKET`
-- `GATSBY_FIREBASE_MESSAGING_SENDER_ID`
-- `GATSBY_FIREBASE_APP_ID`
-
-#### Firebase 설정 (서버 사이드용)
+#### Firebase 설정 (서버 사이드용만 - 보안상 클라이언트에서 노출되지 않음)
 - `FIREBASE_API_KEY`
 - `FIREBASE_AUTH_DOMAIN`
 - `FIREBASE_PROJECT_ID`
@@ -111,7 +103,9 @@ gh secret list --repo mqjinwon/wedding_invitation
 
 ## 주의사항
 
-- **중요**: `GATSBY_` 접두사가 있는 변수는 클라이언트 사이드에서도 사용 가능합니다
+- **보안 중요**: Firebase 설정은 `GATSBY_` 접두사 없이 서버 사이드에서만 사용합니다
+- Firebase API 키가 클라이언트에 노출되면 보안 위험이 있습니다
+- `GATSBY_` 접두사가 있는 변수는 클라이언트 사이드에서도 사용 가능합니다
 - `GATSBY_` 접두사가 없는 변수는 서버 사이드에서만 사용 가능합니다
 - Secrets는 한 번 설정하면 값을 다시 볼 수 없습니다
 - 값을 변경하려면 기존 Secret을 삭제하고 새로 생성해야 합니다
