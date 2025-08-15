@@ -165,13 +165,11 @@ const StyledImageGallery = styled.div`
 const images = [
   {
     original: import.meta.env.BASE_URL + 'images/1.webp',
-    thumbnail: import.meta.env.BASE_URL + 'images/1.webp',
-    description: '우리의 아름다운 순간 1',
+    thumbnail: import.meta.env.BASE_URL + 'images/1.webp'
   },
   {
     original: import.meta.env.BASE_URL + 'images/2.webp',
-    thumbnail: import.meta.env.BASE_URL + 'images/2.webp',
-    description: '우리의 아름다운 순간 2',
+    thumbnail: import.meta.env.BASE_URL + 'images/2.webp'
   },
 ];
 

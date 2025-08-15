@@ -122,9 +122,31 @@ npm run deploy
 
 ## 🔒 보안
 
-- Firebase 보안 규칙을 설정하여 데이터베이스 보호
-- 환경변수를 통한 민감한 정보 관리
-- 클라이언트 사이드에서 안전한 Firebase 사용
+### Firebase 보안 설정
+- **Firestore 보안 규칙 설정 필수**: Firebase Console에서 데이터베이스 접근 제한
+- **API 키 제한**: HTTP 리퍼러, 도메인, API 사용 제한 설정
+- **환경변수 관리**: `.env` 파일을 `.gitignore`에 포함하여 API 키 노출 방지
+
+### 보안 규칙 예시
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /guestbooks/{document} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['name', 'message', 'timestamp']) 
+                   && request.resource.data.name.size() <= 50
+                   && request.resource.data.message.size() <= 500;
+      allow update, delete: if false;
+    }
+  }
+}
+```
+
+### ⚠️ 중요 주의사항
+- `VITE_` 접두사가 붙은 환경변수는 클라이언트 사이드에 노출됩니다
+- Firebase API 키는 보안 규칙과 도메인 제한으로 보호해야 합니다
+- 실제 API 키가 포함된 파일은 절대 Git에 커밋하지 마세요
 
 ## 📱 PWA 지원
 

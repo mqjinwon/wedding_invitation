@@ -18,12 +18,22 @@ const Song = import.meta.env.BASE_URL + 'song.mp3';
 
 const Wrapper = styled.div`
   background-image: url(${import.meta.env.BASE_URL + 'GroovePaper.png'});
-  background-size: cover;
+  background-size: 100px auto;
+  background-repeat: repeat;
   background-attachment: fixed;
   background-position: center;
   min-height: 100vh;
   color: var(--text-color);
   position: relative;
+
+  /* 모바일 최적화 */
+  @media screen and (max-width: 768px) {
+    background-size: 40px auto;
+  }
+
+  @media screen and (max-width: 480px) {
+    background-size: 30px auto;
+  }
 `;
 
 const GlobalFontStyle = styled.div`

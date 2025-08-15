@@ -44,19 +44,19 @@ const Wrapper = styled.div`
   background: var(--background-color);
   background-image: url(${GroovePaper});
   background-repeat: repeat;
-  background-size: auto;
+  background-size: 80px auto;
   width: 100%;
   color: var(--text-color);
   min-height: 100vh;
 
   /* 모바일 최적화 */
   @media screen and (max-width: 768px) {
-    background-size: 200px auto;
+    background-size: 60px auto;
     background-position: center;
   }
 
   @media screen and (max-width: 480px) {
-    background-size: 150px auto;
+    background-size: 40px auto;
     background-position: center;
   }
 `;

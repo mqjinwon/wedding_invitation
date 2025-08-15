@@ -10,6 +10,7 @@ import {
   Typography,
   Spin,
   Alert,
+  InputNumber,
 } from 'antd';
 import {
   EditOutlined,
@@ -24,6 +25,8 @@ import styled from 'styled-components';
 import {
   addGuestbook,
   getGuestbooks,
+  updateGuestbook,
+  deleteGuestbook,
 } from '../services/guestbookService';
 
 const { TextArea } = Input;
@@ -190,6 +193,17 @@ const ActionButton = styled(Button)`
     transform: scale(1.1);
   }
 
+  &.ant-btn-dangerous {
+    border-color: #ff4d4f;
+    color: #ff4d4f;
+
+    &:hover {
+      background: #ff4d4f !important;
+      border-color: #ff7875 !important;
+      color: white !important;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     width: 28px;
     height: 28px;
@@ -227,10 +241,16 @@ const Guestbook = () => {
   const [isClient, setIsClient] = useState(false);
   const [guestbooks, setGuestbooks] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
+  const [editingGuestbook, setEditingGuestbook] = useState(null);
+  const [actionType, setActionType] = useState(''); // 'edit' or 'delete'
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [apiError, setApiError] = useState(false);
   const [form] = Form.useForm();
+  const [editForm] = Form.useForm();
+  const [passwordForm] = Form.useForm();
 
   useEffect(() => {
     setIsClient(true);
@@ -240,7 +260,7 @@ const Guestbook = () => {
   useEffect(() => {
     if (!isClient) return;
 
-    const loadGuestbooks = async () => {
+    const loadGuestbooks = async (retryCount = 0) => {
       try {
         setLoading(true);
         setApiError(false);
@@ -250,8 +270,18 @@ const Guestbook = () => {
         setGuestbooks(result.data || []);
       } catch (error) {
         console.error('방명록 로드 실패:', error);
+        
+        // 재시도 로직 (최대 2회)
+        if (retryCount < 2 && (error.message.includes('blocked') || error.message.includes('network'))) {
+          console.log(`재시도 중... (${retryCount + 1}/2)`);
+          setTimeout(() => {
+            loadGuestbooks(retryCount + 1);
+          }, 2000); // 2초 후 재시도
+          return;
+        }
+        
         setApiError(true);
-        message.error('방명록을 불러오는데 실패했습니다.');
+        message.error(error.message || '방명록을 불러오는데 실패했습니다.');
       } finally {
         setLoading(false);
       }
@@ -270,10 +300,11 @@ const Guestbook = () => {
         name: values.name,
         message: values.message,
         relationship: values.relationship || '',
+        password: values.password,
       });
 
       if (result.success) {
-        // 새 방명록을 목록에 추가
+        // 새 방명록을 목록에 추가 (비밀번호는 제외)
         const newGuestbook = {
           id: result.id,
           name: values.name,
@@ -292,6 +323,119 @@ const Guestbook = () => {
       message.error(error.message || '방명록 등록에 실패했습니다.');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  // 방명록 수정
+  const handleEditGuestbook = async () => {
+    try {
+      setSubmitting(true);
+      const values = await editForm.validateFields();
+
+      const result = await updateGuestbook(editingGuestbook.id, {
+        name: values.name,
+        message: values.message,
+        relationship: values.relationship || '',
+      }, editingGuestbook.password);
+
+      if (result.success) {
+        // 방명록 목록에서 해당 항목 업데이트
+        setGuestbooks(guestbooks.map(guestbook => 
+          guestbook.id === editingGuestbook.id 
+            ? {
+                ...guestbook,
+                name: values.name,
+                message: values.message,
+                relationship: values.relationship || '',
+                updatedAt: new Date().toISOString(),
+              }
+            : guestbook
+        ));
+        
+        editForm.resetFields();
+        setIsEditModalVisible(false);
+        setEditingGuestbook(null);
+        message.success('방명록이 수정되었습니다.');
+      }
+    } catch (error) {
+      console.error('방명록 수정 실패:', error);
+      message.error(error.message || '방명록 수정에 실패했습니다.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // 방명록 삭제
+  const handleDeleteGuestbook = async (id, password) => {
+    try {
+      const result = await deleteGuestbook(id, password);
+      
+      if (result.success) {
+        // 방명록 목록에서 해당 항목 제거
+        setGuestbooks(guestbooks.filter(guestbook => guestbook.id !== id));
+        message.success('방명록이 삭제되었습니다.');
+      }
+    } catch (error) {
+      console.error('방명록 삭제 실패:', error);
+      message.error(error.message || '방명록 삭제에 실패했습니다.');
+    }
+  };
+
+  // 비밀번호 확인 모달 열기
+  const openPasswordModal = (guestbook, type) => {
+    setEditingGuestbook(guestbook);
+    setActionType(type);
+    setIsPasswordModalVisible(true);
+    passwordForm.resetFields();
+  };
+
+  // 비밀번호 확인 처리
+  const handlePasswordConfirm = async () => {
+    try {
+      setSubmitting(true);
+      const values = await passwordForm.validateFields();
+      const password = values.password;
+
+      if (actionType === 'edit') {
+        // 수정 모달 열기
+        editForm.setFieldsValue({
+          name: editingGuestbook.name,
+          message: editingGuestbook.message,
+          relationship: editingGuestbook.relationship || '',
+        });
+        setIsPasswordModalVisible(false);
+        setIsEditModalVisible(true);
+        setEditingGuestbook({ ...editingGuestbook, password });
+      } else if (actionType === 'delete') {
+        // 삭제 확인
+        Modal.confirm({
+          title: '방명록 삭제',
+          content: `"${editingGuestbook.name}"님의 방명록을 삭제하시겠습니까?`,
+          okText: '삭제',
+          cancelText: '취소',
+          okType: 'danger',
+          onOk: () => handleDeleteGuestbook(editingGuestbook.id, password),
+        });
+        setIsPasswordModalVisible(false);
+      }
+    } catch (error) {
+      console.error('비밀번호 확인 실패:', error);
+      message.error(error.message || '비밀번호 확인에 실패했습니다.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // 수정 모달 열기 (비밀번호 확인 후)
+  const openEditModal = (guestbook) => {
+    openPasswordModal(guestbook, 'edit');
+  };
+
+  // 삭제 확인 (비밀번호 확인 후)
+  const confirmDelete = (id, name) => {
+    const guestbook = guestbooks.find(g => g.id === id);
+    if (guestbook) {
+      openPasswordModal(guestbook, 'delete');
     }
   };
 
@@ -335,7 +479,20 @@ const Guestbook = () => {
       {apiError && (
         <Alert
           message="방명록 서비스 연결 오류"
-          description="서버와의 연결에 문제가 있어 방명록 기능을 사용할 수 없습니다. 잠시 후 다시 시도해주세요."
+          description={
+            <div>
+              <p>서버와의 연결에 문제가 있어 방명록 기능을 사용할 수 없습니다.</p>
+              <p style={{ marginTop: '8px', fontSize: '0.9rem' }}>
+                <strong>해결 방법:</strong>
+                <br />
+                1. 광고 차단기나 보안 확장 프로그램을 일시적으로 비활성화
+                <br />
+                2. 브라우저를 새로고침
+                <br />
+                3. 잠시 후 다시 시도
+              </p>
+            </div>
+          }
           type="warning"
           showIcon
           icon={<ExclamationCircleOutlined />}
@@ -436,6 +593,27 @@ const Guestbook = () => {
                   )}
 
                   <GuestMessage>{guestbook.message}</GuestMessage>
+
+                  {/* 수정/삭제 버튼 */}
+                  <ActionButtons>
+                    <ActionButton
+                      icon={<EditOutlined />}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openEditModal(guestbook);
+                      }}
+                      title="수정"
+                    />
+                    <ActionButton
+                      icon={<DeleteOutlined />}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        confirmDelete(guestbook.id, guestbook.name);
+                      }}
+                      title="삭제"
+                      danger
+                    />
+                  </ActionButtons>
                 </GuestbookCard>
               ))
             )}
@@ -491,6 +669,116 @@ const Guestbook = () => {
               rows={4}
               maxLength={500}
               showCount
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="비밀번호"
+            rules={[
+              { required: true, message: '비밀번호를 입력해주세요.' },
+              { min: 4, message: '비밀번호는 4자 이상이어야 합니다.' },
+              { max: 20, message: '비밀번호는 20자 이하여야 합니다.' }
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="수정/삭제 시 사용할 비밀번호"
+              maxLength={20}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* 방명록 수정 모달 */}
+      <Modal
+        title="방명록 수정"
+        open={isEditModalVisible}
+        onOk={handleEditGuestbook}
+        onCancel={() => {
+          setIsEditModalVisible(false);
+          setEditingGuestbook(null);
+          editForm.resetFields();
+        }}
+        okText="수정"
+        cancelText="취소"
+        width={400}
+        confirmLoading={submitting}
+      >
+        <Form form={editForm} layout="vertical">
+          <Form.Item
+            name="name"
+            label="이름"
+            rules={[{ required: true, message: '이름을 입력해주세요.' }]}
+          >
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="이름을 입력하세요"
+              maxLength={20}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="relationship"
+            label="관계 (선택사항)"
+          >
+            <Input
+              placeholder="예: 신랑 친구, 신부 동생 등"
+              maxLength={30}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="message"
+            label="메시지"
+            rules={[{ required: true, message: '메시지를 입력해주세요.' }]}
+          >
+            <TextArea
+              prefix={<MessageOutlined />}
+              placeholder="축하 메시지를 남겨주세요"
+              rows={4}
+              maxLength={500}
+              showCount
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* 비밀번호 확인 모달 */}
+      <Modal
+        title={`방명록 ${actionType === 'edit' ? '수정' : '삭제'} - 비밀번호 확인`}
+        open={isPasswordModalVisible}
+        onOk={handlePasswordConfirm}
+        onCancel={() => {
+          setIsPasswordModalVisible(false);
+          setEditingGuestbook(null);
+          setActionType('');
+          passwordForm.resetFields();
+        }}
+        okText="확인"
+        cancelText="취소"
+        width={400}
+        confirmLoading={submitting}
+      >
+        <div style={{ marginBottom: 16 }}>
+          <p style={{ marginBottom: 8 }}>
+            <strong>{editingGuestbook?.name}</strong>님의 방명록을 {actionType === 'edit' ? '수정' : '삭제'}하려면 비밀번호를 입력해주세요.
+          </p>
+        </div>
+        
+        <Form form={passwordForm} layout="vertical">
+          <Form.Item
+            name="password"
+            label="비밀번호"
+            rules={[
+              { required: true, message: '비밀번호를 입력해주세요.' },
+              { min: 4, message: '비밀번호는 4자 이상이어야 합니다.' }
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="개별 비밀번호 또는 마스터 비밀번호"
+              maxLength={20}
             />
           </Form.Item>
         </Form>
