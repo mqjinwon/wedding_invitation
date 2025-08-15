@@ -49,33 +49,6 @@ export const getGuestbooks = async (limit = 50, offset = 0) => {
   }
 };
 
-// 방명록 수정
-export const updateGuestbook = async (id, message) => {
-  try {
-    const guestbookRef = doc(db, GUESTBOOK_COLLECTION, id);
-    await updateDoc(guestbookRef, {
-      message,
-      updatedAt: new Date().toISOString(),
-    });
-    return true;
-  } catch (error) {
-    console.error('방명록 수정 실패:', error);
-    throw error;
-  }
-};
-
-// 방명록 삭제
-export const deleteGuestbook = async id => {
-  try {
-    const guestbookRef = doc(db, GUESTBOOK_COLLECTION, id);
-    await deleteDoc(guestbookRef);
-    return true;
-  } catch (error) {
-    console.error('방명록 삭제 실패:', error);
-    throw error;
-  }
-};
-
 // 로컬 스토리지에서 데이터 마이그레이션 (기존 데이터가 있는 경우)
 export const migrateFromLocalStorage = async () => {
   try {

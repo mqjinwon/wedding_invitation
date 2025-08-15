@@ -29,21 +29,21 @@ get_env_value() {
     echo "$value"
 }
 
-# Firebase 설정
-echo "Firebase 설정 추가 중..."
-FIREBASE_API_KEY=$(get_env_value "FIREBASE_API_KEY")
-FIREBASE_AUTH_DOMAIN=$(get_env_value "FIREBASE_AUTH_DOMAIN")
+# Firebase Admin SDK 설정 (서버 사이드용)
+echo "Firebase Admin SDK 설정 추가 중..."
 FIREBASE_PROJECT_ID=$(get_env_value "FIREBASE_PROJECT_ID")
-FIREBASE_STORAGE_BUCKET=$(get_env_value "FIREBASE_STORAGE_BUCKET")
-FIREBASE_MESSAGING_SENDER_ID=$(get_env_value "FIREBASE_MESSAGING_SENDER_ID")
-FIREBASE_APP_ID=$(get_env_value "FIREBASE_APP_ID")
+FIREBASE_PRIVATE_KEY_ID=$(get_env_value "FIREBASE_PRIVATE_KEY_ID")
+FIREBASE_PRIVATE_KEY=$(get_env_value "FIREBASE_PRIVATE_KEY")
+FIREBASE_CLIENT_EMAIL=$(get_env_value "FIREBASE_CLIENT_EMAIL")
+FIREBASE_CLIENT_ID=$(get_env_value "FIREBASE_CLIENT_ID")
+FIREBASE_CLIENT_CERT_URL=$(get_env_value "FIREBASE_CLIENT_CERT_URL")
 
-gh secret set FIREBASE_API_KEY --repo $REPO --body "$FIREBASE_API_KEY"
-gh secret set FIREBASE_AUTH_DOMAIN --repo $REPO --body "$FIREBASE_AUTH_DOMAIN"
 gh secret set FIREBASE_PROJECT_ID --repo $REPO --body "$FIREBASE_PROJECT_ID"
-gh secret set FIREBASE_STORAGE_BUCKET --repo $REPO --body "$FIREBASE_STORAGE_BUCKET"
-gh secret set FIREBASE_MESSAGING_SENDER_ID --repo $REPO --body "$FIREBASE_MESSAGING_SENDER_ID"
-gh secret set FIREBASE_APP_ID --repo $REPO --body "$FIREBASE_APP_ID"
+gh secret set FIREBASE_PRIVATE_KEY_ID --repo $REPO --body "$FIREBASE_PRIVATE_KEY_ID"
+gh secret set FIREBASE_PRIVATE_KEY --repo $REPO --body "$FIREBASE_PRIVATE_KEY"
+gh secret set FIREBASE_CLIENT_EMAIL --repo $REPO --body "$FIREBASE_CLIENT_EMAIL"
+gh secret set FIREBASE_CLIENT_ID --repo $REPO --body "$FIREBASE_CLIENT_ID"
+gh secret set FIREBASE_CLIENT_CERT_URL --repo $REPO --body "$FIREBASE_CLIENT_CERT_URL"
 
 # 카카오톡 API
 echo "카카오톡 API 설정 추가 중..."

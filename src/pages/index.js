@@ -145,13 +145,31 @@ const IndexPage = () => {
   }, []);
 
   useEffect(() => {
+    // 카카오톡 SDK가 이미 로드되어 있는지 확인
+    if (window.Kakao) {
+      return;
+    }
+
     const script = document.createElement('script');
     script.async = true;
     script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js';
+    
+    script.onload = () => {
+      console.log('카카오톡 SDK 로드 완료');
+    };
+    
+    script.onerror = () => {
+      console.error('카카오톡 SDK 로드 실패');
+    };
+    
     document.body.appendChild(script);
 
     return () => {
-      document.body.removeChild(script);
+      // 컴포넌트 언마운트 시 스크립트 제거
+      const existingScript = document.querySelector('script[src*="kakao.min.js"]');
+      if (existingScript) {
+        document.body.removeChild(existingScript);
+      }
     };
   }, []);
 
