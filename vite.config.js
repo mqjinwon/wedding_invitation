@@ -4,11 +4,14 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react({
-    // React Strict Mode 비활성화 (프로덕션 에러 방지)
+    // React Strict Mode 완전 비활성화 (프로덕션 에러 방지)
     jsxRuntime: 'automatic',
-    // Strict Mode 완전 비활성화
     strict: false,
   })],
+  // 추가 설정으로 Strict Mode 완전 비활성화
+  define: {
+    __DEV__: false,
+  },
   
   // 기본 경로 설정 (GitHub Pages용)
   base: '/wedding_invitation/',
