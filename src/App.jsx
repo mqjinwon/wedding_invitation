@@ -14,10 +14,10 @@ import Guestbook from './components/guestbook.jsx';
 import Footer from './components/footer.jsx';
 import AudioLoader from './components/audioLoader.jsx';
 import MusicControl from './components/musicControl.jsx';
-const Song = '/wedding_invitation/song.mp3';
+const Song = import.meta.env.BASE_URL + 'song.mp3';
 
 const Wrapper = styled.div`
-  background-image: url('/wedding_invitation/GroovePaper.png');
+  background-image: url(${import.meta.env.BASE_URL + 'GroovePaper.png'});
   background-size: 100px auto;
   background-repeat: repeat;
   background-attachment: fixed;
@@ -39,8 +39,8 @@ const Wrapper = styled.div`
 const GlobalFontStyle = styled.div`
   @font-face {
     font-family: 'mom_to_daughter';
-    src: url('/wedding_invitation/fonts/mom_to_daughter.woff2') format('woff2'),
-         url('/wedding_invitation/fonts/mom_to_daughter.woff') format('woff');
+    src: url(${import.meta.env.BASE_URL + 'fonts/mom_to_daughter.woff2'}) format('woff2'),
+         url(${import.meta.env.BASE_URL + 'fonts/mom_to_daughter.woff'}) format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
