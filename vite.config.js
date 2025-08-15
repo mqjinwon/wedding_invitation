@@ -3,7 +3,10 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    // React Strict Mode 비활성화 (프로덕션 에러 방지)
+    jsxRuntime: 'automatic',
+  })],
   
   // 기본 경로 설정 (GitHub Pages용)
   base: '/wedding_invitation/',
@@ -13,12 +16,16 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     minify: 'esbuild',
+    esbuild: { drop: ['console', 'debugger'] }, // 콘솔/디버거 제거
+    cssCodeSplit: true,                         // CSS 분할(기본 true)
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
+          react: ['react', 'react-dom'],
+          antd: ['antd'],
+          antdIcons: ['@ant-design/icons'],
           firebase: ['firebase/app', 'firebase/firestore'],
-          antd: ['antd', '@ant-design/icons'],
+          gallery: ['react-image-gallery'],
         },
       },
     },

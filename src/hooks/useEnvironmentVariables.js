@@ -1,6 +1,8 @@
+import { useMemo } from 'react';
+
 // Vite 환경변수를 사용하는 훅
 export const useEnvironmentVariables = () => {
-  return {
+  return useMemo(() => ({
     // 결혼식 정보 (공개 정보)
     WEDDING_DATE: import.meta.env.VITE_WEDDING_DATE || '',
     WEDDING_LOCATION: import.meta.env.VITE_WEDDING_LOCATION || '',
@@ -31,7 +33,7 @@ export const useEnvironmentVariables = () => {
     
     // 마스터 비밀번호
     MASTER_PASSWORD: import.meta.env.VITE_MASTER_PASSWORD || '',
-  };
+  }), []);
 };
 
 
