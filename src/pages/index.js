@@ -62,11 +62,11 @@ const IndexPage = () => {
     audio.preload = 'auto';
     audio.crossOrigin = 'anonymous';
 
-    // 타임아웃 설정 (10초 후 자동으로 로딩 완료 처리)
+    // 타임아웃 설정 (5초 후 자동으로 로딩 완료 처리) - 더 빠르게
     const timeoutId = setTimeout(() => {
       console.log('Audio loading timeout - proceeding anyway');
       setAudioLoaded(true);
-    }, 10000);
+    }, 5000);
 
     const handleCanPlay = () => {
       console.log('Audio can play');

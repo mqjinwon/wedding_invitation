@@ -10,9 +10,13 @@ if (!process.env.NODE_ENV) {
   });
 }
 
+// GitHub Pages 배포를 위한 경로 설정
+const isProduction = process.env.NODE_ENV === 'production';
+const pathPrefix = isProduction ? '/wedding_invitation' : '';
+
 module.exports = {
-  pathPrefix:
-    process.env.NODE_ENV === 'production' ? `/wedding_invitation` : '',
+  pathPrefix,
+  assetPrefix: pathPrefix,
   siteMetadata: {
     title: `김진원 & 이연제 결혼식 청첩장`,
     description: `김진원 & 이연제의 결혼식 청첩장입니다. 2025년 11월 8일, 프란치스코 교육회관 결혼식이 열립니다.`,
@@ -33,9 +37,15 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-catch-links`,
+      options: {
+        excludePattern: /^\/wedding_invitation\//,
+      },
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `[신랑 이름] & [신부 이름] 결혼식 청첩장`,
+        name: `김진원 & 이연제 결혼식 청첩장`,
         short_name: `결혼식 청첩장`,
         start_url: `/`,
         background_color: `#ffffff`,
@@ -48,6 +58,15 @@ module.exports = {
       resolve: `gatsby-plugin-offline`,
       options: {
         precachePages: [`/`],
+        workboxConfig: {
+          globPatterns: ['**/*'],
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/mqjinwon\.github\.io\/wedding_invitation\/.*/,
+              handler: 'StaleWhileRevalidate',
+            },
+          ],
+        },
       },
     },
   ],

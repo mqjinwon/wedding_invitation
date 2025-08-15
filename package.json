@@ -13,7 +13,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public --repo https://github.com/mqjinwon/wedding_invitation.git",
+    "deploy": "NODE_ENV=production gatsby build --prefix-paths && gh-pages -d public --repo https://github.com/mqjinwon/wedding_invitation.git",
     "check-env": "node check-env.js"
   },
   "dependencies": {
@@ -32,7 +32,8 @@
     "styled-components": "^6.1.0"
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0",
-    "gatsby-cli": "^5.14.0"
+    "gatsby-cli": "^5.14.0",
+    "gatsby-plugin-catch-links": "^5.14.0",
+    "gh-pages": "^6.3.0"
   }
 }

@@ -97,10 +97,10 @@ const AudioLoader = ({ loaded, error }) => {
   const [timeoutMessage, setTimeoutMessage] = useState(false);
 
   useEffect(() => {
-    // 3초 후에도 로딩이 안 되면 메시지 변경
+    // 1.5초 후에도 로딩이 안 되면 메시지 변경 (더 빠르게)
     const timer = setTimeout(() => {
       setTimeoutMessage(true);
-    }, 3000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
