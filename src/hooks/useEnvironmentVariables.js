@@ -28,6 +28,9 @@ export const useEnvironmentVariables = () => {
     KAKAOTALK_API_TOKEN: import.meta.env.VITE_KAKAOTALK_API_TOKEN || '',
     KAKAOTALK_SHARE_IMAGE: import.meta.env.VITE_KAKAOTALK_SHARE_IMAGE ||
       'https://cdn.pixabay.com/photo/2014/11/13/17/04/heart-529607_960_720.jpg',
+    
+    // 마스터 비밀번호
+    MASTER_PASSWORD: import.meta.env.VITE_MASTER_PASSWORD || '',
   };
 };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Divider } from 'antd';
 import styled from 'styled-components';
 const Flower = import.meta.env.BASE_URL + 'flower2.png';

@@ -1,5 +1,6 @@
-import React from 'react';
+
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { useState, useEffect } from 'react';
 import { Button, Divider, message } from 'antd';
 import { MessageFilled, LinkOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -135,15 +136,10 @@ const LinkShareButton = styled(Button)`
   }
 `;
 
-const AlertContainer = styled.div`
-  margin-bottom: 16px;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+
 
 const Share = () => {
-  const [isClient, setIsClient] = React.useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const {
     GROOM_NAME,
@@ -153,7 +149,7 @@ const Share = () => {
     KAKAOTALK_API_TOKEN,
   } = useEnvironmentVariables();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsClient(true);
   }, []);
 

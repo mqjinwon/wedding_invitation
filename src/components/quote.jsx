@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styled from 'styled-components';
 const QuotePaper = import.meta.env.BASE_URL + 'Quote.png';
 const Flower = import.meta.env.BASE_URL + 'flower1.png';

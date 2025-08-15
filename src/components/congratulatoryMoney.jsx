@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Divider, message, Modal } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -223,10 +223,10 @@ const CongratulatoryMoney = () => {
     GROOM_MOTHER_ACCOUNT_NUMBER,
     BRIDE_NAME,
     BRIDE_ACCOUNT_NUMBER,
-    BRIDE_FATHER_NAME,
-    BRIDE_FATHER_ACCOUNT_NUMBER,
-    BRIDE_MOTHER_NAME,
-    BRIDE_MOTHER_ACCOUNT_NUMBER,
+    // BRIDE_FATHER_NAME,
+    // BRIDE_FATHER_ACCOUNT_NUMBER,
+    // BRIDE_MOTHER_NAME,
+    // BRIDE_MOTHER_ACCOUNT_NUMBER,
   } = useEnvironmentVariables();
 
   return (

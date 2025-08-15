@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Button,
   Input,
@@ -10,7 +10,6 @@ import {
   Typography,
   Spin,
   Alert,
-  InputNumber,
 } from 'antd';
 import {
   EditOutlined,
@@ -27,6 +26,7 @@ import {
   getGuestbooks,
   updateGuestbook,
   deleteGuestbook,
+  verifyPassword,
 } from '../services/guestbookService';
 
 const { TextArea } = Input;
@@ -243,6 +243,7 @@ const Guestbook = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [editingGuestbook, setEditingGuestbook] = useState(null);
   const [actionType, setActionType] = useState(''); // 'edit' or 'delete'
   const [loading, setLoading] = useState(true);
@@ -336,7 +337,7 @@ const Guestbook = () => {
         name: values.name,
         message: values.message,
         relationship: values.relationship || '',
-      }, editingGuestbook.password);
+      });
 
       if (result.success) {
         // 방명록 목록에서 해당 항목 업데이트
@@ -366,9 +367,9 @@ const Guestbook = () => {
   };
 
   // 방명록 삭제
-  const handleDeleteGuestbook = async (id, password) => {
+  const handleDeleteGuestbook = async (id) => {
     try {
-      const result = await deleteGuestbook(id, password);
+      const result = await deleteGuestbook(id);
       
       if (result.success) {
         // 방명록 목록에서 해당 항목 제거
@@ -396,27 +397,27 @@ const Guestbook = () => {
       const values = await passwordForm.validateFields();
       const password = values.password;
 
-      if (actionType === 'edit') {
-        // 수정 모달 열기
-        editForm.setFieldsValue({
-          name: editingGuestbook.name,
-          message: editingGuestbook.message,
-          relationship: editingGuestbook.relationship || '',
-        });
-        setIsPasswordModalVisible(false);
-        setIsEditModalVisible(true);
-        setEditingGuestbook({ ...editingGuestbook, password });
-      } else if (actionType === 'delete') {
-        // 삭제 확인
-        Modal.confirm({
-          title: '방명록 삭제',
-          content: `"${editingGuestbook.name}"님의 방명록을 삭제하시겠습니까?`,
-          okText: '삭제',
-          cancelText: '취소',
-          okType: 'danger',
-          onOk: () => handleDeleteGuestbook(editingGuestbook.id, password),
-        });
-        setIsPasswordModalVisible(false);
+      // API를 통해 비밀번호 검증
+      const verificationResult = await verifyPassword(editingGuestbook.id, password);
+      
+      if (verificationResult.success) {
+        // 비밀번호가 올바른 경우에만 다음 단계 진행
+        if (actionType === 'edit') {
+          // 수정 모달 열기
+          editForm.setFieldsValue({
+            name: editingGuestbook.name,
+            message: editingGuestbook.message,
+            relationship: editingGuestbook.relationship || '',
+          });
+          setIsPasswordModalVisible(false);
+          setIsEditModalVisible(true);
+          setEditingGuestbook({ ...editingGuestbook, password });
+          message.success(verificationResult.message);
+        } else if (actionType === 'delete') {
+          // 삭제 확인 모달 열기
+          setIsPasswordModalVisible(false);
+          setIsDeleteModalVisible(true);
+        }
       }
     } catch (error) {
       console.error('비밀번호 확인 실패:', error);
@@ -432,12 +433,33 @@ const Guestbook = () => {
   };
 
   // 삭제 확인 (비밀번호 확인 후)
-  const confirmDelete = (id, name) => {
+  const confirmDelete = (id) => {
     const guestbook = guestbooks.find(g => g.id === id);
     if (guestbook) {
       openPasswordModal(guestbook, 'delete');
     }
   };
+
+  // 삭제 확인 모달에서 엔터 키 처리
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (isDeleteModalVisible && e.key === 'Enter') {
+        e.preventDefault();
+        handleDeleteGuestbook(editingGuestbook.id);
+        setIsDeleteModalVisible(false);
+        setEditingGuestbook(null);
+        setActionType('');
+      }
+    };
+
+    if (isDeleteModalVisible) {
+      document.addEventListener('keydown', handleKeyPress);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isDeleteModalVisible, editingGuestbook]);
 
   // 날짜 포맷팅
   const formatDate = timestamp => {
@@ -608,7 +630,7 @@ const Guestbook = () => {
                       icon={<DeleteOutlined />}
                       onClick={(e) => {
                         e.stopPropagation();
-                        confirmDelete(guestbook.id, guestbook.name);
+                        confirmDelete(guestbook.id);
                       }}
                       title="삭제"
                       danger
@@ -625,7 +647,6 @@ const Guestbook = () => {
       <Modal
         title="방명록 작성"
         open={isModalVisible}
-        onOk={handleAddGuestbook}
         onCancel={() => {
           setIsModalVisible(false);
           form.resetFields();
@@ -634,8 +655,19 @@ const Guestbook = () => {
         cancelText="취소"
         width={400}
         confirmLoading={submitting}
+        footer={[
+          <Button key="cancel" onClick={() => {
+            setIsModalVisible(false);
+            form.resetFields();
+          }}>
+            취소
+          </Button>,
+          <Button key="submit" type="primary" loading={submitting} onClick={() => form.submit()}>
+            등록
+          </Button>,
+        ]}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} layout="vertical" onFinish={handleAddGuestbook}>
           <Form.Item
             name="name"
             label="이름"
@@ -645,6 +677,7 @@ const Guestbook = () => {
               prefix={<UserOutlined />}
               placeholder="이름을 입력하세요"
               maxLength={20}
+              onPressEnter={() => form.submit()}
             />
           </Form.Item>
 
@@ -655,6 +688,7 @@ const Guestbook = () => {
             <Input
               placeholder="예: 신랑 친구, 신부 동생 등"
               maxLength={30}
+              onPressEnter={() => form.submit()}
             />
           </Form.Item>
 
@@ -669,6 +703,12 @@ const Guestbook = () => {
               rows={4}
               maxLength={500}
               showCount
+              onPressEnter={(e) => {
+                if (e.ctrlKey || e.metaKey) {
+                  // Ctrl+Enter 또는 Cmd+Enter로 제출
+                  form.submit();
+                }
+              }}
             />
           </Form.Item>
 
@@ -685,6 +725,7 @@ const Guestbook = () => {
               prefix={<LockOutlined />}
               placeholder="수정/삭제 시 사용할 비밀번호"
               maxLength={20}
+              onPressEnter={() => form.submit()}
             />
           </Form.Item>
         </Form>
@@ -694,7 +735,6 @@ const Guestbook = () => {
       <Modal
         title="방명록 수정"
         open={isEditModalVisible}
-        onOk={handleEditGuestbook}
         onCancel={() => {
           setIsEditModalVisible(false);
           setEditingGuestbook(null);
@@ -704,8 +744,20 @@ const Guestbook = () => {
         cancelText="취소"
         width={400}
         confirmLoading={submitting}
+        footer={[
+          <Button key="cancel" onClick={() => {
+            setIsEditModalVisible(false);
+            setEditingGuestbook(null);
+            editForm.resetFields();
+          }}>
+            취소
+          </Button>,
+          <Button key="submit" type="primary" loading={submitting} onClick={() => editForm.submit()}>
+            수정
+          </Button>,
+        ]}
       >
-        <Form form={editForm} layout="vertical">
+        <Form form={editForm} layout="vertical" onFinish={handleEditGuestbook}>
           <Form.Item
             name="name"
             label="이름"
@@ -715,6 +767,7 @@ const Guestbook = () => {
               prefix={<UserOutlined />}
               placeholder="이름을 입력하세요"
               maxLength={20}
+              onPressEnter={() => editForm.submit()}
             />
           </Form.Item>
 
@@ -725,6 +778,7 @@ const Guestbook = () => {
             <Input
               placeholder="예: 신랑 친구, 신부 동생 등"
               maxLength={30}
+              onPressEnter={() => editForm.submit()}
             />
           </Form.Item>
 
@@ -739,6 +793,12 @@ const Guestbook = () => {
               rows={4}
               maxLength={500}
               showCount
+              onPressEnter={(e) => {
+                if (e.ctrlKey || e.metaKey) {
+                  // Ctrl+Enter 또는 Cmd+Enter로 제출
+                  editForm.submit();
+                }
+              }}
             />
           </Form.Item>
         </Form>
@@ -748,7 +808,6 @@ const Guestbook = () => {
       <Modal
         title={`방명록 ${actionType === 'edit' ? '수정' : '삭제'} - 비밀번호 확인`}
         open={isPasswordModalVisible}
-        onOk={handlePasswordConfirm}
         onCancel={() => {
           setIsPasswordModalVisible(false);
           setEditingGuestbook(null);
@@ -759,6 +818,19 @@ const Guestbook = () => {
         cancelText="취소"
         width={400}
         confirmLoading={submitting}
+        footer={[
+          <Button key="cancel" onClick={() => {
+            setIsPasswordModalVisible(false);
+            setEditingGuestbook(null);
+            setActionType('');
+            passwordForm.resetFields();
+          }}>
+            취소
+          </Button>,
+          <Button key="submit" type="primary" loading={submitting} onClick={() => passwordForm.submit()}>
+            확인
+          </Button>,
+        ]}
       >
         <div style={{ marginBottom: 16 }}>
           <p style={{ marginBottom: 8 }}>
@@ -766,7 +838,7 @@ const Guestbook = () => {
           </p>
         </div>
         
-        <Form form={passwordForm} layout="vertical">
+        <Form form={passwordForm} layout="vertical" onFinish={handlePasswordConfirm}>
           <Form.Item
             name="password"
             label="비밀번호"
@@ -779,9 +851,51 @@ const Guestbook = () => {
               prefix={<LockOutlined />}
               placeholder="개별 비밀번호 또는 마스터 비밀번호"
               maxLength={20}
+              onPressEnter={() => passwordForm.submit()}
             />
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* 삭제 확인 모달 */}
+      <Modal
+        title="방명록 삭제"
+        open={isDeleteModalVisible}
+        onCancel={() => {
+          setIsDeleteModalVisible(false);
+          setEditingGuestbook(null);
+          setActionType('');
+        }}
+        okText="삭제"
+        cancelText="취소"
+        width={400}
+        confirmLoading={submitting}
+        footer={[
+          <Button key="cancel" onClick={() => {
+            setIsDeleteModalVisible(false);
+            setEditingGuestbook(null);
+            setActionType('');
+          }}>
+            취소
+          </Button>,
+          <Button key="delete" type="primary" danger loading={submitting} onClick={() => {
+            handleDeleteGuestbook(editingGuestbook.id);
+            setIsDeleteModalVisible(false);
+            setEditingGuestbook(null);
+            setActionType('');
+          }}>
+            삭제
+          </Button>,
+        ]}
+      >
+        <div style={{ marginBottom: 16 }}>
+          <p style={{ marginBottom: 8 }}>
+            <strong>{editingGuestbook?.name}</strong>님의 방명록을 삭제하시겠습니까?
+          </p>
+          <p style={{ color: '#ff4d4f', fontSize: '0.9rem' }}>
+            이 작업은 되돌릴 수 없습니다.
+          </p>
+        </div>
       </Modal>
     </Wrapper>
   );

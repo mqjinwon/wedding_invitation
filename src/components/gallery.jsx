@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import ImageGallery from 'react-image-gallery';
 import { Divider } from 'antd';
 import styled from 'styled-components';
@@ -45,6 +45,8 @@ const Title = styled.p`
 const StyledImageGallery = styled.div`
   .image-gallery {
     width: 100%;
+    border-radius: 8px;
+    padding: 10px;
   }
 
   .image-gallery-slide {
@@ -56,7 +58,6 @@ const StyledImageGallery = styled.div`
     border-radius: 8px;
     object-fit: cover;
     width: 100%;
-    height: 400px;
   }
 
   .image-gallery-thumbnail {
@@ -68,7 +69,7 @@ const StyledImageGallery = styled.div`
     border-radius: 4px;
     object-fit: cover;
     width: 100%;
-    height: 60px;
+    height: 80px;
   }
 
   .image-gallery-thumbnails-wrapper {
@@ -76,27 +77,37 @@ const StyledImageGallery = styled.div`
   }
 
   .image-gallery-thumbnails {
-    padding: 5px 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
   }
 
   .image-gallery-thumbnail {
-    margin: 0 5px;
-    border: 2px solid transparent;
+    margin: 0;
+    border: 3px solid transparent;
     transition: all 0.3s ease;
+    border-radius: 6px;
+    overflow: hidden;
   }
 
   .image-gallery-thumbnail.active {
-    border-color: var(--medium-green);
+    border-color: var(--light-green);
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0);
   }
 
   .image-gallery-thumbnail:hover {
     border-color: var(--light-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0);
   }
 
   /* 모바일에서 터치 동작 개선 */
   @media screen and (max-width: 768px) {
     .image-gallery {
       touch-action: pan-y pinch-zoom !important;
+      border-radius: 6px;
+      padding: 8px;
     }
 
     .image-gallery-slide {
@@ -106,9 +117,11 @@ const StyledImageGallery = styled.div`
     }
 
     .image-gallery-image {
-      border-radius: 6px;
+
+      border-radius: 8px;
+      object-fit: cover;
+      width: 100%;
       touch-action: pan-y pinch-zoom !important;
-      height: 300px;
     }
 
     .image-gallery-content {
@@ -123,14 +136,19 @@ const StyledImageGallery = styled.div`
       touch-action: pan-y pinch-zoom !important;
     }
 
+    .image-gallery-thumbnails-wrapper {
+      margin-top: 8px;
+    }
+
     .image-gallery-thumbnail {
       border-radius: 3px;
-      margin: 0 3px;
+      margin: 0;
     }
 
     .image-gallery-thumbnail-image {
       border-radius: 3px;
-      height: 50px;
+      height: 60px;
+      object-fit: cover;
     }
 
     /* 갤러리 내부 모든 요소에 스크롤 허용 */
@@ -140,23 +158,30 @@ const StyledImageGallery = styled.div`
   }
 
   @media screen and (max-width: 480px) {
+    .image-gallery {
+      border-radius: 4px;
+      padding: 6px;
+    }
+    
     .image-gallery-slide {
       border-radius: 4px;
     }
 
     .image-gallery-image {
-      border-radius: 4px;
-      height: 250px;
+      border-radius: 8px;
+      object-fit: cover;
+      width: 100%;
     }
 
     .image-gallery-thumbnail {
       border-radius: 2px;
-      margin: 0 2px;
+      margin: 0;
     }
 
     .image-gallery-thumbnail-image {
       border-radius: 2px;
       height: 40px;
+      object-fit: cover;
     }
   }
 `;
@@ -211,19 +236,19 @@ const Gallery = () => {
       <StyledImageGallery style={galleryStyle}>
         <ImageGallery
           items={images}
-          showPlayButton={false}
+          showPlayButton={true}
           showFullscreenButton={true}
           showThumbnails={true}
           showNav={true}
-          showIndex={true}
-          showBullets={true}
+          showIndex={false}
+          showBullets={false}
           thumbnailPosition="bottom"
           slideInterval={5000}
           slideDuration={450}
           slideOnThumbnailOver={false}
           useBrowserFullscreen={false}
-          disableSwipe={false}
-          enableSwipe={true}
+          disableSwipe={true}
+          enableSwipe={false}
           enableTouchDrag={true}
           enableMouseDrag={true}
           lazyLoad={true}

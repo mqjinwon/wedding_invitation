@@ -1,13 +1,31 @@
 {
-  "name": "wedding-invitation-react",
-  "private": true,
+  "name": "wedding-invitation",
   "version": "1.0.0",
+  "description": "김진원 & 이연제 결혼식 청첩장 - React + Vite 기반 모바일 청첩장",
+  "author": "Jinwon Kim <mqjinwon@gmail.com>",
+  "license": "MIT",
+  "private": true,
   "type": "module",
+  "homepage": "https://mqjinwon.github.io/wedding_invitation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mqjinwon/wedding_invitation.git"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "react",
+    "vite",
+    "firebase",
+    "pwa"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 10",
+    "format": "prettier --write src/**/*.{js,jsx,css,md}"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,6 +43,27 @@
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.0.8",
-    "gh-pages": "^6.1.0"
+    "gh-pages": "^6.1.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

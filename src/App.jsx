@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'antd/dist/reset.css';

@@ -90,30 +90,11 @@ export const getGuestbooks = async (limitCount = 50) => {
 };
 
 // 방명록 수정
-export const updateGuestbook = async (id, updateData, password) => {
+export const updateGuestbook = async (id, updateData) => {
   try {
     // 네트워크 연결 확인
     if (!navigator.onLine) {
       throw new Error('인터넷 연결을 확인해주세요.');
-    }
-
-    // 마스터 비밀번호 확인
-    
-    const MASTER_PASSWORD = 'admin12345678';
-    
-    if (password !== MASTER_PASSWORD) {
-      // 개별 방명록 비밀번호 확인을 위해 문서 조회
-      const docRef = doc(db, COLLECTION_NAME, id);
-      const docSnap = await getDoc(docRef);
-      
-      if (!docSnap.exists()) {
-        throw new Error('방명록을 찾을 수 없습니다.');
-      }
-      
-      const guestbookData = docSnap.data();
-      if (guestbookData.password !== password) {
-        throw new Error('비밀번호가 올바르지 않습니다.');
-      }
     }
 
     const docRef = doc(db, COLLECTION_NAME, id);
@@ -129,9 +110,7 @@ export const updateGuestbook = async (id, updateData, password) => {
   } catch (error) {
     console.error('방명록 수정 오류:', error);
     
-    if (error.message.includes('비밀번호가 올바르지 않습니다')) {
-      throw error;
-    } else if (error.code === 'permission-denied') {
+    if (error.code === 'permission-denied') {
       throw new Error('방명록 수정 권한이 없습니다.');
     } else if (error.code === 'not-found') {
       throw new Error('수정할 방명록을 찾을 수 없습니다.');
@@ -143,30 +122,62 @@ export const updateGuestbook = async (id, updateData, password) => {
   }
 };
 
-// 방명록 삭제
-export const deleteGuestbook = async (id, password) => {
+// 비밀번호 검증
+export const verifyPassword = async (id, password) => {
   try {
     // 네트워크 연결 확인
     if (!navigator.onLine) {
       throw new Error('인터넷 연결을 확인해주세요.');
     }
 
-    // 마스터 비밀번호 확인
-    const MASTER_PASSWORD = 'admin12345678';
+    // 마스터 비밀번호 확인 (환경변수에서 가져오기)
+    const MASTER_PASSWORD = import.meta.env.VITE_MASTER_PASSWORD || 'admin12345678';
     
-    if (password !== MASTER_PASSWORD) {
-      // 개별 방명록 비밀번호 확인을 위해 문서 조회
-      const docRef = doc(db, COLLECTION_NAME, id);
-      const docSnap = await getDoc(docRef);
-      
-      if (!docSnap.exists()) {
-        throw new Error('방명록을 찾을 수 없습니다.');
-      }
-      
-      const guestbookData = docSnap.data();
-      if (guestbookData.password !== password) {
-        throw new Error('비밀번호가 올바르지 않습니다.');
-      }
+    if (password === MASTER_PASSWORD) {
+      return {
+        success: true,
+        message: '마스터 비밀번호가 확인되었습니다.'
+      };
+    }
+
+    // 개별 방명록 비밀번호 확인
+    const docRef = doc(db, COLLECTION_NAME, id);
+    const docSnap = await getDoc(docRef);
+    
+    if (!docSnap.exists()) {
+      throw new Error('방명록을 찾을 수 없습니다.');
+    }
+    
+    const guestbookData = docSnap.data();
+    if (guestbookData.password !== password) {
+      throw new Error('비밀번호가 올바르지 않습니다.');
+    }
+
+    return {
+      success: true,
+      message: '비밀번호가 확인되었습니다.'
+    };
+  } catch (error) {
+    console.error('비밀번호 검증 오류:', error);
+    
+    if (error.message.includes('비밀번호가 올바르지 않습니다')) {
+      throw error;
+    } else if (error.code === 'not-found') {
+      throw new Error('방명록을 찾을 수 없습니다.');
+    } else if (error.message.includes('ERR_BLOCKED_BY_CLIENT') || error.message.includes('blocked')) {
+      throw new Error('광고 차단기나 보안 확장 프로그램이 서비스 접근을 차단하고 있습니다.');
+    } else {
+      throw new Error('비밀번호 검증에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  }
+};
+
+// 방명록 삭제
+export const deleteGuestbook = async (id) => {
+  try {
+    // 네트워크 연결 확인
+    if (!navigator.onLine) {
+      throw new Error('인터넷 연결을 확인해주세요.');
     }
 
     const docRef = doc(db, COLLECTION_NAME, id);
@@ -179,9 +190,7 @@ export const deleteGuestbook = async (id, password) => {
   } catch (error) {
     console.error('방명록 삭제 오류:', error);
     
-    if (error.message.includes('비밀번호가 올바르지 않습니다')) {
-      throw error;
-    } else if (error.code === 'permission-denied') {
+    if (error.code === 'permission-denied') {
       throw new Error('방명록 삭제 권한이 없습니다.');
     } else if (error.code === 'not-found') {
       throw new Error('삭제할 방명록을 찾을 수 없습니다.');

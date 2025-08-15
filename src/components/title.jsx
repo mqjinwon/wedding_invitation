@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styled from 'styled-components';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
 const BackgroundVideo = import.meta.env.BASE_URL + 'BackgroundVideo.mp4';
