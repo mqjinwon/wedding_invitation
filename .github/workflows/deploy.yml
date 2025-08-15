@@ -66,8 +66,9 @@ jobs:
           echo "VITE_GROOM_NAME: $VITE_GROOM_NAME"
           echo "VITE_BRIDE_NAME: $VITE_BRIDE_NAME"
           echo "================================"
-          NODE_ENV=production npm run build
+          npm run build
         env:
+          NODE_ENV: production
           # Firebase 설정 (클라이언트 사이드용)
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
