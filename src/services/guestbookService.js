@@ -13,8 +13,17 @@ import { db } from '../firebase/config';
 
 const GUESTBOOK_COLLECTION = 'guestbooks';
 
+// Firebase가 초기화되었는지 확인
+const isFirebaseInitialized = () => {
+  return db !== null;
+};
+
 // 방명록 추가
 export const addGuestbook = async guestbookData => {
+  if (!isFirebaseInitialized()) {
+    throw new Error('Firebase가 초기화되지 않았습니다. 환경변수를 확인해주세요.');
+  }
+
   try {
     const now = new Date();
     const docRef = await addDoc(collection(db, GUESTBOOK_COLLECTION), {
@@ -39,6 +48,11 @@ export const addGuestbook = async guestbookData => {
 
 // 방명록 목록 조회 (최신순)
 export const getGuestbooks = async () => {
+  if (!isFirebaseInitialized()) {
+    console.warn('Firebase가 초기화되지 않았습니다. 빈 배열을 반환합니다.');
+    return [];
+  }
+
   try {
     const q = query(
       collection(db, GUESTBOOK_COLLECTION),
