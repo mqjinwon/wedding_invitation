@@ -1,5 +1,12 @@
 // webpack 설정
-exports.onCreateWebpackConfig = ({ stage, actions }) => {
+exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
+  const config = getConfig();
+  
+  // 프로덕션 빌드 시 publicPath 설정
+  if (stage === 'build-javascript' || stage === 'build-html') {
+    config.output.publicPath = '/wedding_invitation/';
+  }
+  
   if (stage === 'build-html' || stage === 'develop-html') {
     actions.setWebpackConfig({
       resolve: {
@@ -9,6 +16,8 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
         },
       },
     });
+  } else {
+    actions.replaceWebpackConfig(config);
   }
 };
 

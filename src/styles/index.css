@@ -185,17 +185,6 @@ body {
   }
 }
 
-/* 폰트 적용 */
-@font-face {
-  font-family: 'mom_to_daughter';
-  src:
-    url('../assets/fonts/mom_to_daughter.woff2') format('woff2'),
-    url('../assets/fonts/mom_to_daughter.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* 모바일 특화 스타일 */
 @media screen and (max-width: 480px) {
   /* 작은 모바일 화면 */

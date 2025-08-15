@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Layout } from 'antd';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import { withPrefix } from 'gatsby';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import '../styles/antd-override.css';
 import 'antd/dist/reset.css';
@@ -18,12 +19,27 @@ import Share from '../components/share';
 import Guestbook from '../components/guestbook';
 import Quote from '../components/quote';
 import Song from '../assets/song.mp3';
+import momToDaughterWoff2 from '../assets/fonts/mom_to_daughter.woff2';
+import momToDaughterWoff from '../assets/fonts/mom_to_daughter.woff';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 // markup
 const { Footer } = Layout;
+
+// 폰트 로드를 위한 글로벌 스타일
+const GlobalFontStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'mom_to_daughter';
+    src: 
+      url(${momToDaughterWoff2}) format('woff2'),
+      url(${momToDaughterWoff}) format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+`;
 
 const Wrapper = styled.div`
   background: var(--background-color);
@@ -167,6 +183,7 @@ const IndexPage = () => {
 
   return (
     <Wrapper>
+      <GlobalFontStyle />
       <AudioLoader loaded={audioLoaded} error={audioError} />
       <MusicControl audioRef={audioRef} onMusicToggle={handleMusicToggle} />
       <audio

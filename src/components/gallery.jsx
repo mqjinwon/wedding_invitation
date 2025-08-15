@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import ImageGallery from 'react-image-gallery';
 import { Divider } from 'antd';
 import styled from 'styled-components';
+import { withPrefix } from 'gatsby';
 import image1 from '../assets/images/1.webp';
 import image2 from '../assets/images/2.webp';
 
