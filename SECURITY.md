@@ -4,15 +4,15 @@
 
 ### 공개 정보 (클라이언트에서 사용 가능)
 
-- `WEDDING_DATE`: 결혼식 날짜
-- `WEDDING_LOCATION`: 결혼식 장소
-- `GROOM_NAME`, `BRIDE_NAME`: 신랑/신부 이름
-- `GROOM_ACCOUNT_NUMBER`, `BRIDE_ACCOUNT_NUMBER`: 계좌번호
-- `WEDDING_INVITATION_URL`: 청첩장 URL
+- `GATSBY_WEDDING_DATE`: 결혼식 날짜
+- `GATSBY_WEDDING_LOCATION`: 결혼식 장소
+- `GATSBY_GROOM_NAME`, `BRIDE_NAME`: 신랑/신부 이름
+- `GATSBY_GROOM_ACCOUNT_NUMBER`, `BRIDE_ACCOUNT_NUMBER`: 계좌번호
+- `GATSBY_WEDDING_INVITATION_URL`: 청첩장 URL
+- `GATSBY_KAKAOTALK_API_TOKEN`: 카카오톡 API 토큰
 
 ### 민감한 정보 (서버 사이드에서만 사용)
 
-- `KAKAOTALK_API_TOKEN`: 카카오톡 API 토큰
 - `FIREBASE_API_KEY`: Firebase API 키
 - `FIREBASE_AUTH_DOMAIN`: Firebase 인증 도메인
 - `FIREBASE_PROJECT_ID`: Firebase 프로젝트 ID

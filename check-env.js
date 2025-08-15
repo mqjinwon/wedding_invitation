@@ -43,68 +43,68 @@ console.log('');
 
 console.log('=== 카카오톡 API ===');
 console.log(
-  'KAKAOTALK_API_TOKEN:',
-  process.env.KAKAOTALK_API_TOKEN ? '✅ 설정됨' : '❌ 설정되지 않음'
+  'GATSBY_KAKAOTALK_API_TOKEN:',
+  process.env.GATSBY_KAKAOTALK_API_TOKEN ? '✅ 설정됨' : '❌ 설정되지 않음'
 );
 console.log('');
 
 console.log('=== 결혼식 정보 ===');
 console.log(
-  'WEDDING_INVITATION_URL:',
-  process.env.WEDDING_INVITATION_URL || '❌ 설정되지 않음'
+  'GATSBY_WEDDING_INVITATION_URL:',
+  process.env.GATSBY_WEDDING_INVITATION_URL || '❌ 설정되지 않음'
 );
-console.log('WEDDING_DATE:', process.env.WEDDING_DATE || '❌ 설정되지 않음');
+console.log('GATSBY_WEDDING_DATE:', process.env.GATSBY_WEDDING_DATE || '❌ 설정되지 않음');
 console.log(
-  'WEDDING_LOCATION:',
-  process.env.WEDDING_LOCATION || '❌ 설정되지 않음'
+  'GATSBY_WEDDING_LOCATION:',
+  process.env.GATSBY_WEDDING_LOCATION || '❌ 설정되지 않음'
 );
 console.log('');
 
 console.log('=== 신랑 정보 ===');
-console.log('GROOM_NAME:', process.env.GROOM_NAME || '❌ 설정되지 않음');
+console.log('GATSBY_GROOM_NAME:', process.env.GATSBY_GROOM_NAME || '❌ 설정되지 않음');
 console.log(
-  'GROOM_ACCOUNT_NUMBER:',
-  process.env.GROOM_ACCOUNT_NUMBER || '❌ 설정되지 않음'
+  'GATSBY_GROOM_ACCOUNT_NUMBER:',
+  process.env.GATSBY_GROOM_ACCOUNT_NUMBER || '❌ 설정되지 않음'
 );
 console.log(
-  'GROOM_FATHER_NAME:',
-  process.env.GROOM_FATHER_NAME || '❌ 설정되지 않음'
+  'GATSBY_GROOM_FATHER_NAME:',
+  process.env.GATSBY_GROOM_FATHER_NAME || '❌ 설정되지 않음'
 );
 console.log(
-  'GROOM_FATHER_ACCOUNT_NUMBER:',
-  process.env.GROOM_FATHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
+  'GATSBY_GROOM_FATHER_ACCOUNT_NUMBER:',
+  process.env.GATSBY_GROOM_FATHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
 );
 console.log(
-  'GROOM_MOTHER_NAME:',
-  process.env.GROOM_MOTHER_NAME || '❌ 설정되지 않음'
+  'GATSBY_GROOM_MOTHER_NAME:',
+  process.env.GATSBY_GROOM_MOTHER_NAME || '❌ 설정되지 않음'
 );
 console.log(
-  'GROOM_MOTHER_ACCOUNT_NUMBER:',
-  process.env.GROOM_MOTHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
+  'GATSBY_GROOM_MOTHER_ACCOUNT_NUMBER:',
+  process.env.GATSBY_GROOM_MOTHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
 );
 console.log('');
 
 console.log('=== 신부 정보 ===');
-console.log('BRIDE_NAME:', process.env.BRIDE_NAME || '❌ 설정되지 않음');
+console.log('GATSBY_BRIDE_NAME:', process.env.GATSBY_BRIDE_NAME || '❌ 설정되지 않음');
 console.log(
-  'BRIDE_ACCOUNT_NUMBER:',
-  process.env.BRIDE_ACCOUNT_NUMBER || '❌ 설정되지 않음'
+  'GATSBY_BRIDE_ACCOUNT_NUMBER:',
+  process.env.GATSBY_BRIDE_ACCOUNT_NUMBER || '❌ 설정되지 않음'
 );
 console.log(
-  'BRIDE_FATHER_NAME:',
-  process.env.BRIDE_FATHER_NAME || '❌ 설정되지 않음'
+  'GATSBY_BRIDE_FATHER_NAME:',
+  process.env.GATSBY_BRIDE_FATHER_NAME || '❌ 설정되지 않음'
 );
 console.log(
-  'BRIDE_FATHER_ACCOUNT_NUMBER:',
-  process.env.BRIDE_FATHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
+  'GATSBY_BRIDE_FATHER_ACCOUNT_NUMBER:',
+  process.env.GATSBY_BRIDE_FATHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
 );
 console.log(
-  'BRIDE_MOTHER_NAME:',
-  process.env.BRIDE_MOTHER_NAME || '❌ 설정되지 않음'
+  'GATSBY_BRIDE_MOTHER_NAME:',
+  process.env.GATSBY_BRIDE_MOTHER_NAME || '❌ 설정되지 않음'
 );
 console.log(
-  'BRIDE_MOTHER_ACCOUNT_NUMBER:',
-  process.env.BRIDE_MOTHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
+  'GATSBY_BRIDE_MOTHER_ACCOUNT_NUMBER:',
+  process.env.GATSBY_BRIDE_MOTHER_ACCOUNT_NUMBER || '❌ 설정되지 않음'
 );
 console.log('');
 

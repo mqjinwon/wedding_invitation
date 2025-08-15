@@ -1,119 +1,50 @@
-import {
-  collection,
-  addDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
-  orderBy,
-  query,
-  serverTimestamp,
-} from 'firebase/firestore';
-import { db } from '../firebase/config';
+// 서버리스 함수를 사용한 방명록 서비스
+const API_BASE = '/api';
 
-const GUESTBOOK_COLLECTION = 'guestbooks';
-
-// Firebase가 초기화되었는지 확인
-const isFirebaseInitialized = () => {
-  return db !== null;
-};
-
-// 방명록 추가
-export const addGuestbook = async guestbookData => {
-  if (!isFirebaseInitialized()) {
-    throw new Error('Firebase가 초기화되지 않았습니다. 환경변수를 확인해주세요.');
-  }
-
+export const addGuestbook = async (guestbookData) => {
   try {
-    const now = new Date();
-    const docRef = await addDoc(collection(db, GUESTBOOK_COLLECTION), {
-      ...guestbookData,
-      timestamp: serverTimestamp(),
-      createdAt: now.toISOString(),
-      clientTimestamp: now.getTime(), // 클라이언트 시간도 저장
+    const response = await fetch(`${API_BASE}/add-guestbook`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(guestbookData),
     });
 
-    // 반환할 때는 현재 시간을 사용 (serverTimestamp는 아직 null일 수 있음)
-    return {
-      id: docRef.id,
-      ...guestbookData,
-      timestamp: now,
-      createdAt: now.toISOString(),
-    };
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || '방명록 작성에 실패했습니다.');
+    }
+
+    const result = await response.json();
+    return result;
   } catch (error) {
-    console.error('방명록 추가 실패:', error);
+    console.error('방명록 추가 오류:', error);
     throw error;
   }
 };
 
-// 방명록 목록 조회 (최신순)
-export const getGuestbooks = async () => {
-  if (!isFirebaseInitialized()) {
-    console.warn('Firebase가 초기화되지 않았습니다. 빈 배열을 반환합니다.');
-    return [];
-  }
-
+export const getGuestbooks = async (limit = 50, offset = 0) => {
   try {
-    const q = query(
-      collection(db, GUESTBOOK_COLLECTION),
-      orderBy('timestamp', 'desc')
+    const response = await fetch(
+      `${API_BASE}/get-guestbooks?limit=${limit}&offset=${offset}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     );
-    const querySnapshot = await getDocs(q);
 
-    const guestbooks = [];
-    querySnapshot.forEach(doc => {
-      const data = doc.data();
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || '방명록 조회에 실패했습니다.');
+    }
 
-      // timestamp 처리 개선
-      let timestamp;
-      if (data.timestamp) {
-        // Firebase Timestamp 객체인 경우
-        if (
-          data.timestamp.toDate &&
-          typeof data.timestamp.toDate === 'function'
-        ) {
-          timestamp = data.timestamp.toDate();
-        }
-        // 이미 Date 객체인 경우
-        else if (data.timestamp instanceof Date) {
-          timestamp = data.timestamp;
-        }
-        // 숫자나 문자열인 경우
-        else {
-          timestamp = new Date(data.timestamp);
-        }
-      }
-      // timestamp가 없는 경우 clientTimestamp 사용
-      else if (data.clientTimestamp) {
-        timestamp = new Date(data.clientTimestamp);
-      }
-      // clientTimestamp도 없는 경우 createdAt 사용
-      else if (data.createdAt) {
-        timestamp = new Date(data.createdAt);
-      }
-      // 둘 다 없는 경우 현재 시간 사용
-      else {
-        timestamp = new Date();
-      }
-
-      // 유효하지 않은 날짜인 경우 현재 시간으로 대체
-      if (isNaN(timestamp.getTime())) {
-        timestamp = new Date();
-      }
-
-      guestbooks.push({
-        id: doc.id,
-        name: data.name,
-        password: data.password,
-        message: data.message,
-        timestamp: timestamp,
-        createdAt: data.createdAt,
-      });
-    });
-
-    return guestbooks;
+    const result = await response.json();
+    return result;
   } catch (error) {
-    console.error('방명록 조회 실패:', error);
+    console.error('방명록 조회 오류:', error);
     throw error;
   }
 };

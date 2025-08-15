@@ -24,11 +24,7 @@ import styled from 'styled-components';
 import {
   addGuestbook,
   getGuestbooks,
-  updateGuestbook,
-  deleteGuestbook,
-  migrateFromLocalStorage,
 } from '../services/guestbookService';
-import { db } from '../firebase/config';
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -231,45 +227,28 @@ const Guestbook = () => {
   const [isClient, setIsClient] = useState(false);
   const [guestbooks, setGuestbooks] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [editingGuestbook, setEditingGuestbook] = useState(null);
-  const [deletingGuestbook, setDeletingGuestbook] = useState(null);
-  const [expandedCard, setExpandedCard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [firebaseError, setFirebaseError] = useState(false);
+  const [apiError, setApiError] = useState(false);
   const [form] = Form.useForm();
-  const [editForm] = Form.useForm();
-  const [deleteForm] = Form.useForm();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Firebase 초기화 상태 확인
+  // 방명록 로드
   useEffect(() => {
     if (!isClient) return;
-
-    // Firebase가 초기화되지 않은 경우
-    if (!db) {
-      setFirebaseError(true);
-      setLoading(false);
-      return;
-    }
 
     const loadGuestbooks = async () => {
       try {
         setLoading(true);
-        setFirebaseError(false);
-        // 기존 로컬 스토리지 데이터 마이그레이션
-        await migrateFromLocalStorage();
-        // Firebase에서 데이터 로드
-        const data = await getGuestbooks();
-        setGuestbooks(data);
+        setApiError(false);
+        const result = await getGuestbooks();
+        setGuestbooks(result.data || []);
       } catch (error) {
         console.error('방명록 로드 실패:', error);
-        setFirebaseError(true);
+        setApiError(true);
         message.error('방명록을 불러오는데 실패했습니다.');
       } finally {
         setLoading(false);
@@ -281,159 +260,48 @@ const Guestbook = () => {
 
   // 방명록 추가
   const handleAddGuestbook = async () => {
-    if (!db) {
-      message.error('Firebase가 초기화되지 않았습니다.');
-      return;
-    }
-
     try {
       setSubmitting(true);
       const values = await form.validateFields();
 
-      const newGuestbook = await addGuestbook({
+      const result = await addGuestbook({
         name: values.name,
-        password: values.password,
         message: values.message,
+        relationship: values.relationship || '',
       });
 
-      setGuestbooks([newGuestbook, ...guestbooks]);
-      form.resetFields();
-      setIsModalVisible(false);
-      message.success('방명록이 등록되었습니다.');
+      if (result.success) {
+        // 새 방명록을 목록에 추가
+        const newGuestbook = {
+          id: result.id,
+          name: values.name,
+          message: values.message,
+          relationship: values.relationship || '',
+          timestamp: new Date().toISOString(),
+        };
+        
+        setGuestbooks([newGuestbook, ...guestbooks]);
+        form.resetFields();
+        setIsModalVisible(false);
+        message.success('방명록이 등록되었습니다.');
+      }
     } catch (error) {
       console.error('방명록 추가 실패:', error);
-      message.error('방명록 등록에 실패했습니다.');
+      message.error(error.message || '방명록 등록에 실패했습니다.');
     } finally {
       setSubmitting(false);
     }
-  };
-
-  // 방명록 수정
-  const handleEditGuestbook = async () => {
-    if (!db) {
-      message.error('Firebase가 초기화되지 않았습니다.');
-      return;
-    }
-
-    try {
-      setSubmitting(true);
-      const values = await editForm.validateFields();
-
-      // 슈퍼 권한 확인
-      if (values.password === 'remove12345678') {
-        await updateGuestbook(editingGuestbook.id, values.message);
-        const updatedGuestbooks = guestbooks.map(gb =>
-          gb.id === editingGuestbook.id
-            ? { ...gb, message: values.message }
-            : gb
-        );
-        setGuestbooks(updatedGuestbooks);
-        editForm.resetFields();
-        setIsEditModalVisible(false);
-        setEditingGuestbook(null);
-        message.success('방명록이 수정되었습니다.');
-        return;
-      }
-
-      // 일반 권한 확인
-      if (values.password === editingGuestbook.password) {
-        await updateGuestbook(editingGuestbook.id, values.message);
-        const updatedGuestbooks = guestbooks.map(gb =>
-          gb.id === editingGuestbook.id
-            ? { ...gb, message: values.message }
-            : gb
-        );
-        setGuestbooks(updatedGuestbooks);
-        editForm.resetFields();
-        setIsEditModalVisible(false);
-        setEditingGuestbook(null);
-        message.success('방명록이 수정되었습니다.');
-      } else {
-        message.error('비밀번호가 일치하지 않습니다.');
-      }
-    } catch (error) {
-      console.error('방명록 수정 실패:', error);
-      message.error('방명록 수정에 실패했습니다.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  // 방명록 삭제 모달 열기
-  const showDeleteModal = guestbook => {
-    setDeletingGuestbook(guestbook);
-    deleteForm.resetFields();
-    setIsDeleteModalVisible(true);
-  };
-
-  // 방명록 삭제 실행
-  const handleDeleteGuestbook = async () => {
-    if (!db) {
-      message.error('Firebase가 초기화되지 않았습니다.');
-      return;
-    }
-
-    try {
-      setSubmitting(true);
-      const values = await deleteForm.validateFields();
-
-      // 슈퍼 권한 확인
-      if (values.password === 'remove12345678') {
-        await deleteGuestbook(deletingGuestbook.id);
-        const updatedGuestbooks = guestbooks.filter(
-          gb => gb.id !== deletingGuestbook.id
-        );
-        setGuestbooks(updatedGuestbooks);
-        setIsDeleteModalVisible(false);
-        setDeletingGuestbook(null);
-        deleteForm.resetFields();
-        message.success('방명록이 삭제되었습니다.');
-        return;
-      }
-
-      // 일반 권한 확인
-      if (values.password === deletingGuestbook.password) {
-        await deleteGuestbook(deletingGuestbook.id);
-        const updatedGuestbooks = guestbooks.filter(
-          gb => gb.id !== deletingGuestbook.id
-        );
-        setGuestbooks(updatedGuestbooks);
-        setIsDeleteModalVisible(false);
-        setDeletingGuestbook(null);
-        deleteForm.resetFields();
-        message.success('방명록이 삭제되었습니다.');
-      } else {
-        message.error('비밀번호가 일치하지 않습니다.');
-      }
-    } catch (error) {
-      console.error('방명록 삭제 실패:', error);
-      message.error('방명록 삭제에 실패했습니다.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  // 수정 모달 열기
-  const showEditModal = guestbook => {
-    setEditingGuestbook(guestbook);
-    editForm.setFieldsValue({
-      password: '',
-      message: guestbook.message,
-    });
-    setIsEditModalVisible(true);
   };
 
   // 날짜 포맷팅
   const formatDate = timestamp => {
     try {
-      // timestamp가 유효한지 확인
       if (!timestamp) {
         return '날짜 없음';
       }
 
       const date = new Date(timestamp);
 
-      // 유효하지 않은 날짜인 경우
       if (isNaN(date.getTime())) {
         return '날짜 오류';
       }
@@ -451,11 +319,6 @@ const Guestbook = () => {
     }
   };
 
-  // 카드 클릭 시 확대/축소
-  const handleCardClick = guestbookId => {
-    setExpandedCard(expandedCard === guestbookId ? null : guestbookId);
-  };
-
   return (
     <Wrapper style={{ marginBottom: 16 }}>
       <Divider
@@ -466,11 +329,11 @@ const Guestbook = () => {
         <Title>방명록</Title>
       </Divider>
 
-      {/* Firebase 오류 알림 */}
-      {firebaseError && (
+      {/* API 오류 알림 */}
+      {apiError && (
         <Alert
           message="방명록 서비스 연결 오류"
-          description="Firebase 설정이 완료되지 않아 방명록 기능을 사용할 수 없습니다. 관리자에게 문의해주세요."
+          description="서버와의 연결에 문제가 있어 방명록 기능을 사용할 수 없습니다. 잠시 후 다시 시도해주세요."
           type="warning"
           showIcon
           icon={<ExclamationCircleOutlined />}
@@ -482,7 +345,7 @@ const Guestbook = () => {
         icon={<PlusOutlined />}
         size="large"
         onClick={() => setIsModalVisible(true)}
-        disabled={firebaseError}
+        disabled={apiError}
       >
         방명록 작성하기
       </AddButton>
@@ -511,7 +374,7 @@ const Guestbook = () => {
               방명록을 불러오는 중...
             </div>
           </div>
-        ) : firebaseError ? (
+        ) : apiError ? (
           <div
             style={{
               textAlign: 'center',
@@ -554,31 +417,23 @@ const Guestbook = () => {
               guestbooks.map(guestbook => (
                 <GuestbookCard
                   key={guestbook.id}
-                  className={expandedCard === guestbook.id ? 'expanded' : ''}
-                  onClick={() => handleCardClick(guestbook.id)}
+                  style={{ cursor: 'default' }}
                 >
                   <TimeStamp>{formatDate(guestbook.timestamp)}</TimeStamp>
 
                   <GuestName>{guestbook.name}</GuestName>
+                  
+                  {guestbook.relationship && (
+                    <div style={{ 
+                      fontSize: '0.8rem', 
+                      color: '#666', 
+                      marginBottom: '8px' 
+                    }}>
+                      {guestbook.relationship}
+                    </div>
+                  )}
 
                   <GuestMessage>{guestbook.message}</GuestMessage>
-
-                  <ActionButtons>
-                    <ActionButton
-                      icon={<EditOutlined />}
-                      onClick={e => {
-                        e.stopPropagation();
-                        showEditModal(guestbook);
-                      }}
-                    />
-                    <ActionButton
-                      icon={<DeleteOutlined />}
-                      onClick={e => {
-                        e.stopPropagation();
-                        showDeleteModal(guestbook);
-                      }}
-                    />
-                  </ActionButtons>
                 </GuestbookCard>
               ))
             )}
@@ -614,14 +469,12 @@ const Guestbook = () => {
           </Form.Item>
 
           <Form.Item
-            name="password"
-            label="비밀번호"
-            rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
+            name="relationship"
+            label="관계 (선택사항)"
           >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="비밀번호를 입력하세요"
-              maxLength={20}
+            <Input
+              placeholder="예: 신랑 친구, 신부 동생 등"
+              maxLength={30}
             />
           </Form.Item>
 
@@ -636,86 +489,6 @@ const Guestbook = () => {
               rows={4}
               maxLength={500}
               showCount
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/* 방명록 수정 모달 */}
-      <Modal
-        title="방명록 수정"
-        open={isEditModalVisible}
-        onOk={handleEditGuestbook}
-        onCancel={() => {
-          setIsEditModalVisible(false);
-          setEditingGuestbook(null);
-          editForm.resetFields();
-        }}
-        okText="수정"
-        cancelText="취소"
-        width={400}
-        confirmLoading={submitting}
-      >
-        <Form form={editForm} layout="vertical">
-          <Form.Item
-            name="password"
-            label="비밀번호"
-            rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
-          >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="비밀번호를 입력하세요"
-              maxLength={20}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="message"
-            label="메시지"
-            rules={[{ required: true, message: '메시지를 입력해주세요.' }]}
-          >
-            <TextArea
-              prefix={<MessageOutlined />}
-              placeholder="수정할 메시지를 입력하세요"
-              rows={4}
-              maxLength={500}
-              showCount
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/* 방명록 삭제 모달 */}
-      <Modal
-        title="방명록 삭제"
-        open={isDeleteModalVisible}
-        onOk={handleDeleteGuestbook}
-        onCancel={() => {
-          setIsDeleteModalVisible(false);
-          setDeletingGuestbook(null);
-          deleteForm.resetFields();
-        }}
-        okText="삭제"
-        cancelText="취소"
-        width={400}
-        confirmLoading={submitting}
-      >
-        <div style={{ marginBottom: '16px' }}>
-          <p style={{ marginBottom: '12px', color: '#666' }}>
-            <strong>{deletingGuestbook?.name}</strong>님의 방명록을 삭제하려면
-            비밀번호를 입력하세요.
-          </p>
-        </div>
-        <Form form={deleteForm} layout="vertical">
-          <Form.Item
-            name="password"
-            label="비밀번호"
-            rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
-          >
-            <Input.Password
-              prefix={<LockOutlined />}
-              placeholder="비밀번호를 입력하세요"
-              maxLength={20}
             />
           </Form.Item>
         </Form>

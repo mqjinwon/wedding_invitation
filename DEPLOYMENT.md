@@ -272,31 +272,31 @@ Public repository로 변경하기 전에 다음 GitHub Secrets를 설정해야 �
 
 #### 카카오톡 API
 
-- `KAKAOTALK_API_TOKEN`: [your-kakao-api-token]
+- `GATSBY_KAKAOTALK_API_TOKEN`: [your-kakao-api-token]
 
 #### 결혼식 정보
 
-- `WEDDING_INVITATION_URL`: https://[your-username].github.io/[repository-name]/
-- `WEDDING_DATE`: [결혼식 날짜]
-- `WEDDING_LOCATION`: [결혼식 장소]
+- `GATSBY_WEDDING_INVITATION_URL`: https://[your-username].github.io/[repository-name]/
+- `GATSBY_WEDDING_DATE`: [결혼식 날짜]
+- `GATSBY_WEDDING_LOCATION`: [결혼식 장소]
 
 #### 신랑 정보
 
-- `GROOM_NAME`: [신랑 이름]
-- `GROOM_ACCOUNT_NUMBER`: [신랑 계좌번호]
-- `GROOM_FATHER_NAME`: [신랑 아버지 이름]
-- `GROOM_FATHER_ACCOUNT_NUMBER`: [신랑 아버지 계좌번호]
-- `GROOM_MOTHER_NAME`: [신랑 어머니 이름]
-- `GROOM_MOTHER_ACCOUNT_NUMBER`: [신랑 어머니 계좌번호]
+- `GATSBY_GROOM_NAME`: [신랑 이름]
+- `GATSBY_GROOM_ACCOUNT_NUMBER`: [신랑 계좌번호]
+- `GATSBY_GROOM_FATHER_NAME`: [신랑 아버지 이름]
+- `GATSBY_GROOM_FATHER_ACCOUNT_NUMBER`: [신랑 아버지 계좌번호]
+- `GATSBY_GROOM_MOTHER_NAME`: [신랑 어머니 이름]
+- `GATSBY_GROOM_MOTHER_ACCOUNT_NUMBER`: [신랑 어머니 계좌번호]
 
 #### 신부 정보
 
-- `BRIDE_NAME`: [신부 이름]
-- `BRIDE_ACCOUNT_NUMBER`: [신부 계좌번호]
-- `BRIDE_FATHER_NAME`: [신부 아버지 이름]
-- `BRIDE_FATHER_ACCOUNT_NUMBER`: [신부 아버지 계좌번호]
-- `BRIDE_MOTHER_NAME`: [신부 어머니 이름]
-- `BRIDE_MOTHER_ACCOUNT_NUMBER`: [신부 어머니 계좌번호]
+- `GATSBY_BRIDE_NAME`: [신부 이름]
+- `GATSBY_BRIDE_ACCOUNT_NUMBER`: [신부 계좌번호]
+- `GATSBY_BRIDE_FATHER_NAME`: [신부 아버지 이름]
+- `GATSBY_BRIDE_FATHER_ACCOUNT_NUMBER`: [신부 아버지 계좌번호]
+- `GATSBY_BRIDE_MOTHER_NAME`: [신부 어머니 이름]
+- `GATSBY_BRIDE_MOTHER_ACCOUNT_NUMBER`: [신부 어머니 계좌번호]
 
 ### 6. 로컬 개발 환경변수 설정
 
