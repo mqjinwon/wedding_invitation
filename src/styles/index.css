@@ -1,0 +1,206 @@
+:root {
+  --dark-green: #1c3e32; /* 진한 초록색 */
+  --medium-green: #458a72; /* 중간 초록색 */
+  --light-green: #b6d3c2; /* 옅은 초록색 */
+  --white: #ffffff;
+  --black: #000000;
+  --yellow: #ffd700;
+  --light-yellow: #fcf07e;
+  --title-color: var(--dark-green); /* 초록색 */
+  --text-color: var(--black); /* 검정색 */
+  --background-color: var(--white); /* 흰색 배경 */
+  --music-button-bg: var(--dark-green); /* 음악 버튼 배경 */
+  --music-button-hover: var(--yellow); /* 음악 버튼 호버 */
+  --music-button-playing: var(--yellow); /* 음악 재생 중 배경 */
+  --music-button-playing-text: var(--black); /* 음악 재생 중 텍스트 */
+  --music-label-bg: var(--white); /* 음악 라벨 배경 */
+}
+
+* {
+  font-family: "Noto Serif KR", serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* 카카오맵 버튼 없애기 */
+.wrap_controllers {
+  display: none !important;
+}
+
+.root_daum_roughmap {
+  width: 100% !important;
+  max-height: 480px !important;
+}
+.root_daum_roughmap_landing {
+  margin: auto !important;
+}
+.root_daum_roughmap .wrap_btn_zoom {
+  display: none !important;
+}
+
+/* react-image-gallery 모바일 터치 개선 */
+@media screen and (max-width: 768px) {
+  .image-gallery {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  .image-gallery-slide {
+    overflow: hidden !important;
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  .image-gallery-slide .image-gallery-image {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  .image-gallery-content {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  .image-gallery-slide-wrapper {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  .image-gallery-slides {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  /* 갤러리 컨테이너 전체에 스크롤 허용 */
+  .image-gallery * {
+    touch-action: pan-y pinch-zoom !important;
+  }
+  
+  /* 더 구체적인 선택자로 우선순위 높임 */
+  body .image-gallery,
+  html .image-gallery,
+  #___gatsby .image-gallery,
+  #gatsby-focus-wrapper .image-gallery {
+    touch-action: pan-y pinch-zoom !important;
+  }
+}
+
+/* 모바일 반응형 디자인 */
+@media screen and (max-width: 768px) {
+  /* 모바일에서 기본 여백 조정 */
+  body {
+    padding: 0 12px;
+  }
+  
+  /* 모바일에서 폰트 크기 조정 */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1.1em;
+    line-height: 1.3;
+  }
+  
+  p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  
+  /* 모바일에서 버튼 터치 영역 확대 */
+  button, .ant-btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 14px;
+  }
+  
+  /* 모바일에서 링크 터치 영역 확대 */
+  a {
+    padding: 6px 0;
+    display: inline-block;
+  }
+}
+
+/* 태블릿 반응형 디자인 */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  body {
+    padding: 0 24px;
+  }
+}
+
+/* 데스크톱 반응형 디자인 */
+@media screen and (min-width: 1025px) {
+  body {
+    padding: 0 32px;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 폰트 적용 */
+@font-face {
+  font-family: "mom_to_daughter";
+  src: url("../assets/fonts/mom_to_daughter.woff2") format("woff2"),
+    url("../assets/fonts/mom_to_daughter.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+/* 모바일 특화 스타일 */
+@media screen and (max-width: 480px) {
+  /* 작은 모바일 화면 */
+  body {
+    padding: 0 8px;
+  }
+  
+  /* 더 큰 터치 영역 */
+  button, .ant-btn, [role="button"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* 모바일에서 텍스트 줄간격 조정 */
+  p {
+    line-height: 1.6;
+    font-size: 0.8rem;
+  }
+  
+  /* 작은 화면에서 제목 크기 조정 */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 1em;
+    line-height: 1.2;
+  }
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "wedding-invitation",
-  "author": "S-jooyoung",
+  "author": "Jinwon Kim & Yeonje Lee",
   "keywords": [
     "gatsby"
   ],
@@ -12,18 +12,23 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public --repo https://github.com/mqjinwon/wedding_invitation.git",
+    "check-env": "node check-env.js"
   },
   "dependencies": {
-    "antd": "^4.20.4",
+    "antd": "^5.0.0",
     "aos": "^2.3.4",
-    "babel-plugin-styled-components": "^2.0.7",
-    "gatsby": "^4.14.0",
-    "gatsby-plugin-styled-components": "^5.14.0",
-    "react": "^17.0.1",
+    "firebase": "^12.0.0",
+    "gatsby": "^5.14.5",
+    "gatsby-plugin-styled-components": "^6.14.0",
+    "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "^17.0.1",
+    "react-dom": "^18.2.0",
     "react-image-gallery": "^1.2.8",
-    "styled-components": "^5.3.5"
+    "styled-components": "^6.1.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
