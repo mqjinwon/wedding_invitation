@@ -53,9 +53,18 @@ const App = () => {
   const [isClient, setIsClient] = useState(false);
   const audioRef = useRef(null);
 
-  // 클라이언트 사이드 렌더링 확인
+  // 클라이언트 사이드 렌더링 확인 (Edge 호환성)
   useEffect(() => {
-    setIsClient(true);
+    // Edge 브라우저 감지
+    const isEdge = navigator.userAgent.includes('Edg') || navigator.userAgent.includes('Edge');
+    
+    if (isEdge) {
+      console.log('Edge browser detected - applying compatibility fixes');
+      // Edge에서는 약간의 지연 후 클라이언트 모드로 설정
+      setTimeout(() => setIsClient(true), 200);
+    } else {
+      setIsClient(true);
+    }
   }, []);
 
   // 오디오 로딩 및 재생 최적화
