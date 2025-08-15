@@ -105,7 +105,7 @@ const StyledImageGallery = styled.div`
   /* 모바일에서 터치 동작 개선 */
   @media screen and (max-width: 768px) {
     .image-gallery {
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
       border-radius: 6px;
       padding: 8px;
     }
@@ -113,7 +113,7 @@ const StyledImageGallery = styled.div`
     .image-gallery-slide {
       border-radius: 6px;
       overflow: hidden !important;
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
     }
 
     .image-gallery-image {
@@ -121,19 +121,19 @@ const StyledImageGallery = styled.div`
       border-radius: 8px;
       object-fit: cover;
       width: 100%;
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
     }
 
     .image-gallery-content {
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
     }
 
     .image-gallery-slide-wrapper {
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
     }
 
     .image-gallery-slides {
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
     }
 
     .image-gallery-thumbnails-wrapper {
@@ -147,13 +147,14 @@ const StyledImageGallery = styled.div`
 
     .image-gallery-thumbnail-image {
       border-radius: 3px;
+      width: 100%;
       height: 60px;
       object-fit: cover;
     }
 
-    /* 갤러리 내부 모든 요소에 스크롤 허용 */
+    /* 갤러리 내부 모든 요소에 좌우 스와이프만 허용 */
     .image-gallery * {
-      touch-action: pan-y pinch-zoom !important;
+      touch-action: pan-x pinch-zoom !important;
     }
   }
 
@@ -180,6 +181,7 @@ const StyledImageGallery = styled.div`
 
     .image-gallery-thumbnail-image {
       border-radius: 2px;
+      width: 100%;
       height: 40px;
       object-fit: cover;
     }
@@ -202,9 +204,9 @@ const Gallery = () => {
   // 디버깅을 위한 콘솔 로그
   console.log('Images loaded:', images);
 
-  // 모바일에서 위아래 스크롤을 위한 인라인 스타일
+  // 모바일에서 좌우 스와이프만 허용하고 위아래는 전체 스크롤에 위임
   const galleryStyle = {
-    touchAction: 'pan-y pinch-zoom',
+    touchAction: 'pan-x pinch-zoom',
     WebkitOverflowScrolling: 'touch',
   };
 
@@ -215,7 +217,7 @@ const Gallery = () => {
         '.image-gallery, .image-gallery *'
       );
       galleryElements.forEach(element => {
-        element.style.touchAction = 'pan-y pinch-zoom';
+        element.style.touchAction = 'pan-x pinch-zoom';
       });
     };
 
@@ -247,8 +249,8 @@ const Gallery = () => {
           slideDuration={450}
           slideOnThumbnailOver={false}
           useBrowserFullscreen={false}
-          disableSwipe={true}
-          enableSwipe={false}
+          disableSwipe={false}
+          enableSwipe={true}
           enableTouchDrag={true}
           enableMouseDrag={true}
           lazyLoad={true}
