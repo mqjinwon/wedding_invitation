@@ -9,6 +9,7 @@ import {
   Form,
   Typography,
   Spin,
+  Alert,
 } from 'antd';
 import {
   EditOutlined,
@@ -17,6 +18,7 @@ import {
   UserOutlined,
   LockOutlined,
   MessageOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import styled from 'styled-components';
 import {
@@ -26,6 +28,7 @@ import {
   deleteGuestbook,
   migrateFromLocalStorage,
 } from '../services/guestbookService';
+import { db } from '../firebase/config';
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -235,6 +238,7 @@ const Guestbook = () => {
   const [expandedCard, setExpandedCard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [firebaseError, setFirebaseError] = useState(false);
   const [form] = Form.useForm();
   const [editForm] = Form.useForm();
   const [deleteForm] = Form.useForm();
@@ -243,13 +247,21 @@ const Guestbook = () => {
     setIsClient(true);
   }, []);
 
-  // Firebase에서 방명록 데이터 로드
+  // Firebase 초기화 상태 확인
   useEffect(() => {
     if (!isClient) return;
+
+    // Firebase가 초기화되지 않은 경우
+    if (!db) {
+      setFirebaseError(true);
+      setLoading(false);
+      return;
+    }
 
     const loadGuestbooks = async () => {
       try {
         setLoading(true);
+        setFirebaseError(false);
         // 기존 로컬 스토리지 데이터 마이그레이션
         await migrateFromLocalStorage();
         // Firebase에서 데이터 로드
@@ -257,6 +269,7 @@ const Guestbook = () => {
         setGuestbooks(data);
       } catch (error) {
         console.error('방명록 로드 실패:', error);
+        setFirebaseError(true);
         message.error('방명록을 불러오는데 실패했습니다.');
       } finally {
         setLoading(false);
@@ -268,6 +281,11 @@ const Guestbook = () => {
 
   // 방명록 추가
   const handleAddGuestbook = async () => {
+    if (!db) {
+      message.error('Firebase가 초기화되지 않았습니다.');
+      return;
+    }
+
     try {
       setSubmitting(true);
       const values = await form.validateFields();
@@ -292,6 +310,11 @@ const Guestbook = () => {
 
   // 방명록 수정
   const handleEditGuestbook = async () => {
+    if (!db) {
+      message.error('Firebase가 초기화되지 않았습니다.');
+      return;
+    }
+
     try {
       setSubmitting(true);
       const values = await editForm.validateFields();
@@ -345,6 +368,11 @@ const Guestbook = () => {
 
   // 방명록 삭제 실행
   const handleDeleteGuestbook = async () => {
+    if (!db) {
+      message.error('Firebase가 초기화되지 않았습니다.');
+      return;
+    }
+
     try {
       setSubmitting(true);
       const values = await deleteForm.validateFields();
@@ -438,10 +466,23 @@ const Guestbook = () => {
         <Title>방명록</Title>
       </Divider>
 
+      {/* Firebase 오류 알림 */}
+      {firebaseError && (
+        <Alert
+          message="방명록 서비스 연결 오류"
+          description="Firebase 설정이 완료되지 않아 방명록 기능을 사용할 수 없습니다. 관리자에게 문의해주세요."
+          type="warning"
+          showIcon
+          icon={<ExclamationCircleOutlined />}
+          style={{ marginBottom: 16 }}
+        />
+      )}
+
       <AddButton
         icon={<PlusOutlined />}
         size="large"
         onClick={() => setIsModalVisible(true)}
+        disabled={firebaseError}
       >
         방명록 작성하기
       </AddButton>
@@ -469,6 +510,19 @@ const Guestbook = () => {
             <div style={{ marginTop: '16px', color: '#666' }}>
               방명록을 불러오는 중...
             </div>
+          </div>
+        ) : firebaseError ? (
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '40px 20px',
+              color: '#999',
+              fontSize: '0.9rem',
+            }}
+          >
+            방명록 서비스를 사용할 수 없습니다.
+            <br />
+            잠시 후 다시 시도해주세요.
           </div>
         ) : (
           <>
