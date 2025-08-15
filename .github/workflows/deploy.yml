@@ -31,8 +31,42 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Debug Environment Variables
+        run: |
+          echo "=== Environment Variables Debug ==="
+          echo "NODE_ENV: $NODE_ENV"
+          echo "VITE_FIREBASE_API_KEY exists: ${{ secrets.VITE_FIREBASE_API_KEY != '' }}"
+          echo "VITE_GROOM_NAME exists: ${{ secrets.VITE_GROOM_NAME != '' }}"
+          echo "VITE_BRIDE_NAME exists: ${{ secrets.VITE_BRIDE_NAME != '' }}"
+          echo "VITE_MASTER_PASSWORD exists: ${{ secrets.VITE_MASTER_PASSWORD != '' }}"
+          echo ""
+          echo "=== Checking if secrets are set ==="
+          if [ -n "${{ secrets.VITE_FIREBASE_API_KEY }}" ]; then
+            echo "✅ VITE_FIREBASE_API_KEY is set"
+          else
+            echo "❌ VITE_FIREBASE_API_KEY is not set"
+          fi
+          if [ -n "${{ secrets.VITE_GROOM_NAME }}" ]; then
+            echo "✅ VITE_GROOM_NAME is set"
+          else
+            echo "❌ VITE_GROOM_NAME is not set"
+          fi
+          if [ -n "${{ secrets.VITE_BRIDE_NAME }}" ]; then
+            echo "✅ VITE_BRIDE_NAME is set"
+          else
+            echo "❌ VITE_BRIDE_NAME is not set"
+          fi
+          echo "=================================="
+
       - name: Build
-        run: NODE_ENV=production npm run build
+        run: |
+          echo "=== Build Environment Check ==="
+          echo "NODE_ENV: $NODE_ENV"
+          echo "VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY:0:10}..."
+          echo "VITE_GROOM_NAME: $VITE_GROOM_NAME"
+          echo "VITE_BRIDE_NAME: $VITE_BRIDE_NAME"
+          echo "================================"
+          NODE_ENV=production npm run build
         env:
           # Firebase 설정 (클라이언트 사이드용)
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
@@ -80,3 +114,13 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: 'Deploy to GitHub Pages'
+
+      - name: Verify Build Output
+        run: |
+          echo "=== Build Output Verification ==="
+          echo "Checking if dist/index.html exists..."
+          ls -la dist/
+          echo ""
+          echo "Checking if environment variables are in the built files..."
+          grep -r "VITE_" dist/ || echo "No VITE_ variables found in build output (this is expected for security)"
+          echo "=================================="
