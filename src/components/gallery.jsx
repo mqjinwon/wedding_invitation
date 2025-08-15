@@ -245,7 +245,7 @@ const Gallery = () => {
           showIndex={false}
           showBullets={false}
           thumbnailPosition="bottom"
-          slideInterval={5000}
+          slideInterval={3000}
           slideDuration={450}
           slideOnThumbnailOver={false}
           useBrowserFullscreen={false}
