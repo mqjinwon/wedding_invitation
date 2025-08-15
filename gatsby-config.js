@@ -16,7 +16,6 @@ const pathPrefix = isProduction ? '/wedding_invitation' : '';
 
 module.exports = {
   pathPrefix,
-  assetPrefix: pathPrefix,
   siteMetadata: {
     title: `김진원 & 이연제 결혼식 청첩장`,
     description: `김진원 & 이연제의 결혼식 청첩장입니다. 2025년 11월 8일, 프란치스코 교육회관 결혼식이 열립니다.`,
