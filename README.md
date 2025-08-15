@@ -225,6 +225,39 @@ const images = [
 
 ### GitHub Pages 배포
 
+#### 1. GitHub Secrets 설정
+
+GitHub 저장소의 Settings > Secrets and variables > Actions에서 다음 환경변수들을 설정하세요:
+
+**필수 환경변수:**
+- `VITE_FIREBASE_API_KEY`: Firebase API 키
+- `VITE_FIREBASE_AUTH_DOMAIN`: Firebase Auth 도메인
+- `VITE_FIREBASE_PROJECT_ID`: Firebase 프로젝트 ID
+- `VITE_FIREBASE_STORAGE_BUCKET`: Firebase Storage 버킷
+- `VITE_FIREBASE_MESSAGING_SENDER_ID`: Firebase 메시징 발신자 ID
+- `VITE_FIREBASE_APP_ID`: Firebase 앱 ID
+- `VITE_GROOM_NAME`: 신랑 이름
+- `VITE_BRIDE_NAME`: 신부 이름
+- `VITE_MASTER_PASSWORD`: 방명록 마스터 비밀번호
+
+**선택적 환경변수:**
+- `VITE_KAKAOTALK_API_TOKEN`: 카카오톡 공유 API 토큰
+- `VITE_KAKAOTALK_SHARE_IMAGE`: 카카오톡 공유 이미지 URL
+- `VITE_WEDDING_DATE`: 결혼식 날짜
+- `VITE_WEDDING_LOCATION`: 결혼식 장소
+- `VITE_WEDDING_INVITATION_URL`: 청첩장 URL
+
+#### 2. 자동 배포
+
+```bash
+# main 브랜치에 푸시하면 자동으로 GitHub Pages에 배포됩니다
+git add .
+git commit -m "Update wedding invitation"
+git push origin main
+```
+
+#### 3. 수동 배포
+
 ```bash
 # 프로덕션 빌드 및 배포
 npm run deploy
@@ -238,6 +271,21 @@ npm run build
 
 # dist 폴더의 내용을 웹 서버에 업로드
 ```
+
+### 배포 문제 해결
+
+#### React 오류 해결
+- React Strict Mode가 비활성화되어 있어 hydration 오류가 발생하지 않습니다
+- 프로덕션 빌드에서 콘솔 로그가 제거되어 성능이 최적화됩니다
+
+#### 환경변수 문제 해결
+- GitHub Secrets에서 모든 필수 환경변수가 설정되어 있는지 확인하세요
+- 환경변수 이름이 `VITE_` 접두사로 시작하는지 확인하세요
+- GitHub Actions 로그에서 환경변수 디버깅 정보를 확인하세요
+
+#### 정적 파일 경로 문제 해결
+- 모든 정적 파일 경로가 `/wedding_invitation/` 접두사를 사용하도록 수정되었습니다
+- 이미지, 폰트, 오디오 파일 경로가 올바르게 설정되어 있습니다
 
 ## 📋 스크립트
 

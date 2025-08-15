@@ -6,6 +6,8 @@ export default defineConfig({
   plugins: [react({
     // React Strict Mode 비활성화 (프로덕션 에러 방지)
     jsxRuntime: 'automatic',
+    // Strict Mode 완전 비활성화
+    strict: false,
   })],
   
   // 기본 경로 설정 (GitHub Pages용)
