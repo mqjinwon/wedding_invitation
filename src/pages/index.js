@@ -150,6 +150,16 @@ const IndexPage = () => {
     });
   });
 
+  useEffect(() => {
+    // 매니페스트 링크가 없으면 동적으로 추가
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = '/wedding_invitation/manifest.webmanifest';
+      document.head.appendChild(manifestLink);
+    }
+  }, []);
+
   // 음악 토글 핸들러
   const handleMusicToggle = isPlaying => {
     console.log('Music toggled:', isPlaying ? 'ON' : 'OFF');

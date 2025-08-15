@@ -46,11 +46,15 @@ module.exports = {
       options: {
         name: `김진원 & 이연제 결혼식 청첩장`,
         short_name: `결혼식 청첩장`,
-        start_url: `/`,
+        start_url: `${pathPrefix}/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/icon.png`,
+        include_favicon: true,
+        legacy: true,
+        theme_color_in_head: true,
+        cache_busting_mode: 'query',
       },
     },
     {
