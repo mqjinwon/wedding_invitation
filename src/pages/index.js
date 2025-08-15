@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Layout } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
-import { withPrefix } from 'gatsby';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import '../styles/antd-override.css';
 import 'antd/dist/reset.css';
@@ -132,10 +131,6 @@ const IndexPage = () => {
     audio.addEventListener('canplay', handleCanPlay);
     audio.addEventListener('canplaythrough', handleCanPlayThrough);
     audio.addEventListener('error', handleError);
-
-    // 로딩 시작
-    console.log('Starting audio load...');
-    audio.load();
 
     return () => {
       clearTimeout(timeoutId);

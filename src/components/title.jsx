@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withPrefix } from 'gatsby';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
 import BackgroundVideo from '../assets/BackgroundVideo.mp4';
 

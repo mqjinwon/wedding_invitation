@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { withPrefix } from 'gatsby';
 import QuotePaper from '../assets/Quote.png';
 import Flower from '../assets/flower1.png';
 
