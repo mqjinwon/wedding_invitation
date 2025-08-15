@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { SoundOutlined, CustomerServiceOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { SoundOutlined, CustomerServiceOutlined } from '@ant-design/icons';
 
 const MusicControlWrapper = styled.div`
   position: fixed;
@@ -11,13 +11,13 @@ const MusicControlWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  
+
   @media screen and (max-width: 768px) {
     top: 16px;
     right: 16px;
     gap: 6px;
   }
-  
+
   @media screen and (max-width: 480px) {
     top: 12px;
     right: 12px;
@@ -40,23 +40,23 @@ const MusicButton = styled.button`
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   -webkit-tap-highlight-color: transparent;
-  
+
   &:hover {
     background: var(--music-button-hover);
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
-  
+
   &:active {
     transform: scale(0.95);
   }
-  
+
   &.playing {
     background: var(--music-button-playing);
     color: var(--music-button-playing-text);
     animation: pulse 2s infinite;
   }
-  
+
   @keyframes pulse {
     0% {
       box-shadow: 0 0 0 0 var(--light-yellow);
@@ -68,7 +68,7 @@ const MusicButton = styled.button`
       box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
     }
   }
-  
+
   @media screen and (max-width: 768px) {
     width: 44px;
     height: 44px;
@@ -76,7 +76,7 @@ const MusicButton = styled.button`
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   @media screen and (max-width: 480px) {
     width: 48px;
     height: 48px;
@@ -96,12 +96,12 @@ const MusicLabel = styled.div`
   padding: 2px 6px;
   border-radius: 8px;
   white-space: nowrap;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 9px;
     padding: 3px 8px;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 8px;
     padding: 4px 10px;
@@ -121,21 +121,18 @@ const MusicControl = ({ audioRef, onMusicToggle }) => {
       // 노래가 끝나면 처음부터 다시 재생
       audio.currentTime = 0;
       audio.play().catch(e => {
-        console.log("Music replay failed:", e);
+        console.log('Music replay failed:', e);
       });
     };
-
 
     audio.addEventListener('play', handlePlay);
     audio.addEventListener('pause', handlePause);
     audio.addEventListener('ended', handleEnded);
 
-
     return () => {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('ended', handleEnded);
-
     };
   }, [audioRef]);
 
@@ -147,10 +144,10 @@ const MusicControl = ({ audioRef, onMusicToggle }) => {
       audio.pause();
     } else {
       audio.play().catch(e => {
-        console.log("Music play failed:", e);
+        console.log('Music play failed:', e);
       });
     }
-    
+
     if (onMusicToggle) {
       onMusicToggle(!isPlaying);
     }
@@ -165,11 +162,9 @@ const MusicControl = ({ audioRef, onMusicToggle }) => {
       >
         {isPlaying ? <SoundOutlined /> : <CustomerServiceOutlined />}
       </MusicButton>
-      <MusicLabel>
-        {isPlaying ? '음악 ON' : '음악 OFF'}
-      </MusicLabel>
+      <MusicLabel>{isPlaying ? '음악 ON' : '음악 OFF'}</MusicLabel>
     </MusicControlWrapper>
   );
 };
 
-export default MusicControl; 
+export default MusicControl;

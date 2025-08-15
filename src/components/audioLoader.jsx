@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 const LoaderWrapper = styled.div`
   position: fixed;
@@ -13,19 +13,19 @@ const LoaderWrapper = styled.div`
   align-items: center;
   z-index: 9999;
   transition: opacity 0.5s ease;
-  opacity: ${props => props.$loaded ? 0 : 1};
-  pointer-events: ${props => props.$loaded ? 'none' : 'auto'};
+  opacity: ${props => (props.$loaded ? 0 : 1)};
+  pointer-events: ${props => (props.$loaded ? 'none' : 'auto')};
 `;
 
 const LoaderContent = styled.div`
   text-align: center;
   color: var(--title-color);
   padding: 20px;
-  
+
   @media screen and (max-width: 768px) {
     padding: 16px;
   }
-  
+
   @media screen and (max-width: 480px) {
     padding: 12px;
   }
@@ -41,17 +41,21 @@ const Spinner = styled.div`
   margin: 0 auto 16px;
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
-  
+
   @media screen and (max-width: 768px) {
     width: 36px;
     height: 36px;
     border-width: 2.5px;
     margin-bottom: 14px;
   }
-  
+
   @media screen and (max-width: 480px) {
     width: 32px;
     height: 32px;
@@ -63,11 +67,11 @@ const Spinner = styled.div`
 const LoadingText = styled.div`
   font-size: 1rem;
   font-weight: 500;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.9rem;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.85rem;
   }
@@ -77,12 +81,12 @@ const SubText = styled.div`
   font-size: 0.8rem;
   margin-top: 8px;
   opacity: 0.7;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.75rem;
     margin-top: 6px;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.7rem;
     margin-top: 4px;
@@ -108,14 +112,18 @@ const AudioLoader = ({ loaded, error }) => {
       <LoaderContent>
         <Spinner />
         <LoadingText>
-          {timeoutMessage ? "음악 로딩에 시간이 걸리고 있습니다..." : "음악을 준비하고 있습니다..."}
+          {timeoutMessage
+            ? '음악 로딩에 시간이 걸리고 있습니다...'
+            : '음악을 준비하고 있습니다...'}
         </LoadingText>
         <SubText>
-          {timeoutMessage ? "잠시 후 자동으로 진행됩니다" : "잠시만 기다려주세요"}
+          {timeoutMessage
+            ? '잠시 후 자동으로 진행됩니다'
+            : '잠시만 기다려주세요'}
         </SubText>
       </LoaderContent>
     </LoaderWrapper>
   );
 };
 
-export default AudioLoader; 
+export default AudioLoader;

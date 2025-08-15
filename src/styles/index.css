@@ -17,9 +17,21 @@
 }
 
 * {
-  font-family: "Noto Serif KR", serif, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family:
+    'Noto Serif KR',
+    serif,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    'Noto Sans',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
 }
 
 body {
@@ -49,33 +61,33 @@ body {
   .image-gallery {
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   .image-gallery-slide {
     overflow: hidden !important;
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   .image-gallery-slide .image-gallery-image {
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   .image-gallery-content {
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   .image-gallery-slide-wrapper {
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   .image-gallery-slides {
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   /* 갤러리 컨테이너 전체에 스크롤 허용 */
   .image-gallery * {
     touch-action: pan-y pinch-zoom !important;
   }
-  
+
   /* 더 구체적인 선택자로 우선순위 높임 */
   body .image-gallery,
   html .image-gallery,
@@ -91,25 +103,31 @@ body {
   body {
     padding: 0 12px;
   }
-  
+
   /* 모바일에서 폰트 크기 조정 */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: 1.1em;
     line-height: 1.3;
   }
-  
+
   p {
     font-size: 0.85rem;
     line-height: 1.5;
   }
-  
+
   /* 모바일에서 버튼 터치 영역 확대 */
-  button, .ant-btn {
+  button,
+  .ant-btn {
     min-height: 44px;
     min-width: 44px;
     padding: 10px 14px;
   }
-  
+
   /* 모바일에서 링크 터치 영역 확대 */
   a {
     padding: 6px 0;
@@ -169,15 +187,14 @@ body {
 
 /* 폰트 적용 */
 @font-face {
-  font-family: "mom_to_daughter";
-  src: url("../assets/fonts/mom_to_daughter.woff2") format("woff2"),
-    url("../assets/fonts/mom_to_daughter.woff") format("woff");
+  font-family: 'mom_to_daughter';
+  src:
+    url('../assets/fonts/mom_to_daughter.woff2') format('woff2'),
+    url('../assets/fonts/mom_to_daughter.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
-
-
 
 /* 모바일 특화 스타일 */
 @media screen and (max-width: 480px) {
@@ -185,21 +202,28 @@ body {
   body {
     padding: 0 8px;
   }
-  
+
   /* 더 큰 터치 영역 */
-  button, .ant-btn, [role="button"] {
+  button,
+  .ant-btn,
+  [role='button'] {
     min-height: 48px;
     min-width: 48px;
   }
-  
+
   /* 모바일에서 텍스트 줄간격 조정 */
   p {
     line-height: 1.6;
     font-size: 0.8rem;
   }
-  
+
   /* 작은 화면에서 제목 크기 조정 */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: 1em;
     line-height: 1.2;
   }

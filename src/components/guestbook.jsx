@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { 
-  Button, 
-  Input, 
-  Modal, 
-  message, 
-  Card, 
-  Divider, 
+import React, { useState, useEffect } from 'react';
+import {
+  Button,
+  Input,
+  Modal,
+  message,
+  Card,
+  Divider,
   Form,
   Typography,
-  Spin
-} from "antd";
-import { 
-  EditOutlined, 
-  DeleteOutlined, 
+  Spin,
+} from 'antd';
+import {
+  EditOutlined,
+  DeleteOutlined,
   PlusOutlined,
   UserOutlined,
   LockOutlined,
-  MessageOutlined
-} from "@ant-design/icons";
-import styled from "styled-components";
-import { 
-  addGuestbook, 
-  getGuestbooks, 
-  updateGuestbook, 
+  MessageOutlined,
+} from '@ant-design/icons';
+import styled from 'styled-components';
+import {
+  addGuestbook,
+  getGuestbooks,
+  updateGuestbook,
   deleteGuestbook,
-  migrateFromLocalStorage 
-} from "../services/guestbookService";
+  migrateFromLocalStorage,
+} from '../services/guestbookService';
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -38,13 +38,13 @@ const Wrapper = styled.div`
   text-align: center;
   padding-left: 16px;
   padding-right: 16px;
-  
+
   @media screen and (max-width: 768px) {
     padding-top: 32px;
     padding-left: 12px;
     padding-right: 12px;
   }
-  
+
   @media screen and (max-width: 480px) {
     padding-top: 24px;
     padding-left: 8px;
@@ -58,11 +58,11 @@ const Title = styled.span`
   font-weight: bold;
   opacity: 0.85;
   margin-bottom: 0;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.9rem;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.85rem;
   }
@@ -130,7 +130,7 @@ const GuestbookCard = styled(Card)`
 
   @media screen and (max-width: 768px) {
     margin-bottom: 12px;
-    
+
     .ant-card-body {
       padding: 12px;
     }
@@ -144,7 +144,7 @@ const TimeStamp = styled.div`
   font-size: 0.75rem;
   color: #999;
   opacity: 0.7;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.7rem;
     top: 8px;
@@ -203,7 +203,7 @@ const GuestName = styled.div`
   margin-bottom: 8px;
   margin-top: 24px;
   font-size: 1rem;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.9rem;
     margin-bottom: 6px;
@@ -217,7 +217,7 @@ const GuestMessage = styled.div`
   margin-top: 8px;
   white-space: pre-wrap;
   word-break: break-word;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.9rem;
     line-height: 1.5;
@@ -246,7 +246,7 @@ const Guestbook = () => {
   // Firebase에서 방명록 데이터 로드
   useEffect(() => {
     if (!isClient) return;
-    
+
     const loadGuestbooks = async () => {
       try {
         setLoading(true);
@@ -271,7 +271,7 @@ const Guestbook = () => {
     try {
       setSubmitting(true);
       const values = await form.validateFields();
-      
+
       const newGuestbook = await addGuestbook({
         name: values.name,
         password: values.password,
@@ -295,12 +295,12 @@ const Guestbook = () => {
     try {
       setSubmitting(true);
       const values = await editForm.validateFields();
-      
+
       // 슈퍼 권한 확인
       if (values.password === 'remove12345678') {
         await updateGuestbook(editingGuestbook.id, values.message);
-        const updatedGuestbooks = guestbooks.map(gb => 
-          gb.id === editingGuestbook.id 
+        const updatedGuestbooks = guestbooks.map(gb =>
+          gb.id === editingGuestbook.id
             ? { ...gb, message: values.message }
             : gb
         );
@@ -315,8 +315,8 @@ const Guestbook = () => {
       // 일반 권한 확인
       if (values.password === editingGuestbook.password) {
         await updateGuestbook(editingGuestbook.id, values.message);
-        const updatedGuestbooks = guestbooks.map(gb => 
-          gb.id === editingGuestbook.id 
+        const updatedGuestbooks = guestbooks.map(gb =>
+          gb.id === editingGuestbook.id
             ? { ...gb, message: values.message }
             : gb
         );
@@ -337,7 +337,7 @@ const Guestbook = () => {
   };
 
   // 방명록 삭제 모달 열기
-  const showDeleteModal = (guestbook) => {
+  const showDeleteModal = guestbook => {
     setDeletingGuestbook(guestbook);
     deleteForm.resetFields();
     setIsDeleteModalVisible(true);
@@ -348,11 +348,13 @@ const Guestbook = () => {
     try {
       setSubmitting(true);
       const values = await deleteForm.validateFields();
-      
+
       // 슈퍼 권한 확인
       if (values.password === 'remove12345678') {
         await deleteGuestbook(deletingGuestbook.id);
-        const updatedGuestbooks = guestbooks.filter(gb => gb.id !== deletingGuestbook.id);
+        const updatedGuestbooks = guestbooks.filter(
+          gb => gb.id !== deletingGuestbook.id
+        );
         setGuestbooks(updatedGuestbooks);
         setIsDeleteModalVisible(false);
         setDeletingGuestbook(null);
@@ -360,11 +362,13 @@ const Guestbook = () => {
         message.success('방명록이 삭제되었습니다.');
         return;
       }
-      
+
       // 일반 권한 확인
       if (values.password === deletingGuestbook.password) {
         await deleteGuestbook(deletingGuestbook.id);
-        const updatedGuestbooks = guestbooks.filter(gb => gb.id !== deletingGuestbook.id);
+        const updatedGuestbooks = guestbooks.filter(
+          gb => gb.id !== deletingGuestbook.id
+        );
         setGuestbooks(updatedGuestbooks);
         setIsDeleteModalVisible(false);
         setDeletingGuestbook(null);
@@ -382,36 +386,36 @@ const Guestbook = () => {
   };
 
   // 수정 모달 열기
-  const showEditModal = (guestbook) => {
+  const showEditModal = guestbook => {
     setEditingGuestbook(guestbook);
     editForm.setFieldsValue({
       password: '',
-      message: guestbook.message
+      message: guestbook.message,
     });
     setIsEditModalVisible(true);
   };
 
   // 날짜 포맷팅
-  const formatDate = (timestamp) => {
+  const formatDate = timestamp => {
     try {
       // timestamp가 유효한지 확인
       if (!timestamp) {
         return '날짜 없음';
       }
-      
+
       const date = new Date(timestamp);
-      
+
       // 유효하지 않은 날짜인 경우
       if (isNaN(date.getTime())) {
         return '날짜 오류';
       }
-      
+
       return date.toLocaleString('ko-KR', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       });
     } catch (error) {
       console.error('날짜 포맷팅 오류:', error);
@@ -420,11 +424,9 @@ const Guestbook = () => {
   };
 
   // 카드 클릭 시 확대/축소
-  const handleCardClick = (guestbookId) => {
+  const handleCardClick = guestbookId => {
     setExpandedCard(expandedCard === guestbookId ? null : guestbookId);
   };
-
-
 
   return (
     <Wrapper style={{ marginBottom: 16 }}>
@@ -447,20 +449,22 @@ const Guestbook = () => {
       {/* 방명록 목록 */}
       <div style={{ textAlign: 'left' }}>
         {!isClient ? (
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '40px 20px'
-          }}>
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '40px 20px',
+            }}
+          >
             <Spin size="large" />
-            <div style={{ marginTop: '16px', color: '#666' }}>
-              로딩 중...
-            </div>
+            <div style={{ marginTop: '16px', color: '#666' }}>로딩 중...</div>
           </div>
         ) : loading ? (
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '40px 20px'
-          }}>
+          <div
+            style={{
+              textAlign: 'center',
+              padding: '40px 20px',
+            }}
+          >
             <Spin size="large" />
             <div style={{ marginTop: '16px', color: '#666' }}>
               방명록을 불러오는 중...
@@ -469,49 +473,53 @@ const Guestbook = () => {
         ) : (
           <>
             {guestbooks.length > 0 && (
-              <div style={{ 
-                marginBottom: '16px',
-                padding: '0 4px'
-              }}>
+              <div
+                style={{
+                  marginBottom: '16px',
+                  padding: '0 4px',
+                }}
+              >
                 <Text style={{ color: '#666', fontSize: '0.9rem' }}>
                   총 {guestbooks.length}개의 방명록
                 </Text>
               </div>
             )}
             {guestbooks.length === 0 ? (
-              <div style={{ 
-                textAlign: 'center', 
-                padding: '40px 20px',
-                color: '#999',
-                fontSize: '0.9rem'
-              }}>
-                아직 방명록이 없습니다.<br />
-                첫 번째 방명록을 남겨보세요!
+              <div
+                style={{
+                  textAlign: 'center',
+                  padding: '40px 20px',
+                  color: '#999',
+                  fontSize: '0.9rem',
+                }}
+              >
+                아직 방명록이 없습니다.
+                <br />첫 번째 방명록을 남겨보세요!
               </div>
             ) : (
-              guestbooks.map((guestbook) => (
+              guestbooks.map(guestbook => (
                 <GuestbookCard
                   key={guestbook.id}
                   className={expandedCard === guestbook.id ? 'expanded' : ''}
                   onClick={() => handleCardClick(guestbook.id)}
                 >
                   <TimeStamp>{formatDate(guestbook.timestamp)}</TimeStamp>
-                  
+
                   <GuestName>{guestbook.name}</GuestName>
-                  
+
                   <GuestMessage>{guestbook.message}</GuestMessage>
 
                   <ActionButtons>
                     <ActionButton
                       icon={<EditOutlined />}
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation();
                         showEditModal(guestbook);
                       }}
                     />
                     <ActionButton
                       icon={<DeleteOutlined />}
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation();
                         showDeleteModal(guestbook);
                       }}
@@ -544,32 +552,32 @@ const Guestbook = () => {
             label="이름"
             rules={[{ required: true, message: '이름을 입력해주세요.' }]}
           >
-            <Input 
-              prefix={<UserOutlined />} 
+            <Input
+              prefix={<UserOutlined />}
               placeholder="이름을 입력하세요"
               maxLength={20}
             />
           </Form.Item>
-          
+
           <Form.Item
             name="password"
             label="비밀번호"
             rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
           >
-            <Input.Password 
-              prefix={<LockOutlined />} 
+            <Input.Password
+              prefix={<LockOutlined />}
               placeholder="비밀번호를 입력하세요"
               maxLength={20}
             />
           </Form.Item>
-          
+
           <Form.Item
             name="message"
             label="메시지"
             rules={[{ required: true, message: '메시지를 입력해주세요.' }]}
           >
-            <TextArea 
-              prefix={<MessageOutlined />} 
+            <TextArea
+              prefix={<MessageOutlined />}
               placeholder="축하 메시지를 남겨주세요"
               rows={4}
               maxLength={500}
@@ -600,20 +608,20 @@ const Guestbook = () => {
             label="비밀번호"
             rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
           >
-            <Input.Password 
-              prefix={<LockOutlined />} 
+            <Input.Password
+              prefix={<LockOutlined />}
               placeholder="비밀번호를 입력하세요"
               maxLength={20}
             />
           </Form.Item>
-          
+
           <Form.Item
             name="message"
             label="메시지"
             rules={[{ required: true, message: '메시지를 입력해주세요.' }]}
           >
-            <TextArea 
-              prefix={<MessageOutlined />} 
+            <TextArea
+              prefix={<MessageOutlined />}
               placeholder="수정할 메시지를 입력하세요"
               rows={4}
               maxLength={500}
@@ -640,7 +648,8 @@ const Guestbook = () => {
       >
         <div style={{ marginBottom: '16px' }}>
           <p style={{ marginBottom: '12px', color: '#666' }}>
-            <strong>{deletingGuestbook?.name}</strong>님의 방명록을 삭제하려면 비밀번호를 입력하세요.
+            <strong>{deletingGuestbook?.name}</strong>님의 방명록을 삭제하려면
+            비밀번호를 입력하세요.
           </p>
         </div>
         <Form form={deleteForm} layout="vertical">
@@ -649,8 +658,8 @@ const Guestbook = () => {
             label="비밀번호"
             rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
           >
-            <Input.Password 
-              prefix={<LockOutlined />} 
+            <Input.Password
+              prefix={<LockOutlined />}
               placeholder="비밀번호를 입력하세요"
               maxLength={20}
             />
@@ -661,4 +670,4 @@ const Guestbook = () => {
   );
 };
 
-export default Guestbook; 
+export default Guestbook;

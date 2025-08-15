@@ -31,12 +31,12 @@ Gatsby와 React를 사용하여 제작되었습니다.
 
 ```javascript
 const firebaseConfig = {
-  apiKey: "실제_API_KEY",
-  authDomain: "실제_PROJECT_ID.firebaseapp.com",
-  projectId: "실제_PROJECT_ID",
-  storageBucket: "실제_PROJECT_ID.appspot.com",
-  messagingSenderId: "실제_MESSAGING_SENDER_ID",
-  appId: "실제_APP_ID"
+  apiKey: '실제_API_KEY',
+  authDomain: '실제_PROJECT_ID.firebaseapp.com',
+  projectId: '실제_PROJECT_ID',
+  storageBucket: '실제_PROJECT_ID.appspot.com',
+  messagingSenderId: '실제_MESSAGING_SENDER_ID',
+  appId: '실제_APP_ID',
 };
 ```
 
@@ -66,27 +66,27 @@ nano .env.development
 ```
 
 ```javascript
-export const WEDDING_INVITATION_URL = "http://localhost:8000/";
-export const KAKAOTALK_API_TOKEN = "JavaScript 키 입력";
+export const WEDDING_INVITATION_URL = 'http://localhost:8000/';
+export const KAKAOTALK_API_TOKEN = '카카오톡 API 키 입력';
 export const KAKAOTALK_SHARE_IMAGE =
-  "https://cdn.pixabay.com/photo/2014/11/13/17/04/heart-529607_960_720.jpg";
+  'https://cdn.pixabay.com/photo/2014/11/13/17/04/heart-529607_960_720.jpg';
 
-export const WEDDING_DATE = "1970년 01월 01일, 목요일 오전 12시 00분";
-export const WEDDING_LOCATION = "○○○웨딩, ○층 ○○홀";
+export const WEDDING_DATE = '1970년 01월 01일, 목요일 오전 12시 00분';
+export const WEDDING_LOCATION = '○○○웨딩, ○층 ○○홀';
 
-export const GROOM_NAME = "○○○";
-export const GROOM_ACCOUNT_NUMBER = "○○은행 ***-***-******";
-export const GROOM_FATHER_NAME = "○○○";
-export const GROOM_FATHER_ACCOUNT_NUMBER = "○○은행 ***-***-******";
-export const GROOM_MOTHER_NAME = "○○○";
-export const GROOM_MOTHER_ACCOUNT_NUMBER = "○○은행 ***-***-******";
+export const GROOM_NAME = '○○○';
+export const GROOM_ACCOUNT_NUMBER = '○○은행 ***-***-******';
+export const GROOM_FATHER_NAME = '○○○';
+export const GROOM_FATHER_ACCOUNT_NUMBER = '○○은행 ***-***-******';
+export const GROOM_MOTHER_NAME = '○○○';
+export const GROOM_MOTHER_ACCOUNT_NUMBER = '○○은행 ***-***-******';
 
-export const BRIDE_NAME = "○○○";
-export const BRIDE_ACCOUNT_NUMBER = "○○은행 ***-***-******";
-export const BRIDE_FATHER_NAME = "○○○";
-export const BRIDE_FATHER_ACCOUNT_NUMBER = "○○은행 ***-***-******";
-export const BRIDE_MOTHER_NAME = "○○○";
-export const BRIDE_MOTHER_ACCOUNT_NUMBER = "○○은행 ***-***-******";
+export const BRIDE_NAME = '○○○';
+export const BRIDE_ACCOUNT_NUMBER = '○○은행 ***-***-******';
+export const BRIDE_FATHER_NAME = '○○○';
+export const BRIDE_FATHER_ACCOUNT_NUMBER = '○○은행 ***-***-******';
+export const BRIDE_MOTHER_NAME = '○○○';
+export const BRIDE_MOTHER_ACCOUNT_NUMBER = '○○은행 ***-***-******';
 ```
 
 ## 🗺️ 카카오 지도 설정
@@ -100,7 +100,7 @@ export const BRIDE_MOTHER_ACCOUNT_NUMBER = "○○은행 ***-***-******";
 //  4. `timestamp,key` 위의 코드에 알맞게 입력
 
 const executeScript = () => {
-  const scriptTag = document.createElement("script");
+  const scriptTag = document.createElement('script');
   const inlineScript = document.createTextNode(`new daum.roughmap.Lander({
     "timestamp" : "1652464367301",
     "key" : "2a8fe",

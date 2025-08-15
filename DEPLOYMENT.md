@@ -73,12 +73,14 @@ firebase deploy
 ## 🔧 환경별 설정
 
 ### 개발 환경
+
 ```bash
 npm start
 # http://localhost:8001
 ```
 
 ### 프로덕션 환경
+
 ```bash
 npm run build
 npm run serve
@@ -94,6 +96,7 @@ npm run serve
 ## 🔒 보안 설정
 
 ### Firebase Firestore 규칙
+
 ```javascript
 rules_version = '2';
 service cloud.firestore {
@@ -115,6 +118,7 @@ service cloud.firestore {
 ## 🚨 문제 해결
 
 ### 빌드 오류
+
 ```bash
 # 캐시 정리
 npm run clean
@@ -125,6 +129,7 @@ npm install
 ```
 
 ### 배포 후 문제
+
 1. Firebase 설정 확인
 2. 환경 변수 확인
 3. 브라우저 캐시 삭제
@@ -132,9 +137,10 @@ npm install
 ## 📞 지원
 
 배포 관련 문제가 발생하면:
+
 1. 브라우저 개발자 도구 확인
 2. Firebase 콘솔 확인
-3. 배포 플랫폼 로그 확인 
+3. 배포 플랫폼 로그 확인
 
 # GitHub Pages 배포 가이드
 
@@ -147,6 +153,7 @@ npm install
 ### 해결 방법
 
 #### 방법 1: Repository를 Public으로 변경 (가장 간단)
+
 1. GitHub 저장소 페이지에서 **Settings** 클릭
 2. 페이지 맨 아래로 스크롤
 3. **Danger Zone**에서 **Change repository visibility**
@@ -156,6 +163,7 @@ npm install
 #### 방법 2: 다른 배포 플랫폼 사용 (Private 유지)
 
 ##### Netlify 배포 (권장)
+
 1. [netlify.com](https://netlify.com)에서 계정 생성
 2. **New site from Git** 클릭
 3. GitHub 저장소 연결
@@ -165,6 +173,7 @@ npm install
 5. **Deploy site** 클릭
 
 ##### Vercel 배포
+
 1. [vercel.com](https://vercel.com)에서 계정 생성
 2. **New Project** 클릭
 3. GitHub 저장소 연결
@@ -174,6 +183,7 @@ npm install
 ### 1. GitHub 설정 (Public repository인 경우)
 
 #### 1.1 GitHub Pages 활성화
+
 1. GitHub 저장소 페이지에서 `Settings` 탭 클릭
 2. 왼쪽 메뉴에서 `Pages` 클릭
 3. `Source` 섹션에서 `Deploy from a branch` 선택
@@ -182,6 +192,7 @@ npm install
 6. `Save` 클릭
 
 #### 1.2 Personal Access Token 생성
+
 1. GitHub.com → Settings → Developer settings → Personal access tokens → Tokens (classic)
 2. `Generate new token (classic)` 클릭
 3. 권한 설정: `repo` (전체 repository 접근 권한) 체크
@@ -192,11 +203,13 @@ npm install
 #### 방법 1: 수동 배포 (deploy.sh 스크립트 사용)
 
 1. 환경변수 설정:
+
 ```bash
 export GITHUB_TOKEN=your_token_here
 ```
 
 2. 스크립트 실행:
+
 ```bash
 ./deploy.sh
 ```
@@ -204,6 +217,7 @@ export GITHUB_TOKEN=your_token_here
 #### 방법 2: npm 스크립트 사용
 
 1. 환경변수 설정 후 실행:
+
 ```bash
 export GITHUB_TOKEN=your_token_here
 npm run deploy
@@ -217,6 +231,7 @@ npm run deploy
 ### 3. 배포 확인
 
 배포가 완료되면 다음 URL에서 사이트를 확인할 수 있습니다:
+
 ```
 https://[your-username].github.io/[repository-name]/
 ```
@@ -224,15 +239,18 @@ https://[your-username].github.io/[repository-name]/
 ### 4. 문제 해결
 
 #### 빌드 실패
+
 - Node.js 버전 확인 (18.x 이상 권장)
 - 의존성 설치 확인: `npm install`
 
 #### 배포 실패
+
 - Personal Access Token 권한 확인
 - GitHub Pages 설정 확인
 - gh-pages 브랜치가 생성되었는지 확인
 
 #### 사이트가 보이지 않음
+
 - GitHub Pages 설정에서 올바른 브랜치가 선택되었는지 확인
 - 배포 후 몇 분 기다린 후 다시 확인
 
@@ -244,6 +262,7 @@ Public repository로 변경하기 전에 다음 GitHub Secrets를 설정해야 �
 2. **New repository secret** 클릭하여 다음 값들을 추가:
 
 #### Firebase 설정
+
 - `FIREBASE_API_KEY`: [your-firebase-api-key]
 - `FIREBASE_AUTH_DOMAIN`: [your-project-id].firebaseapp.com
 - `FIREBASE_PROJECT_ID`: [your-project-id]
@@ -252,14 +271,17 @@ Public repository로 변경하기 전에 다음 GitHub Secrets를 설정해야 �
 - `FIREBASE_APP_ID`: [your-app-id]
 
 #### 카카오톡 API
+
 - `KAKAOTALK_API_TOKEN`: [your-kakao-api-token]
 
 #### 결혼식 정보
+
 - `WEDDING_INVITATION_URL`: https://[your-username].github.io/[repository-name]/
 - `WEDDING_DATE`: [결혼식 날짜]
 - `WEDDING_LOCATION`: [결혼식 장소]
 
 #### 신랑 정보
+
 - `GROOM_NAME`: [신랑 이름]
 - `GROOM_ACCOUNT_NUMBER`: [신랑 계좌번호]
 - `GROOM_FATHER_NAME`: [신랑 아버지 이름]
@@ -268,6 +290,7 @@ Public repository로 변경하기 전에 다음 GitHub Secrets를 설정해야 �
 - `GROOM_MOTHER_ACCOUNT_NUMBER`: [신랑 어머니 계좌번호]
 
 #### 신부 정보
+
 - `BRIDE_NAME`: [신부 이름]
 - `BRIDE_ACCOUNT_NUMBER`: [신부 계좌번호]
 - `BRIDE_FATHER_NAME`: [신부 아버지 이름]
@@ -278,16 +301,19 @@ Public repository로 변경하기 전에 다음 GitHub Secrets를 설정해야 �
 ### 6. 로컬 개발 환경변수 설정
 
 #### 환경변수 파일 구조
+
 - `.env`: 기본 환경변수 (모든 환경에서 공통)
 - `.env.development`: 개발 환경 전용 변수
 - `.env.production`: 프로덕션 환경 전용 변수
 
 #### 환경변수 확인
+
 ```bash
 npm run check-env
 ```
 
 #### 환경변수 파일 생성
+
 ```bash
 # 개발 환경
 cp env.example .env.development
@@ -302,4 +328,4 @@ cp env.example .env.production
 - `.env` 파일이 `.gitignore`에 포함되어 있는지 확인하세요
 - 토큰을 안전한 곳에 백업해두세요
 - GitHub Secrets에 설정한 값들은 절대 공개하지 마세요
-- `.env` 파일은 절대 Git에 커밋하지 마세요 
+- `.env` 파일은 절대 Git에 커밋하지 마세요

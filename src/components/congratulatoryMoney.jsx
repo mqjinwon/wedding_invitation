@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Button, Divider, message, Modal } from "antd";
-import { CheckCircleTwoTone } from "@ant-design/icons";
-import styled from "styled-components";
-import CopyToClipboard from "react-copy-to-clipboard";
-import Flower from "../assets/flower3.png";
-import { useEnvironmentVariables } from "../hooks/useEnvironmentVariables";
+import React, { useState } from 'react';
+import { Button, Divider, message, Modal } from 'antd';
+import { CheckCircleTwoTone } from '@ant-design/icons';
+import styled from 'styled-components';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import Flower from '../assets/flower3.png';
+import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
 
 const Wrapper = styled.div`
   padding-top: 42px;
@@ -15,13 +15,13 @@ const Wrapper = styled.div`
   text-align: center;
   padding-left: 16px;
   padding-right: 16px;
-  
+
   @media screen and (max-width: 768px) {
     padding-top: 32px;
     padding-left: 12px;
     padding-right: 12px;
   }
-  
+
   @media screen and (max-width: 480px) {
     padding-top: 24px;
     padding-left: 8px;
@@ -35,11 +35,11 @@ const Title = styled.p`
   font-weight: bold;
   opacity: 0.85;
   margin-bottom: 0;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.9rem;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.85rem;
   }
@@ -50,13 +50,13 @@ const Content = styled.p`
   line-height: 1.75;
   opacity: 0.75;
   margin-bottom: 42px;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
     line-height: 1.8;
     margin-bottom: 32px;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.75rem;
     line-height: 1.9;
@@ -69,13 +69,13 @@ const SubContent = styled.p`
   line-height: 1.75;
   opacity: 0.75;
   margin-bottom: 42px;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
     line-height: 1.8;
     margin-bottom: 32px;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.75rem;
     line-height: 1.9;
@@ -88,12 +88,12 @@ const Description = styled.p`
   line-height: 1.75;
   opacity: 0.65;
   margin-top: 8px;
-  
+
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
     line-height: 1.8;
   }
-  
+
   @media screen and (max-width: 480px) {
     font-size: 0.75rem;
     line-height: 1.9;
@@ -107,13 +107,13 @@ const ButtonWrap = styled.div`
   justify-content: center;
   text-align: center;
   gap: 16px;
-  
+
   @media screen and (max-width: 768px) {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 2.5rem;
   }
-  
+
   @media screen and (max-width: 480px) {
     gap: 8px;
     margin-bottom: 2rem;
@@ -121,36 +121,36 @@ const ButtonWrap = styled.div`
 `;
 
 const ContactButton = styled.div`
-    width: 10.75rem;
-    border: 1px solid var(--light-green);
-    padding: 2.188rem 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 8px;
-    min-height: 44px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 10.75rem;
+  border: 1px solid var(--light-green);
+  padding: 2.188rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    &:hover {
-        background-color: rgba(239, 221, 222, 0.1);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+  &:hover {
+    background-color: rgba(239, 221, 222, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
-    @media screen and (max-width: 768px) {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-        padding: 1.5rem 0;
-        min-height: 48px;
-    }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    min-height: 48px;
+  }
 
-    @media screen and (max-width: 480px) {
-        padding: 1.25rem 0;
-        min-height: 52px;
-    }
+  @media screen and (max-width: 480px) {
+    padding: 1.25rem 0;
+    min-height: 52px;
+  }
 `;
 
 const Image = styled.img`
@@ -158,12 +158,12 @@ const Image = styled.img`
   margin: 0 auto;
   width: 1.375rem;
   padding-bottom: 42px;
-  
+
   @media screen and (max-width: 768px) {
     width: 1.2rem;
     padding-bottom: 32px;
   }
-  
+
   @media screen and (max-width: 480px) {
     width: 1.1rem;
     padding-bottom: 24px;
@@ -174,36 +174,36 @@ const StyledModal = styled(Modal)`
   .ant-modal-content {
     border-radius: 12px;
   }
-  
+
   .ant-modal-header {
     border-radius: 12px 12px 0 0;
   }
-  
+
   @media screen and (max-width: 768px) {
     .ant-modal {
       margin: 16px;
       max-width: calc(100vw - 32px);
     }
-    
+
     .ant-modal-content {
       border-radius: 8px;
     }
-    
+
     .ant-modal-header {
       border-radius: 8px 8px 0 0;
     }
   }
-  
+
   @media screen and (max-width: 480px) {
     .ant-modal {
       margin: 8px;
       max-width: calc(100vw - 16px);
     }
-    
+
     .ant-modal-content {
       border-radius: 6px;
     }
-    
+
     .ant-modal-header {
       border-radius: 6px 6px 0 0;
     }
@@ -279,7 +279,7 @@ const CongratulatoryMoney = () => {
             <Button
               type="text"
               style={{ padding: 0, margin: 0 }}
-              onClick={() => message.success("계좌번호가 복사되었습니다.")}
+              onClick={() => message.success('계좌번호가 복사되었습니다.')}
             >
               {GROOM_FATHER_ACCOUNT_NUMBER}
             </Button>
@@ -292,7 +292,7 @@ const CongratulatoryMoney = () => {
             <Button
               type="text"
               style={{ padding: 0, margin: 0 }}
-              onClick={() => message.success("계좌번호가 복사되었습니다.")}
+              onClick={() => message.success('계좌번호가 복사되었습니다.')}
             >
               {GROOM_MOTHER_ACCOUNT_NUMBER}
             </Button>
@@ -305,7 +305,7 @@ const CongratulatoryMoney = () => {
             <Button
               type="text"
               style={{ padding: 0, margin: 0 }}
-              onClick={() => message.success("계좌번호가 복사되었습니다.")}
+              onClick={() => message.success('계좌번호가 복사되었습니다.')}
             >
               {GROOM_ACCOUNT_NUMBER}
             </Button>
@@ -356,7 +356,7 @@ const CongratulatoryMoney = () => {
             <Button
               type="text"
               style={{ padding: 0, margin: 0 }}
-              onClick={() => message.success("계좌번호가 복사되었습니다.")}
+              onClick={() => message.success('계좌번호가 복사되었습니다.')}
             >
               {BRIDE_ACCOUNT_NUMBER}
             </Button>

@@ -19,8 +19,11 @@
   "dependencies": {
     "antd": "^5.0.0",
     "aos": "^2.3.4",
+    "dotenv": "^16.3.1",
     "firebase": "^12.0.0",
     "gatsby": "^5.14.5",
+    "gatsby-plugin-manifest": "^5.14.0",
+    "gatsby-plugin-offline": "^6.14.0",
     "gatsby-plugin-styled-components": "^6.14.0",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
@@ -29,6 +32,7 @@
     "styled-components": "^6.1.0"
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "gatsby-cli": "^5.14.0"
   }
 }

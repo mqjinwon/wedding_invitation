@@ -50,4 +50,4 @@ gh secret list --repo mqjinwon/wedding_invitation
 
 - Secrets는 한 번 설정하면 값을 다시 볼 수 없습니다
 - 값을 변경하려면 기존 Secret을 삭제하고 새로 생성해야 합니다
-- Secrets는 GitHub Actions에서만 사용되며, 로컬 개발에는 영향을 주지 않습니다 
+- Secrets는 GitHub Actions에서만 사용되며, 로컬 개발에는 영향을 주지 않습니다

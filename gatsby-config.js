@@ -11,43 +11,44 @@ if (!process.env.NODE_ENV) {
 }
 
 module.exports = {
-    pathPrefix: `/wedding_invitation`,
-    siteMetadata: {
-        title: `[신랑 이름] & [신부 이름] 결혼식 청첩장`,
-        description: `[신랑 이름] & [신부 이름]의 결혼식 청첩장입니다. [결혼식 날짜], [결혼식 장소]에서 열립니다.`,
-        author: `[신랑 이름] & [신부 이름]`,
-        siteUrl: `https://[your-username].github.io/wedding_invitation`,
-        keywords: `결혼, 청첩장, [신랑 이름], [신부 이름], [결혼식 장소]`,
-        lang: `ko`,
+  pathPrefix:
+    process.env.NODE_ENV === 'production' ? `/wedding_invitation` : '',
+  siteMetadata: {
+    title: `김진원 & 이연제 결혼식 청첩장`,
+    description: `김진원 & 이연제의 결혼식 청첩장입니다. 2025년 11월 8일, 프란치스코 교육회관 결혼식이 열립니다.`,
+    author: `김진원 & 이연제`,
+    siteUrl: `https://mqjinwon.github.io/wedding_invitation`,
+    keywords: `결혼, 청첩장, 김진원, 이연제, 프란치스코 교육회관`,
+    lang: `ko`,
+  },
+  plugins: [
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        displayName: true,
+        fileName: false,
+        pure: true,
+        minify: true,
+        transpileTemplateLiterals: true,
+      },
     },
-    plugins: [
-        {
-            resolve: `gatsby-plugin-styled-components`,
-            options: {
-                displayName: true,
-                fileName: false,
-                pure: true,
-                minify: true,
-                transpileTemplateLiterals: true,
-            },
-        },
-        {
-            resolve: `gatsby-plugin-manifest`,
-            options: {
-                name: `[신랑 이름] & [신부 이름] 결혼식 청첩장`,
-                short_name: `결혼식 청첩장`,
-                start_url: `/`,
-                background_color: `#ffffff`,
-                theme_color: `#663399`,
-                display: `minimal-ui`,
-                icon: `src/images/gatsby-icon.png`,
-            },
-        },
-        {
-            resolve: `gatsby-plugin-offline`,
-            options: {
-                precachePages: [`/`],
-            },
-        },
-    ],
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `[신랑 이름] & [신부 이름] 결혼식 청첩장`,
+        short_name: `결혼식 청첩장`,
+        start_url: `/`,
+        background_color: `#ffffff`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `src/images/icon.png`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/`],
+      },
+    },
+  ],
 };
