@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
-import BackgroundVideo from '../assets/BackgroundVideo.mp4';
+const BackgroundVideo = import.meta.env.BASE_URL + 'BackgroundVideo.mp4';
 
 const Layout = styled.div`
   width: 100%;

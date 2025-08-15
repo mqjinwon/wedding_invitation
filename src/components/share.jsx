@@ -158,10 +158,6 @@ const Share = () => {
   }, []);
 
   const createKakaoButton = () => {
-    console.log('카카오톡 공유 버튼 클릭됨');
-    console.log('API 토큰:', KAKAOTALK_API_TOKEN ? '설정됨' : '설정되지 않음');
-    console.log('카카오 SDK:', window.Kakao ? '로드됨' : '로드되지 않음');
-    
     // API 토큰 확인
     if (!KAKAOTALK_API_TOKEN) {
       console.warn('카카오톡 API 토큰이 설정되지 않았습니다.');
@@ -177,21 +173,14 @@ const Share = () => {
       if (!kakao.isInitialized()) {
         try {
           kakao.init(KAKAOTALK_API_TOKEN);
-          console.log('카카오톡 SDK 초기화 성공');
         } catch (error) {
           console.error('카카오톡 SDK 초기화 실패:', error);
           message.error('카카오톡 공유 기능을 초기화할 수 없습니다.');
           return;
         }
-      } else {
-        console.log('카카오톡 SDK 이미 초기화됨');
       }
 
       try {
-        console.log('카카오톡 공유 버튼 생성 시작');
-        console.log('공유 이미지 URL:', KAKAOTALK_SHARE_IMAGE);
-        console.log('현재 URL:', window.location.href);
-        
         kakao.Link.createDefaultButton({
           objectType: 'feed',
           container: '#sendKakao',
@@ -216,16 +205,12 @@ const Share = () => {
           installTalk: true,
         });
 
-        console.log('카카오톡 공유 버튼 생성 완료');
-        
         setTimeout(() => {
           const button = document.getElementById('sendKakao');
-          console.log('공유 버튼 요소:', button);
           if (button) {
             button.click();
             message.success('카카오톡으로 청첩장을 공유합니다!');
           } else {
-            console.error('공유 버튼을 찾을 수 없습니다.');
             message.error('공유 버튼을 찾을 수 없습니다.');
           }
         }, 100);

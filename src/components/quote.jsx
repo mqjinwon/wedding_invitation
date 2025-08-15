@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import QuotePaper from '../assets/Quote.png';
-import Flower from '../assets/flower1.png';
+const QuotePaper = import.meta.env.BASE_URL + 'Quote.png';
+const Flower = import.meta.env.BASE_URL + 'flower1.png';
 
 const Wrapper = styled.div`
   padding-top: 42px;

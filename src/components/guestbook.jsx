@@ -25,10 +25,6 @@ import {
   addGuestbook,
   getGuestbooks,
 } from '../services/guestbookService';
-import {
-  addGuestbookClient,
-  getGuestbooksClient,
-} from '../services/guestbookClientService';
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -249,11 +245,7 @@ const Guestbook = () => {
         setLoading(true);
         setApiError(false);
         
-        // 개발 환경에서는 클라이언트 SDK 사용, 프로덕션에서는 서버리스 함수 사용
-        const isDevelopment = process.env.NODE_ENV === 'development';
-        const result = isDevelopment 
-          ? await getGuestbooksClient()
-          : await getGuestbooks();
+        const result = await getGuestbooks();
           
         setGuestbooks(result.data || []);
       } catch (error) {
@@ -274,19 +266,11 @@ const Guestbook = () => {
       setSubmitting(true);
       const values = await form.validateFields();
 
-      // 개발 환경에서는 클라이언트 SDK 사용, 프로덕션에서는 서버리스 함수 사용
-      const isDevelopment = process.env.NODE_ENV === 'development';
-      const result = isDevelopment 
-        ? await addGuestbookClient({
-            name: values.name,
-            message: values.message,
-            relationship: values.relationship || '',
-          })
-        : await addGuestbook({
-            name: values.name,
-            message: values.message,
-            relationship: values.relationship || '',
-          });
+      const result = await addGuestbook({
+        name: values.name,
+        message: values.message,
+        relationship: values.relationship || '',
+      });
 
       if (result.success) {
         // 새 방명록을 목록에 추가

@@ -3,7 +3,7 @@ import { Button, Divider, message, Modal } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import styled from 'styled-components';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import Flower from '../assets/flower3.png';
+const Flower = import.meta.env.BASE_URL + 'flower3.png';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
 
 const Wrapper = styled.div`

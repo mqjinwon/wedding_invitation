@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import ImageGallery from 'react-image-gallery';
 import { Divider } from 'antd';
 import styled from 'styled-components';
-import image1 from '../assets/images/1.webp';
-import image2 from '../assets/images/2.webp';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 const Wrapper = styled.div`
   padding-top: 42px;
@@ -55,6 +54,9 @@ const StyledImageGallery = styled.div`
 
   .image-gallery-image {
     border-radius: 8px;
+    object-fit: cover;
+    width: 100%;
+    height: 400px;
   }
 
   .image-gallery-thumbnail {
@@ -64,6 +66,31 @@ const StyledImageGallery = styled.div`
 
   .image-gallery-thumbnail-image {
     border-radius: 4px;
+    object-fit: cover;
+    width: 100%;
+    height: 60px;
+  }
+
+  .image-gallery-thumbnails-wrapper {
+    margin-top: 10px;
+  }
+
+  .image-gallery-thumbnails {
+    padding: 5px 0;
+  }
+
+  .image-gallery-thumbnail {
+    margin: 0 5px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .image-gallery-thumbnail.active {
+    border-color: var(--medium-green);
+  }
+
+  .image-gallery-thumbnail:hover {
+    border-color: var(--light-green);
   }
 
   /* 모바일에서 터치 동작 개선 */
@@ -81,6 +108,7 @@ const StyledImageGallery = styled.div`
     .image-gallery-image {
       border-radius: 6px;
       touch-action: pan-y pinch-zoom !important;
+      height: 300px;
     }
 
     .image-gallery-content {
@@ -97,10 +125,12 @@ const StyledImageGallery = styled.div`
 
     .image-gallery-thumbnail {
       border-radius: 3px;
+      margin: 0 3px;
     }
 
     .image-gallery-thumbnail-image {
       border-radius: 3px;
+      height: 50px;
     }
 
     /* 갤러리 내부 모든 요소에 스크롤 허용 */
@@ -110,57 +140,38 @@ const StyledImageGallery = styled.div`
   }
 
   @media screen and (max-width: 480px) {
-    .image-gallery {
-      touch-action: pan-y pinch-zoom !important;
-    }
-
     .image-gallery-slide {
       border-radius: 4px;
-      overflow: hidden !important;
-      touch-action: pan-y pinch-zoom !important;
     }
 
     .image-gallery-image {
       border-radius: 4px;
-      touch-action: pan-y pinch-zoom !important;
-    }
-
-    .image-gallery-content {
-      touch-action: pan-y pinch-zoom !important;
-    }
-
-    .image-gallery-slide-wrapper {
-      touch-action: pan-y pinch-zoom !important;
-    }
-
-    .image-gallery-slides {
-      touch-action: pan-y pinch-zoom !important;
+      height: 250px;
     }
 
     .image-gallery-thumbnail {
       border-radius: 2px;
+      margin: 0 2px;
     }
 
     .image-gallery-thumbnail-image {
       border-radius: 2px;
-    }
-
-    /* 갤러리 내부 모든 요소에 스크롤 허용 */
-    .image-gallery * {
-      touch-action: pan-y pinch-zoom !important;
+      height: 40px;
     }
   }
 `;
 
-// 이미지 배열 직접 정의
+// 이미지 배열 정의 (public 폴더 기준)
 const images = [
   {
-    original: image1,
-    thumbnail: image1,
+    original: import.meta.env.BASE_URL + 'images/1.webp',
+    thumbnail: import.meta.env.BASE_URL + 'images/1.webp',
+    description: '우리의 아름다운 순간 1',
   },
   {
-    original: image2,
-    thumbnail: image2,
+    original: import.meta.env.BASE_URL + 'images/2.webp',
+    thumbnail: import.meta.env.BASE_URL + 'images/2.webp',
+    description: '우리의 아름다운 순간 2',
   },
 ];
 
@@ -201,20 +212,25 @@ const Gallery = () => {
       </Divider>
       <StyledImageGallery style={galleryStyle}>
         <ImageGallery
-          showPlayButton={false}
-          showFullscreenButton={false}
           items={images}
+          showPlayButton={false}
+          showFullscreenButton={true}
           showThumbnails={true}
           showNav={true}
           showIndex={true}
-          slideInterval={3000}
-          slideOnThumbnailOver={true}
-          useBrowserFullscreen={false}
           showBullets={true}
+          thumbnailPosition="bottom"
+          slideInterval={5000}
+          slideDuration={450}
+          slideOnThumbnailOver={false}
+          useBrowserFullscreen={false}
           disableSwipe={false}
           enableSwipe={true}
           enableTouchDrag={true}
           enableMouseDrag={true}
+          lazyLoad={true}
+          infinite={true}
+          startIndex={0}
         />
       </StyledImageGallery>
     </Wrapper>

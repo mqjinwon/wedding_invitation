@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Divider } from 'antd';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
-import Flower from '../assets/flower1.png';
+const Flower = import.meta.env.BASE_URL + 'flower1.png';
 
 const Wrapper = styled.div`
   padding-top: 42px;
