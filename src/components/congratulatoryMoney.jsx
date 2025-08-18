@@ -109,12 +109,13 @@ const ButtonWrap = styled.div`
   gap: 16px;
 
   @media screen and (max-width: 768px) {
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
     margin-bottom: 2.5rem;
   }
 
   @media screen and (max-width: 480px) {
+    flex-direction: row;
     gap: 8px;
     margin-bottom: 2rem;
   }
@@ -122,7 +123,7 @@ const ButtonWrap = styled.div`
 
 const ContactButton = styled.div`
   width: 10.75rem;
-  border: 1px solid var(--light-green);
+  border: 1px solid var(--gray);
   padding: 2.188rem 0;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -140,14 +141,13 @@ const ContactButton = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
+    width: calc(50% - 6px);
     padding: 1.5rem 0;
     min-height: 48px;
   }
 
   @media screen and (max-width: 480px) {
+    width: calc(50% - 4px);
     padding: 1.25rem 0;
     min-height: 52px;
   }

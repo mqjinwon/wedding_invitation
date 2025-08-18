@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 480px) {
-    background-size: 30px auto;
+    background-size: 5px auto;
   }
 `;
 
@@ -200,7 +200,7 @@ const App = () => {
   return (
     <Wrapper>
       <GlobalFontStyle />
-      <AudioLoader loaded={audioLoaded} error={audioError} />
+      {/* <AudioLoader loaded={audioLoaded} error={audioError} /> */}
       <MusicControl audioRef={audioRef} onMusicToggle={handleMusicToggle} />
       <audio
         ref={audioRef}
@@ -226,7 +226,7 @@ const App = () => {
       <Greeting />
       <Gallery />
       <Location />
-      <Quote />
+      {/* <Quote /> */}
       <CongratulatoryMoney />
       <Share />
       <Guestbook />
@@ -238,7 +238,13 @@ const App = () => {
           color: 'var(--dark-green)',
         }}
       >
-        <div style={{ marginBottom: '8px', color: 'var(--background-color)' }}>
+        <div
+          style={{
+            fontSize: '0.8rem',
+            marginBottom: '4px',
+            color: 'var(--background-color)',
+          }}
+        >
           Copyright © 2025 Jinwon Kim & Yeonje Lee
         </div>
         <div

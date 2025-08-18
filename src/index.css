@@ -4,9 +4,10 @@
   --light-green: #b6d3c2;
   --white: #fff;
   --black: #000;
+  --gray: #808080;
   --yellow: gold;
   --light-yellow: #fcf07e;
-  --title-color: var(--dark-green);
+  --title-color: var(--black);
   --text-color: var(--black);
   --background-color: var(--white);
   --music-button-bg: var(--dark-green);

@@ -105,7 +105,7 @@ const StyledImageGallery = styled.div`
   /* 모바일에서 터치 동작 개선 */
   @media screen and (max-width: 768px) {
     .image-gallery {
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
       border-radius: 6px;
       padding: 8px;
     }
@@ -113,27 +113,26 @@ const StyledImageGallery = styled.div`
     .image-gallery-slide {
       border-radius: 6px;
       overflow: hidden !important;
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
     }
 
     .image-gallery-image {
-
       border-radius: 8px;
       object-fit: cover;
       width: 100%;
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
     }
 
     .image-gallery-content {
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
     }
 
     .image-gallery-slide-wrapper {
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
     }
 
     .image-gallery-slides {
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
     }
 
     .image-gallery-thumbnails-wrapper {
@@ -152,9 +151,9 @@ const StyledImageGallery = styled.div`
       object-fit: cover;
     }
 
-    /* 갤러리 내부 모든 요소에 좌우 스와이프만 허용 */
+    /* 갤러리 내부 모든 요소에 좌우/상하 스와이프 허용 */
     .image-gallery * {
-      touch-action: pan-x pinch-zoom !important;
+      touch-action: pan-x pan-y pinch-zoom !important;
     }
   }
 
@@ -204,9 +203,9 @@ const Gallery = () => {
   // 디버깅을 위한 콘솔 로그
   console.log('Images loaded:', images);
 
-  // 모바일에서 좌우 스와이프만 허용하고 위아래는 전체 스크롤에 위임
+  // 모바일에서 좌우/상하 스와이프 허용
   const galleryStyle = {
-    touchAction: 'pan-x pinch-zoom',
+    touchAction: 'pan-x pan-y pinch-zoom',
     WebkitOverflowScrolling: 'touch',
   };
 
@@ -217,7 +216,7 @@ const Gallery = () => {
         '.image-gallery, .image-gallery *'
       );
       galleryElements.forEach(element => {
-        element.style.touchAction = 'pan-x pinch-zoom';
+        element.style.touchAction = 'pan-x pan-y pinch-zoom';
       });
     };
 

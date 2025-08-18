@@ -158,11 +158,11 @@ const MusicControl = ({ audioRef, onMusicToggle }) => {
       <MusicButton
         onClick={handleMusicToggle}
         className={isPlaying ? 'playing' : ''}
-        title={isPlaying ? '음악 끄기' : '음악 켜기'}
+        title={isPlaying ? '음악 켜기' : '음악 끄기'}
       >
         {isPlaying ? <SoundOutlined /> : <CustomerServiceOutlined />}
       </MusicButton>
-      <MusicLabel>{isPlaying ? '음악 ON' : '음악 OFF'}</MusicLabel>
+      <MusicLabel>{isPlaying ? '음악 OFF' : '음악 ON'}</MusicLabel>
     </MusicControlWrapper>
   );
 };

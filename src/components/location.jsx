@@ -85,6 +85,12 @@ const Content = styled.div`
 const Map = styled.div`
   width: 100%;
   padding: 0;
+  pointer-events: none;
+  max-height: 400px;
+
+  & > * {
+    pointer-events: auto;
+  }
 
   @media screen and (max-width: 768px) {
     margin: 0 -12px;
