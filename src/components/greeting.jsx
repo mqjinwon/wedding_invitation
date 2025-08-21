@@ -130,10 +130,13 @@ const Greeting = () => {
           {GROOM_NAME}
         </span>
         <br />
+        <br />
         {BRIDE_FATHER_NAME} · {BRIDE_MOTHER_NAME}의 딸{' '}
         <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
           {BRIDE_NAME}
         </span>
+        <br />
+        <br />
       </GroomBride>
     </Wrapper>
   );

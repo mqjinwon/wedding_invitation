@@ -57,16 +57,16 @@ const VideoBackground = styled.video`
 const WeddingInvitation = styled.p`
   font-size: 0.825rem;
   opacity: 0.45;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
 
   @media screen and (max-width: 768px) {
     font-size: 0.75rem;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
 
   @media screen and (max-width: 480px) {
     font-size: 0.7rem;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -114,7 +114,7 @@ const Title = () => {
       <TitleWrapper>
         <WeddingInvitation>WEDDING INVITATION</WeddingInvitation>
         <GroomBride>
-          {GROOM_NAME} &#38; {BRIDE_NAME}
+          김진원 &#38; 이연제
         </GroomBride>
         <Schedule>
           {WEDDING_DATE}

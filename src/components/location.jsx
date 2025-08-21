@@ -222,8 +222,6 @@ const Location = () => {
         className="root_daum_roughmap root_daum_roughmap_landing"
       ></Map>
       <Content>
-        <Title>찾아오시는 길</Title>
-        <br />
         <span style={{ fontWeight: 'bold' }}>프란치스코 교육회관</span>
         <br />
         서울 중구 정동길 9 (정동 17-1, 04518)
@@ -464,6 +462,7 @@ const Location = () => {
         화환을 대신하여 어려운 이웃을 위해 쌀 ·성금으로 기부하실 수 있습니다.
         <br />
         (성금 기부 문의처 : 02) 6364-2245)
+        <br />
       </Content>
     </Wrapper>
   );
