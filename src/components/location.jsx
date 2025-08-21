@@ -66,6 +66,9 @@ const Content = styled.div`
   padding-top: 42px;
   padding-bottom: 42px;
   margin: 0;
+  word-break: keep-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
@@ -258,9 +261,13 @@ const Location = () => {
         <br />
         <Title>지하철 이용시</Title>
         <br />
-        5호선 서대문역 5호선 출구에서 경향신문사 방향으로 7분 거리
+        5호선 서대문역 5호선 출구에서
         <br />
-        1,2호선 시청역 1,2,12번 출구(덕수궁 방향)에서 정동길을 따라 15분 거리
+        경향신문사 방향으로 7분 거리
+        <br />
+        1,2호선 시청역 1,2,12번 출구
+        <br />
+        (덕수궁 방향)에서 정동길을 따라 15분 거리
         <br />
         <br />
         <Title>버스 이용시</Title>
@@ -453,6 +460,7 @@ const Location = () => {
         <br />
         승용차를 가져오시는 경우{' '}
         <span style={{ fontWeight: 'bold' }}>이화정동빌딩 주차장</span>을
+        <br />
         이용하시기 바랍니다.
         <br />
         <br />
@@ -460,7 +468,9 @@ const Location = () => {
         <br />
         축하 화환은 정중히 사양합니다.
         <br />
-        화환을 대신하여 어려운 이웃을 위해 쌀 ·성금으로 기부하실 수 있습니다.
+        화환을 대신하여 어려운 이웃을 위해 쌀 ·성금으로
+        <br />
+        기부하실 수 있습니다.
         <br />
         (성금 기부 문의처 : 02) 6364-2245)
         <br />
