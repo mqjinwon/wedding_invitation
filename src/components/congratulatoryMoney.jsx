@@ -273,7 +273,7 @@ const CongratulatoryMoney = () => {
         ]}
       >
         <div>
-          <b>부 : {GROOM_FATHER_NAME}</b>
+          <b>부 : 김봉규</b>
           <Divider type="vertical" />
           <CopyToClipboard text={GROOM_FATHER_ACCOUNT_NUMBER}>
             <Button
@@ -286,7 +286,7 @@ const CongratulatoryMoney = () => {
           </CopyToClipboard>
         </div>
         <div style={{ marginTop: 24, marginBottom: 24 }}>
-          <b>모 : {GROOM_MOTHER_NAME}</b>
+          <b>모 : 송혜정</b>
           <Divider type="vertical" />
           <CopyToClipboard text={GROOM_MOTHER_ACCOUNT_NUMBER}>
             <Button
@@ -299,7 +299,7 @@ const CongratulatoryMoney = () => {
           </CopyToClipboard>
         </div>
         <div>
-          <b>신랑 {GROOM_NAME}</b>
+          <b>신랑 : 김진원</b>
           <Divider type="vertical" />
           <CopyToClipboard text={GROOM_ACCOUNT_NUMBER}>
             <Button
@@ -350,7 +350,7 @@ const CongratulatoryMoney = () => {
           </CopyToClipboard>
         </div> */}
         <div>
-          <b>신부 {BRIDE_NAME}</b>
+          <b>신부 : 이연제</b>
           <Divider type="vertical" />
           <CopyToClipboard text={BRIDE_ACCOUNT_NUMBER}>
             <Button

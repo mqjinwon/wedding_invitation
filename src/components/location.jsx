@@ -117,7 +117,7 @@ const BusButton = styled.div`
   min-height: 44px;
   min-width: 29px;
   width: 66%;
-  max-width: 240px;
+  max-width: 180px;
   margin-left: auto;
   margin-right: auto;
 
@@ -266,6 +266,7 @@ const Location = () => {
         <Title>버스 이용시</Title>
         <br />
         <span style={{ fontWeight: 'bold' }}>서울역사박물관 앞 하차</span>
+        <br />
         <br />
         <BusButton
           onMouseEnter={() => setShowBusDetails(true)}
