@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import ImageGallery from 'react-image-gallery';
-import { Divider } from 'antd';
 import styled from 'styled-components';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -58,7 +57,10 @@ const StyledImageGallery = styled.div`
     border-radius: 8px;
     object-fit: contain;
     width: 100%;
+    max-width: 500px;
     height: auto;
+    margin: 0 auto;
+    display: block;
   }
 
   .image-gallery-thumbnail {
@@ -121,7 +123,10 @@ const StyledImageGallery = styled.div`
       border-radius: 8px;
       object-fit: contain;
       width: 100%;
+      max-width: 100%;
       height: auto;
+      margin: 0 auto;
+      display: block;
       touch-action: pan-x pan-y pinch-zoom !important;
     }
 
@@ -173,7 +178,10 @@ const StyledImageGallery = styled.div`
       border-radius: 8px;
       object-fit: contain;
       width: 100%;
+      max-width: 100%;
       height: auto;
+      margin: 0 auto;
+      display: block;
     }
 
     .image-gallery-thumbnail {

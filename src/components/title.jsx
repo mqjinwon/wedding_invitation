@@ -6,23 +6,15 @@ const BackgroundImage = import.meta.env.BASE_URL + 'upper_image.png';
 const Layout = styled.div`
   width: 100%;
   max-width: 800px;
-  overflow: hidden;
+  overflow: visible;
   margin: 0 auto;
-  padding: 0 16px;
-
-  @media screen and (max-width: 768px) {
-    padding: 0 12px;
-  }
-
-  @media screen and (max-width: 480px) {
-    padding: 0 8px;
-  }
+  padding: 0;
 `;
 
 const TitleWrapper = styled.div`
   width: 100%;
   text-align: center;
-  padding-top: 42px;
+  padding: 42px 16px 0 16px;
   font-weight: 500 !important;
   color: var(--title-color);
   animation: fadein 3s;
@@ -31,11 +23,11 @@ const TitleWrapper = styled.div`
   -o-animation: fadein 3s; /* Opera */
 
   @media screen and (max-width: 768px) {
-    padding-top: 32px;
+    padding: 32px 12px 0 12px;
   }
 
   @media screen and (max-width: 480px) {
-    padding-top: 24px;
+    padding: 24px 8px 0 8px;
   }
 `;
 
@@ -44,6 +36,13 @@ const ImageBackground = styled.img`
   height: auto;
   object-fit: contain;
   display: block;
+  margin: 0 auto;
+  max-width: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    max-width: 100%;
+  }
 `;
 
 const WeddingInvitation = styled.p`

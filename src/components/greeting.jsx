@@ -116,9 +116,6 @@ const Greeting = () => {
       </Divider>
       {/* <Image src={Flower} /> */}
       <Content>
-        함께 보내는 열 한 번째 가을,
-        <br />
-        <br />
         소중한 분들을 모시고 평생 함께할 것을 약속하고자 합니다.
         <br />
         <br />
