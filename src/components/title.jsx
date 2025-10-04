@@ -1,7 +1,7 @@
 
 import styled from 'styled-components';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
-const BackgroundVideo = import.meta.env.BASE_URL + 'BackgroundVideo.mp4';
+const BackgroundImage = import.meta.env.BASE_URL + 'upper_image.png';
 
 const Layout = styled.div`
   width: 100%;
@@ -39,19 +39,11 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const VideoBackground = styled.video`
+const ImageBackground = styled.img`
   width: 100%;
   height: auto;
-  max-height: 400px;
-  object-fit: cover;
-
-  @media screen and (max-width: 768px) {
-    max-height: 300px;
-  }
-
-  @media screen and (max-width: 480px) {
-    max-height: 250px;
-  }
+  object-fit: contain;
+  display: block;
 `;
 
 const WeddingInvitation = styled.p`
@@ -111,6 +103,10 @@ const Title = () => {
 
   return (
     <Layout>
+      <ImageBackground 
+        src={BackgroundImage} 
+        alt="Wedding invitation background" 
+      />
       <TitleWrapper>
         <WeddingInvitation>WEDDING INVITATION</WeddingInvitation>
         <GroomBride>
@@ -122,9 +118,6 @@ const Title = () => {
           {WEDDING_LOCATION}
         </Schedule>
       </TitleWrapper>
-      <VideoBackground autoPlay loop muted playsInline={true}>
-        <source src={BackgroundVideo} type="video/mp4" />
-      </VideoBackground>
     </Layout>
   );
 };

@@ -164,6 +164,58 @@ const BusDetails = styled.div`
   }
 `;
 
+const LocationImage = styled.img`
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 8px;
+  margin: 16px auto;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  opacity: 1;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: auto;
+  filter: none;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+    margin: 12px auto;
+    border-radius: 6px;
+  }
+
+  @media screen and (max-width: 480px) {
+    margin: 8px auto;
+    border-radius: 4px;
+  }
+`;
+
+const ImageCaption = styled.div`
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--title-color);
+  opacity: 0.7;
+  margin-top: -8px;
+  margin-bottom: 16px;
+  font-weight: 500;
+
+  @media screen and (max-width: 768px) {
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+  }
+
+  @media screen and (max-width: 480px) {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+`;
+
 const Location = () => {
   const [showBusDetails, setShowBusDetails] = useState(false);
 
@@ -225,6 +277,9 @@ const Location = () => {
         className="root_daum_roughmap root_daum_roughmap_landing"
       ></Map>
       <Content>
+        <br />
+        <Title>결혼식장</Title>
+        <br />
         <span style={{ fontWeight: 'bold' }}>프란치스코 교육회관</span>
         <br />
         서울 중구 정동길 9 (정동 17-1, 04518)
@@ -258,6 +313,12 @@ const Location = () => {
           네이버지도
         </a>
         <br />
+        <br />
+        <LocationImage 
+          src={import.meta.env.BASE_URL + 'loc_front.jpg'} 
+          alt="프란치스코 교육회관 정면" 
+        />
+        <ImageCaption>프란치스코 교육회관 정면</ImageCaption>
         <br />
         <Title>지하철 이용시</Title>
         <br />
@@ -462,6 +523,13 @@ const Location = () => {
         <span style={{ fontWeight: 'bold' }}>이화정동빌딩 주차장</span>을
         <br />
         이용하시기 바랍니다.
+        <br />
+        <br />
+        <LocationImage 
+          src={import.meta.env.BASE_URL + 'loc_parkinglot.jpg'} 
+          alt="이화정동빌딩 주차장" 
+        />
+        <ImageCaption>이화정동빌딩 주차장</ImageCaption>
         <br />
         <br />
         <Title>축하 화환</Title>

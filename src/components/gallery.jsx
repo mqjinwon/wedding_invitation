@@ -56,8 +56,9 @@ const StyledImageGallery = styled.div`
 
   .image-gallery-image {
     border-radius: 8px;
-    object-fit: cover;
+    object-fit: contain;
     width: 100%;
+    height: auto;
   }
 
   .image-gallery-thumbnail {
@@ -118,8 +119,9 @@ const StyledImageGallery = styled.div`
 
     .image-gallery-image {
       border-radius: 8px;
-      object-fit: cover;
+      object-fit: contain;
       width: 100%;
+      height: auto;
       touch-action: pan-x pan-y pinch-zoom !important;
     }
 
@@ -169,8 +171,9 @@ const StyledImageGallery = styled.div`
 
     .image-gallery-image {
       border-radius: 8px;
-      object-fit: cover;
+      object-fit: contain;
       width: 100%;
+      height: auto;
     }
 
     .image-gallery-thumbnail {
@@ -196,6 +199,22 @@ const images = [
   {
     original: import.meta.env.BASE_URL + 'images/2.webp',
     thumbnail: import.meta.env.BASE_URL + 'images/2.webp'
+  },
+  {
+    original: import.meta.env.BASE_URL + 'images/3.webp',
+    thumbnail: import.meta.env.BASE_URL + 'images/3.webp'
+  },
+  {
+    original: import.meta.env.BASE_URL + 'images/4.webp',
+    thumbnail: import.meta.env.BASE_URL + 'images/4.webp'
+  },
+  {
+    original: import.meta.env.BASE_URL + 'images/5.webp',
+    thumbnail: import.meta.env.BASE_URL + 'images/5.webp'
+  },
+  {
+    original: import.meta.env.BASE_URL + 'images/6.webp',
+    thumbnail: import.meta.env.BASE_URL + 'images/6.webp'
   },
 ];
 
