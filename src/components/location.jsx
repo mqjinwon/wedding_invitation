@@ -271,7 +271,7 @@ const Location = () => {
       <Divider plain style={{ marginTop: 0, marginBottom: 32 }}>
         <Title>오시는 길</Title>
       </Divider>
-      <Image src={Flower} />
+      {/* <Image src={Flower} /> */}
       <Map
         id="daumRoughmapContainer1753587778659"
         className="root_daum_roughmap root_daum_roughmap_landing"

@@ -43,7 +43,7 @@ const Title = styled.p`
 `;
 
 const Content = styled.p`
-  font-size: 0.72rem;
+  font-size: 1rem;
   line-height: 1.75;
   opacity: 0.75;
   margin-bottom: 16px;
@@ -114,7 +114,7 @@ const Greeting = () => {
       <Divider style={{ marginTop: 32, marginBottom: 32 }} plain>
         <Title>초대합니다</Title>
       </Divider>
-      <Image src={Flower} />
+      {/* <Image src={Flower} /> */}
       <Content>
         함께 보내는 열 한 번째 가을,
         <br />

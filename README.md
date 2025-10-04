@@ -153,7 +153,6 @@ VITE_KAKAOTALK_SHARE_IMAGE=https://your-domain.com/icon-512x512.png
 - **아이콘**: `public/` 폴더에 다양한 사이즈로 배치
 - **폰트**: `public/fonts/` 폴더에 배치
 - **배경 음악**: `public/song.mp3`
-- **배경 비디오**: `public/BackgroundVideo.mp4`
 
 ### 갤러리 이미지 추가
 
