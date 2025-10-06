@@ -285,6 +285,7 @@ const Gallery = () => {
         />
       </StyledImageGallery>
       <br />
+      <br />
     </Wrapper>
   );
 };

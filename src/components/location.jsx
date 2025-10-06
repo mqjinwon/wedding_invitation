@@ -209,6 +209,8 @@ const Location = () => {
       ></Map>
       <LocationContent as="div">
         <br />
+        <br />
+        <br />
         <TitleSpan>결혼식장</TitleSpan>
         <br />
         <span style={{ fontWeight: 'bold' }}>프란치스코 교육회관</span>
@@ -245,9 +247,9 @@ const Location = () => {
         </a>
         <br />
         <br />
-        <LocationImage 
-          src={import.meta.env.BASE_URL + 'loc_front.jpg'} 
-          alt="프란치스코 교육회관 정면" 
+        <LocationImage
+          src={import.meta.env.BASE_URL + 'loc_front.jpg'}
+          alt="프란치스코 교육회관 정면"
         />
         <ImageCaption>프란치스코 교육회관 정면</ImageCaption>
         <br />
@@ -456,9 +458,9 @@ const Location = () => {
         이용하시기 바랍니다.
         <br />
         <br />
-        <LocationImage 
-          src={import.meta.env.BASE_URL + 'loc_parkinglot.jpg'} 
-          alt="이화정동빌딩 주차장" 
+        <LocationImage
+          src={import.meta.env.BASE_URL + 'loc_parkinglot.jpg'}
+          alt="이화정동빌딩 주차장"
         />
         <ImageCaption>이화정동빌딩 주차장</ImageCaption>
         <br />
