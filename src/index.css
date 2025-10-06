@@ -56,6 +56,10 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+  .root_daum_roughmap {
+    max-height: 360px !important;
+    height: 360px !important;
+  }
   .image-gallery,
   .image-gallery-slide {
     touch-action: pan-y pinch-zoom !important;
@@ -124,6 +128,10 @@ body {
 }
 
 @media screen and (max-width: 480px) {
+  .root_daum_roughmap {
+    max-height: 280px !important;
+    height: 280px !important;
+  }
   body {
     padding: 0;
   }

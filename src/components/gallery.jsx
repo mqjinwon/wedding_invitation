@@ -284,6 +284,7 @@ const Gallery = () => {
           startIndex={0}
         />
       </StyledImageGallery>
+      <br />
     </Wrapper>
   );
 };

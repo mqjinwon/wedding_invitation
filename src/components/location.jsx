@@ -18,6 +18,7 @@ const Map = styled.div`
   padding: 0;
   pointer-events: none;
   max-height: 400px;
+  height: 400px;
 
   & > * {
     pointer-events: auto;
@@ -26,15 +27,14 @@ const Map = styled.div`
   @media screen and (max-width: 768px) {
     margin: 0 -12px;
     width: calc(100% + 24px);
+    height: 360px !important; /* 태블릿 이하에서 높이 축소 */
   }
 
   @media screen and (max-width: 480px) {
     margin: 0 -8px;
     width: calc(100% + 16px);
-    /* 모바일에서 위아래 10% 크롭 */
-    overflow: hidden;
-    -webkit-clip-path: inset(10% 0 20% 0);
-    clip-path: inset(10% 0 20% 0);
+    /* 모바일에서 크롭 제거하고 더 낮은 높이 적용 */
+    height: 300px !important;
   }
 `;
 

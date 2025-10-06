@@ -81,6 +81,7 @@ const Greeting = () => {
           {BRIDE_NAME}
         </span>
         <br />
+        <br />
       </GroomBride>
     </Wrapper>
   );
