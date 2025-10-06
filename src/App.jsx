@@ -39,7 +39,8 @@ const Wrapper = styled.div`
 const GlobalFontStyle = styled.div`
   @font-face {
     font-family: 'GowunDodum';
-    src: url(${import.meta.env.BASE_URL + 'fonts/GowunDodum-Regular.ttf'}) format('truetype');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff'),
+         url(${import.meta.env.BASE_URL + 'fonts/GowunDodum-Regular.ttf'}) format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

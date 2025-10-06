@@ -68,6 +68,7 @@ const Greeting = () => {
         <br />
         격려해 주시면 더없는 기쁨이 되겠습니다.
         <br />
+        <br />
       </GreetingContent>
       <GroomBride>
         {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 아들{' '}
