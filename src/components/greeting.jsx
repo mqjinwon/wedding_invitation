@@ -116,10 +116,13 @@ const Greeting = () => {
       </Divider>
       {/* <Image src={Flower} /> */}
       <Content>
-        소중한 분들을 모시고 평생 함께할 것을 약속하고자 합니다.
+        소망이 축복 속에서 기쁨으로 이루어지는 날,<br />
         <br />
+        저희 두 사람이 하나가 될<br />
+        뜻깊은 날을 맞게 되었습니다.<br />
         <br />
-        가까이서 축복해주신다면 더없는 기쁨으로 간직하겠습니다.
+        소중하고 힘찬 내디딤이 될 수 있도록<br />
+        격려해 주시면 더없는 기쁨이 되겠습니다.
       </Content>
       <GroomBride>
         {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 아들{' '}

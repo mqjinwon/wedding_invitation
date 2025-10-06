@@ -185,16 +185,16 @@ const Share = () => {
             description: "아래의 '청첩장 열기' 버튼을 눌러 읽어주세요🤵👰",
             imageUrl: KAKAOTALK_SHARE_IMAGE,
             link: {
-              mobileWebUrl: '',
-              webUrl: '',
+              mobileWebUrl: 'https://mqjinwon.github.io/wedding_invitation',
+              webUrl: 'https://mqjinwon.github.io/wedding_invitation',
             },
           },
           buttons: [
             {
               title: '청첩장 열기',
               link: {
-                mobileWebUrl: window.location.href,
-                webUrl: window.location.href,
+                mobileWebUrl: 'https://mqjinwon.github.io/wedding_invitation',
+                webUrl: 'https://mqjinwon.github.io/wedding_invitation',
               },
             },
           ],
