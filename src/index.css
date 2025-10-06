@@ -54,8 +54,6 @@ body {
     overflow: hidden !important;
   }
   
-  #___gatsby .image-gallery,
-  #gatsby-focus-wrapper .image-gallery,
   .image-gallery *,
   .image-gallery-content,
   .image-gallery-slide .image-gallery-image,

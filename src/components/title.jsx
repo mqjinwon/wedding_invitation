@@ -1,7 +1,7 @@
 
 import styled from 'styled-components';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
-const BackgroundImage = import.meta.env.BASE_URL + 'upper_image.png';
+const BackgroundImage = import.meta.env.BASE_URL + 'upper_image.webp';
 
 const Layout = styled.div`
   width: 100%;
