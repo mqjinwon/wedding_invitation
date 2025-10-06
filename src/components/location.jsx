@@ -8,8 +8,10 @@ const TitleSpan = styled(Title)`
   display: inline;
 `;
 
-// Content를 그대로 사용하고, JSX에서 as="div"로 태그만 변경합니다.
-const LocationContent = Content;
+// Content 스타일에서 부모 opacity가 자식까지 적용되지 않도록 1로 덮어씀
+const LocationContent = styled(Content)`
+  opacity: 1;
+`;
 
 const Map = styled.div`
   width: 100%;
@@ -29,6 +31,10 @@ const Map = styled.div`
   @media screen and (max-width: 480px) {
     margin: 0 -8px;
     width: calc(100% + 16px);
+    /* 모바일에서 위아래 10% 크롭 */
+    overflow: hidden;
+    -webkit-clip-path: inset(10% 0 20% 0);
+    clip-path: inset(10% 0 20% 0);
   }
 `;
 
