@@ -177,39 +177,12 @@ const Share = () => {
       }
 
       try {
-        kakao.Link.createDefaultButton({
-          objectType: 'feed',
-          container: '#sendKakao',
-          content: {
-            title: `김진원❤이연제 결혼식에 초대합니다`,
-            description: "아래의 '청첩장 열기' 버튼을 눌러 읽어주세요🤵👰",
-            imageUrl: KAKAOTALK_SHARE_IMAGE,
-            link: {
-              mobileWebUrl: 'https://mqjinwon.github.io/wedding_invitation',
-              webUrl: 'https://mqjinwon.github.io/wedding_invitation',
-            },
-          },
-          buttons: [
-            {
-              title: '청첩장 열기',
-              link: {
-                mobileWebUrl: 'https://mqjinwon.github.io/wedding_invitation',
-                webUrl: 'https://mqjinwon.github.io/wedding_invitation',
-              },
-            },
-          ],
-          installTalk: true,
+        // sendCustom을 사용하여 템플릿 ID 124907로 공유
+        kakao.Share.sendCustom({
+          templateId: 124907
         });
 
-        setTimeout(() => {
-          const button = document.getElementById('sendKakao');
-          if (button) {
-            button.click();
-            message.success('카카오톡으로 청첩장을 공유합니다!');
-          } else {
-            message.error('공유 버튼을 찾을 수 없습니다.');
-          }
-        }, 100);
+        message.success('카카오톡으로 청첩장을 공유합니다!');
       } catch (error) {
         console.error('카카오톡 공유 버튼 생성 실패:', error);
         message.error('카카오톡 공유 기능을 사용할 수 없습니다.');
