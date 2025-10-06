@@ -29,7 +29,6 @@ const Content = styled.span`
   display: block;
   margin: 0 auto;
   font-size: 1.3rem;
-  font-family: 'mom_to_daughter';
   text-align: center;
   color: var(--title-color);
   line-height: 2.2rem;

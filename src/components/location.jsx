@@ -8,9 +8,8 @@ const TitleSpan = styled(Title)`
   display: inline;
 `;
 
-// Content 스타일을 location에 맞게 확장
-const LocationContent = styled(Content)`
-`;
+// Content를 그대로 사용하고, JSX에서 as="div"로 태그만 변경합니다.
+const LocationContent = Content;
 
 const Map = styled.div`
   width: 100%;
@@ -202,7 +201,7 @@ const Location = () => {
         id="daumRoughmapContainer1753587778659"
         className="root_daum_roughmap root_daum_roughmap_landing"
       ></Map>
-      <LocationContent>
+      <LocationContent as="div">
         <br />
         <TitleSpan>결혼식장</TitleSpan>
         <br />

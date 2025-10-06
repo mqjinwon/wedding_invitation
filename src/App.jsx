@@ -38,9 +38,8 @@ const Wrapper = styled.div`
 
 const GlobalFontStyle = styled.div`
   @font-face {
-    font-family: 'mom_to_daughter';
-    src: url(${import.meta.env.BASE_URL + 'fonts/mom_to_daughter.woff2'}) format('woff2'),
-         url(${import.meta.env.BASE_URL + 'fonts/mom_to_daughter.woff'}) format('woff');
+    font-family: 'GowunDodum';
+    src: url(${import.meta.env.BASE_URL + 'fonts/GowunDodum-Regular.ttf'}) format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
