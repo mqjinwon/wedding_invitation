@@ -1,7 +1,6 @@
 
 import styled from 'styled-components';
 const QuotePaper = import.meta.env.BASE_URL + 'Quote.png';
-const Flower = import.meta.env.BASE_URL + 'flower1.png';
 
 const Wrapper = styled.div`
   padding-top: 42px;
@@ -51,27 +50,9 @@ const Content = styled.span`
   max-width: 600px;
 `;
 
-const Image = styled.img`
-  display: block;
-  margin: 0 auto;
-  width: 1.375rem;
-  padding-bottom: 42px;
-
-  @media screen and (max-width: 768px) {
-    width: 1.2rem;
-    padding-bottom: 32px;
-  }
-
-  @media screen and (max-width: 480px) {
-    width: 1.1rem;
-    padding-bottom: 24px;
-  }
-`;
-
 const Quote = () => {
   return (
     <Wrapper>
-      <Image src={Flower} data-aos="fade-up" />
       <Content data-aos="fade-up">
         Please let my star rise on your night
         <br />

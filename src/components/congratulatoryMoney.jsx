@@ -3,65 +3,12 @@ import { Button, Divider, message, Modal } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import styled from 'styled-components';
 import CopyToClipboard from 'react-copy-to-clipboard';
-const Flower = import.meta.env.BASE_URL + 'flower3.png';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
+import { Content, Title, Wrapper } from '../styles/common';
 
-const Wrapper = styled.div`
-  padding-top: 42px;
+// Wrapper에 padding-bottom 추가를 위한 확장
+const ExtendedWrapper = styled(Wrapper)`
   padding-bottom: 18px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  padding-left: 16px;
-  padding-right: 16px;
-
-  @media screen and (max-width: 768px) {
-    padding-top: 32px;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
-  @media screen and (max-width: 480px) {
-    padding-top: 24px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-`;
-
-const Title = styled.p`
-  font-size: 1rem;
-  color: var(--title-color);
-  font-weight: bold;
-  opacity: 0.85;
-  margin-bottom: 0;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.85rem;
-  }
-`;
-
-const Content = styled.p`
-  font-size: 0.875rem;
-  line-height: 1.75;
-  opacity: 0.75;
-  margin-bottom: 42px;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
-    line-height: 1.8;
-    margin-bottom: 32px;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.75rem;
-    line-height: 1.9;
-    margin-bottom: 24px;
-  }
 `;
 
 const SubContent = styled.p`
@@ -153,23 +100,6 @@ const ContactButton = styled.div`
   }
 `;
 
-const Image = styled.img`
-  display: block;
-  margin: 0 auto;
-  width: 1.375rem;
-  padding-bottom: 42px;
-
-  @media screen and (max-width: 768px) {
-    width: 1.2rem;
-    padding-bottom: 32px;
-  }
-
-  @media screen and (max-width: 480px) {
-    width: 1.1rem;
-    padding-bottom: 24px;
-  }
-`;
-
 const StyledModal = styled(Modal)`
   .ant-modal-content {
     border-radius: 12px;
@@ -230,22 +160,20 @@ const CongratulatoryMoney = () => {
   } = useEnvironmentVariables();
 
   return (
-    <Wrapper>
+    <ExtendedWrapper data-aos="fade-up">
       <Divider
-        data-aos="fade-up"
         plain
         style={{ marginTop: 0, marginBottom: 32 }}
       >
         <Title>마음 전하실 곳</Title>
       </Divider>
-      {/* <Image src={Flower} /> */}
-      <Content data-aos="fade-up">
+      <Content>
         참석이 어려우신 분들을 위해 기재했습니다. <br />
         너그러운 마음으로 양해 부탁드립니다.
       </Content>
 
       <ButtonWrap>
-        <ContactButton data-aos="fade-up" onClick={() => setGroomVisible(true)}>
+        <ContactButton onClick={() => setGroomVisible(true)}>
           <CheckCircleTwoTone
             style={{ fontSize: 64, marginBottom: 16 }}
             twoToneColor="#829fe0"
@@ -253,7 +181,7 @@ const CongratulatoryMoney = () => {
           <br />
           <SubContent>신랑측 계좌번호 확인</SubContent>
         </ContactButton>
-        <ContactButton data-aos="fade-up" onClick={() => setBrideVisible(true)}>
+        <ContactButton onClick={() => setBrideVisible(true)}>
           <CheckCircleTwoTone
             style={{ fontSize: 64, marginBottom: 16 }}
             twoToneColor="#fe7daf"
@@ -364,7 +292,7 @@ const CongratulatoryMoney = () => {
           </CopyToClipboard>
         </div>
       </StyledModal>
-    </Wrapper>
+    </ExtendedWrapper>
   );
 };
 

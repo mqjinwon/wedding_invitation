@@ -206,10 +206,11 @@ const Share = () => {
         <Title>청첩장 공유하기</Title>
       </Divider>
 
-      <ButtonContainer>
+      <ButtonContainer data-aos="fade-up">
         {/* 카카오톡 API 토큰이 설정된 경우에만 카카오톡 공유 버튼 표시 */}
         {!isKakaoTokenMissing && (
           <KakaoTalkShareButton
+            data-aos="fade-up"
             style={{ margin: 0 }}
             icon={<MessageFilled />}
             id="sendKakao"

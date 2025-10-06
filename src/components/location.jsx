@@ -1,88 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Divider } from 'antd';
 import styled from 'styled-components';
-const Flower = import.meta.env.BASE_URL + 'flower2.png';
+import { Content, Title, Wrapper } from '../styles/common';
 
-const Wrapper = styled.div`
-  padding-top: 42px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-left: 16px;
-  padding-right: 16px;
-
-  @media screen and (max-width: 768px) {
-    padding-top: 32px;
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
-  @media screen and (max-width: 480px) {
-    padding-top: 24px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+// Title을 span으로 확장
+const TitleSpan = styled(Title)`
+  display: inline;
 `;
 
-const Title = styled.span`
-  font-size: 1rem;
-  color: var(--title-color);
-  font-weight: bold;
-  opacity: 0.85;
-  margin-bottom: 0;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.85rem;
-  }
-`;
-
-const Image = styled.img`
-  display: block;
-  margin: 0 auto;
-  width: 1.375rem;
-  padding-bottom: 42px;
-
-  @media screen and (max-width: 768px) {
-    width: 1.2rem;
-    padding-bottom: 32px;
-  }
-
-  @media screen and (max-width: 480px) {
-    width: 1.1rem;
-    padding-bottom: 24px;
-  }
-`;
-
-const Content = styled.div`
-  font-size: 0.875rem;
-  line-height: 1.75;
-  opacity: 0.75;
-  width: 100%;
-  text-align: center;
-  padding-top: 42px;
-  padding-bottom: 42px;
-  margin: 0;
-  word-break: keep-all;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
-    line-height: 1.8;
-    padding-top: 32px;
-    padding-bottom: 32px;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.75rem;
-    line-height: 1.9;
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
+// Content 스타일을 location에 맞게 확장
+const LocationContent = styled(Content)`
 `;
 
 const Map = styled.div`
@@ -269,16 +196,15 @@ const Location = () => {
   return (
     <Wrapper>
       <Divider plain style={{ marginTop: 0, marginBottom: 32 }}>
-        <Title>오시는 길</Title>
+        <TitleSpan>오시는 길</TitleSpan>
       </Divider>
-      {/* <Image src={Flower} /> */}
       <Map
         id="daumRoughmapContainer1753587778659"
         className="root_daum_roughmap root_daum_roughmap_landing"
       ></Map>
-      <Content>
+      <LocationContent>
         <br />
-        <Title>결혼식장</Title>
+        <TitleSpan>결혼식장</TitleSpan>
         <br />
         <span style={{ fontWeight: 'bold' }}>프란치스코 교육회관</span>
         <br />
@@ -320,7 +246,7 @@ const Location = () => {
         />
         <ImageCaption>프란치스코 교육회관 정면</ImageCaption>
         <br />
-        <Title>지하철 이용시</Title>
+        <TitleSpan>지하철 이용시</TitleSpan>
         <br />
         5호선 서대문역 5호선 출구에서
         <br />
@@ -331,7 +257,7 @@ const Location = () => {
         (덕수궁 방향)에서 정동길을 따라 15분 거리
         <br />
         <br />
-        <Title>버스 이용시</Title>
+        <TitleSpan>버스 이용시</TitleSpan>
         <br />
         <span style={{ fontWeight: 'bold' }}>서울역사박물관 앞 하차</span>
         <br />
@@ -513,7 +439,7 @@ const Location = () => {
           </BusDetails>
         )}
         <br />
-        <Title>주차</Title>
+        <TitleSpan>주차</TitleSpan>
         <br />
         <span style={{ fontWeight: 'bold' }}>이화정동빌딩</span>
         <br />
@@ -532,7 +458,7 @@ const Location = () => {
         <ImageCaption>이화정동빌딩 주차장</ImageCaption>
         <br />
         <br />
-        <Title>축하 화환</Title>
+        <TitleSpan>축하 화환</TitleSpan>
         <br />
         축하 화환은 정중히 사양합니다.
         <br />
@@ -542,7 +468,7 @@ const Location = () => {
         <br />
         (성금 기부 문의처 : 02) 6364-2245)
         <br />
-      </Content>
+      </LocationContent>
     </Wrapper>
   );
 };
