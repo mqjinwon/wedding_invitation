@@ -475,6 +475,8 @@ const Location = () => {
         <br />
         (성금 기부 문의처 : 02) 6364-2245)
         <br />
+        <br />
+        
       </LocationContent>
     </Wrapper>
   );

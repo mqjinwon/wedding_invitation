@@ -11,6 +11,27 @@ const ExtendedWrapper = styled(Wrapper)`
   padding-bottom: 18px;
 `;
 
+// 기본 이미지: 호버/그림자/라운드 제거, 주변과 자연스럽게 융화
+const NeutralImage = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px auto;
+  border-radius: 0;
+  box-shadow: none;
+  filter: none;
+`;
+
+// 비디오용 기본 스타일 (장식 제거, 주변과 융화)
+const NeutralVideo = styled.video`
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 8px auto;
+  border-radius: 0;
+  box-shadow: none;
+`;
+
 const SubContent = styled.p`
   font-size: 0.875rem;
   line-height: 1.75;
@@ -161,10 +182,7 @@ const CongratulatoryMoney = () => {
 
   return (
     <ExtendedWrapper data-aos="fade-up">
-      <Divider
-        plain
-        style={{ marginTop: 0, marginBottom: 32 }}
-      >
+      <Divider plain style={{ marginTop: 0, marginBottom: 32 }}>
         <Title>마음 전하실 곳</Title>
       </Divider>
       <Content>
@@ -292,6 +310,26 @@ const CongratulatoryMoney = () => {
           </CopyToClipboard>
         </div>
       </StyledModal>
+
+      <NeutralVideo
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        poster={import.meta.env.BASE_URL + 'end-poster.jpg'}
+        aria-label="추억 비디오"
+        title="추억 비디오"
+      >
+        <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
+        <source src={import.meta.env.BASE_URL + 'end.mp4'} type="video/mp4" />
+        {/* 폴백: 비디오 미지원 환경 */}
+        <NeutralImage
+          src={import.meta.env.BASE_URL + 'end.gif'}
+          alt="추억 이미지"
+        />
+      </NeutralVideo>
+      
     </ExtendedWrapper>
   );
 };
