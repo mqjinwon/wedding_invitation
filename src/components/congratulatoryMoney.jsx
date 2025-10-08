@@ -30,6 +30,26 @@ const NeutralVideo = styled.video`
   margin: 8px auto;
   border-radius: 0;
   box-shadow: none;
+  
+  /* 배경 투명 처리 - mask 속성 사용 */
+  background: transparent;
+  
+  /* mask 속성으로 검은 배경 제거 */
+  /* 방법 1: 기본 마스크 적용 */
+  mask: linear-gradient(black, black);
+  -webkit-mask: linear-gradient(black, black);
+  
+  /* 방법 2: 필터 제거 - 원본 색상 그대로 유지 */
+  /* filter: none; */
+  
+  /* 방법 3: 블렌드 모드 제거 - 자연스러운 표시 */
+  /* mix-blend-mode: normal; */
+  
+  /* 방법 4: 대안 - multiply 모드 */
+  /* mix-blend-mode: multiply; */
+  
+  /* 방법 5: 대안 - overlay 모드 */
+  /* mix-blend-mode: overlay; */
 `;
 
 const SubContent = styled.p`
@@ -321,9 +341,13 @@ const CongratulatoryMoney = () => {
         aria-label="추억 비디오"
         title="추억 비디오"
       >
-        <source src={import.meta.env.BASE_URL + 'end_apng.png'} type="image/apng" />
+        {/* HEVC with Alpha - iOS Safari 최적화 */}
+        <source src={import.meta.env.BASE_URL + 'end_hevc_alpha.mov'} type="video/mp4; codecs=hevc" />
+        {/* 폴백: WebM for Chrome/Firefox */}
         <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
-        {/* 폴백: 비디오 미지원 환경 */}
+        {/* 폴백: APNG for older browsers */}
+        <source src={import.meta.env.BASE_URL + 'end_apng.png'} type="image/apng" />
+        {/* 최종 폴백: GIF */}
         <NeutralImage
           src={import.meta.env.BASE_URL + 'end.gif'}
           alt="추억 이미지"
