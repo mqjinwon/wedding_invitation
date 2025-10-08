@@ -330,29 +330,10 @@ const CongratulatoryMoney = () => {
           </CopyToClipboard>
         </div>
       </StyledModal>
-
-      <NeutralVideo
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        poster={import.meta.env.BASE_URL + 'end-poster.png'}
-        aria-label="추억 비디오"
-        title="추억 비디오"
-      >
-        {/* HEVC with Alpha - iOS Safari 최적화 */}
-        <source src={import.meta.env.BASE_URL + 'end_hevc_alpha.mov'} type="video/mp4; codecs=hevc" />
-        {/* 폴백: WebM for Chrome/Firefox */}
-        <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
-        {/* 폴백: APNG for older browsers */}
-        <source src={import.meta.env.BASE_URL + 'end_apng.png'} type="image/apng" />
-        {/* 최종 폴백: GIF */}
-        <NeutralImage
-          src={import.meta.env.BASE_URL + 'end.gif'}
-          alt="추억 이미지"
-        />
-      </NeutralVideo>
+      <NeutralImage
+        src={import.meta.env.BASE_URL + 'end.gif'}
+        alt="추억 이미지"
+      />
     </ExtendedWrapper>
   );
 };
