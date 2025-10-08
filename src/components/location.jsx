@@ -52,7 +52,7 @@ const BusButton = styled.div`
   min-height: 44px;
   min-width: 29px;
   width: 66%;
-  max-width: 200px;
+  max-width: 220px;
   margin-left: auto;
   margin-right: auto;
 

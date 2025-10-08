@@ -24,25 +24,12 @@ const NeutralImage = styled.img`
 
 // 비디오용 기본 스타일 (장식 제거, 주변과 융화)
 const NeutralVideo = styled.video`
-  width: 120%;
-  transform: translateX(-8.33%); // 100% / 12 = 8.33%
+  width: 100%;
   height: auto;
   display: block;
   margin: 8px auto;
   border-radius: 0;
   box-shadow: none;
-  background-color: transparent;
-
-  /* iOS Safari에서 투명 배경 지원 */
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-
-  /* iOS에서 비디오 poster 투명도 강제 적용 */
-  @supports (-webkit-touch-callout: none) {
-    background-color: transparent !important;
-    -webkit-background-size: cover;
-    background-size: cover;
-  }
 `;
 
 const SubContent = styled.p`
@@ -333,9 +320,8 @@ const CongratulatoryMoney = () => {
         poster={import.meta.env.BASE_URL + 'end-poster.png'}
         aria-label="추억 비디오"
         title="추억 비디오"
-        style={{ backgroundColor: 'transparent' }}
-        webkit-playsinline="true"
       >
+        <source src={import.meta.env.BASE_URL + 'end.mov'} type="video/quicktime" />
         <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
         {/* 폴백: 비디오 미지원 환경 */}
         <NeutralImage

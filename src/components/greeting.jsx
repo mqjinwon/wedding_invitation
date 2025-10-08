@@ -4,24 +4,24 @@ import { Divider } from 'antd';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
 import { Content, Title, Wrapper } from '../styles/common';
 
-const GroomBride = styled.p`
-  font-size: 0.9rem;
-  line-height: 1.75;
-  opacity: 0.85;
-  margin-bottom: 0px;
-  width: 100%;
-  text-align: center;
+// const GroomBride = styled.p`
+//   font-size: 1.0rem;
+//   line-height: 1.75;
+//   opacity: 0.85;
+//   margin-bottom: 0px;
+//   width: 100%;
+//   text-align: center;
 
-  @media screen and (max-width: 768px) {
-    font-size: 0.9rem;
-    line-height: 1.8;
-  }
+//   @media screen and (max-width: 768px) {
+//     font-size: 0.9rem;
+//     line-height: 1.8;
+//   }
 
-  @media screen and (max-width: 480px) {
-    font-size: 0.9rem;
-    line-height: 1.9;
-  }
-`;
+//   @media screen and (max-width: 480px) {
+//     font-size: 0.9rem;
+//     line-height: 1.9;
+//   }
+// `;
 
 const Greeting = () => {
   const {
@@ -52,19 +52,19 @@ const Greeting = () => {
         <br />
         <br />
       </Content>
-      <GroomBride>
+      <Content>
         {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 아들{' '}
-        <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
+        <span style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
           {GROOM_NAME}
         </span>
         <br />
         {BRIDE_FATHER_NAME} · {BRIDE_MOTHER_NAME}의 딸{' '}
-        <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
+        <span style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
           {BRIDE_NAME}
         </span>
         <br />
         <br />
-      </GroomBride>
+      </Content>
     </Wrapper>
   );
 };
