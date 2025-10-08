@@ -317,12 +317,11 @@ const CongratulatoryMoney = () => {
         muted
         playsInline
         preload="metadata"
-        poster={import.meta.env.BASE_URL + 'end-poster.jpg'}
+        poster={import.meta.env.BASE_URL + 'end-poster.png'}
         aria-label="추억 비디오"
         title="추억 비디오"
       >
         <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
-        <source src={import.meta.env.BASE_URL + 'end.mp4'} type="video/mp4" />
         {/* 폴백: 비디오 미지원 환경 */}
         <NeutralImage
           src={import.meta.env.BASE_URL + 'end.gif'}
