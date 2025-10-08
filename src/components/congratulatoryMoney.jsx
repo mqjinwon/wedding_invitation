@@ -321,7 +321,7 @@ const CongratulatoryMoney = () => {
         aria-label="추억 비디오"
         title="추억 비디오"
       >
-        <source src={import.meta.env.BASE_URL + 'end_apng_tiny.png'} type="image/apng" />
+        <source src={import.meta.env.BASE_URL + 'end_apng.png'} type="image/apng" />
         <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
         {/* 폴백: 비디오 미지원 환경 */}
         <NeutralImage
