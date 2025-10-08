@@ -54,12 +54,12 @@ const Greeting = () => {
       </Content>
       <Content>
         {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 아들{' '}
-        <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
+        <span style={{ fontWeight: 'bold'}}>
           {GROOM_NAME}
         </span>
         <br />
         {BRIDE_FATHER_NAME} · {BRIDE_MOTHER_NAME}의 딸{' '}
-        <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
+        <span style={{ fontWeight: 'bold'}}>
           {BRIDE_NAME}
         </span>
         <br />
