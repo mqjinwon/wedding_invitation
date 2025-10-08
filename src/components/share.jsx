@@ -140,6 +140,8 @@ const LinkShareButton = styled(Button)`
 
 const Share = () => {
   const [isClient, setIsClient] = useState(false);
+  const [kakaoSdkLoaded, setKakaoSdkLoaded] = useState(false);
+  const [kakaoSdkLoading, setKakaoSdkLoading] = useState(false);
 
   const {
     GROOM_NAME,
@@ -153,12 +155,71 @@ const Share = () => {
     setIsClient(true);
   }, []);
 
-  const createKakaoButton = () => {
+  // 카카오톡 SDK 로드 상태 확인
+  useEffect(() => {
+    const checkKakaoSdk = () => {
+      if (window.Kakao) {
+        setKakaoSdkLoaded(true);
+        setKakaoSdkLoading(false);
+        return true;
+      }
+      return false;
+    };
+
+    // 즉시 확인
+    if (checkKakaoSdk()) {
+      return;
+    }
+
+    // SDK가 아직 로드되지 않았다면 주기적으로 확인
+    const interval = setInterval(() => {
+      if (checkKakaoSdk()) {
+        clearInterval(interval);
+      }
+    }, 500);
+
+    // 10초 후 타임아웃
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+      setKakaoSdkLoading(false);
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  const createKakaoButton = async () => {
     // API 토큰 확인
     if (!KAKAOTALK_API_TOKEN) {
       console.warn('카카오톡 API 토큰이 설정되지 않았습니다.');
       message.error('카카오톡 공유 기능을 사용할 수 없습니다.');
       return;
+    }
+
+    // SDK 로드 중이면 대기
+    if (kakaoSdkLoading) {
+      message.info('카카오톡 SDK를 로드하는 중입니다. 잠시만 기다려주세요.');
+      return;
+    }
+
+    // SDK가 로드되지 않았다면 재시도
+    if (!kakaoSdkLoaded && !window.Kakao) {
+      console.warn('카카오톡 SDK가 로드되지 않았습니다. 재시도 중...');
+      setKakaoSdkLoading(true);
+      
+      // SDK 재로드 시도
+      try {
+        await loadKakaoSdk();
+        // 재로드 후 잠시 대기
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (error) {
+        console.error('카카오톡 SDK 재로드 실패:', error);
+        setKakaoSdkLoading(false);
+        message.error('카카오톡 공유 기능을 사용할 수 없습니다. 네트워크 연결을 확인해주세요.');
+        return;
+      }
     }
 
     // kakao sdk script이 정상적으로 불러와졌으면 window.Kakao로 접근이 가능합니다
@@ -193,6 +254,36 @@ const Share = () => {
     }
   };
 
+  // 카카오톡 SDK 수동 로드 함수
+  const loadKakaoSdk = () => {
+    return new Promise((resolve, reject) => {
+      // 이미 로드된 스크립트가 있는지 확인
+      const existingScript = document.querySelector('script[src*="kakao.min.js"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js';
+      
+      script.onload = () => {
+        console.log('카카오톡 SDK 수동 로드 완료');
+        setKakaoSdkLoaded(true);
+        setKakaoSdkLoading(false);
+        resolve();
+      };
+      
+      script.onerror = (error) => {
+        console.error('카카오톡 SDK 수동 로드 실패:', error);
+        setKakaoSdkLoading(false);
+        reject(error);
+      };
+      
+      document.head.appendChild(script);
+    });
+  };
+
   // 카카오톡 API 토큰이 설정되지 않은 경우
   const isKakaoTokenMissing = !KAKAOTALK_API_TOKEN;
 
@@ -215,9 +306,11 @@ const Share = () => {
             icon={<MessageFilled />}
             id="sendKakao"
             size="large"
+            loading={kakaoSdkLoading}
+            disabled={kakaoSdkLoading}
             onClick={createKakaoButton}
           >
-            카카오톡으로 공유하기
+            {kakaoSdkLoading ? '카카오톡 SDK 로드 중...' : '카카오톡으로 공유하기'}
           </KakaoTalkShareButton>
         )}
 
