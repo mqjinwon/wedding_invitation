@@ -24,12 +24,25 @@ const NeutralImage = styled.img`
 
 // 비디오용 기본 스타일 (장식 제거, 주변과 융화)
 const NeutralVideo = styled.video`
-  width: 100%;
+  width: 120%;
+  transform: translateX(-8.33%); // 100% / 12 = 8.33%
   height: auto;
   display: block;
   margin: 8px auto;
   border-radius: 0;
   box-shadow: none;
+  background-color: transparent;
+
+  /* iOS Safari에서 투명 배경 지원 */
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+
+  /* iOS에서 비디오 poster 투명도 강제 적용 */
+  @supports (-webkit-touch-callout: none) {
+    background-color: transparent !important;
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
 `;
 
 const SubContent = styled.p`
@@ -220,6 +233,19 @@ const CongratulatoryMoney = () => {
         ]}
       >
         <div>
+          <b>신랑 : 김진원</b>
+          <Divider type="vertical" />
+          <CopyToClipboard text={GROOM_ACCOUNT_NUMBER}>
+            <Button
+              type="text"
+              style={{ padding: 0, margin: 0 }}
+              onClick={() => message.success('계좌번호가 복사되었습니다.')}
+            >
+              {GROOM_ACCOUNT_NUMBER}
+            </Button>
+          </CopyToClipboard>
+        </div>
+        <div style={{ marginTop: 24, marginBottom: 24 }}>
           <b>부 : 김봉규</b>
           <Divider type="vertical" />
           <CopyToClipboard text={GROOM_FATHER_ACCOUNT_NUMBER}>
@@ -232,7 +258,7 @@ const CongratulatoryMoney = () => {
             </Button>
           </CopyToClipboard>
         </div>
-        <div style={{ marginTop: 24, marginBottom: 24 }}>
+        <div>
           <b>모 : 송혜정</b>
           <Divider type="vertical" />
           <CopyToClipboard text={GROOM_MOTHER_ACCOUNT_NUMBER}>
@@ -242,19 +268,6 @@ const CongratulatoryMoney = () => {
               onClick={() => message.success('계좌번호가 복사되었습니다.')}
             >
               {GROOM_MOTHER_ACCOUNT_NUMBER}
-            </Button>
-          </CopyToClipboard>
-        </div>
-        <div>
-          <b>신랑 : 김진원</b>
-          <Divider type="vertical" />
-          <CopyToClipboard text={GROOM_ACCOUNT_NUMBER}>
-            <Button
-              type="text"
-              style={{ padding: 0, margin: 0 }}
-              onClick={() => message.success('계좌번호가 복사되었습니다.')}
-            >
-              {GROOM_ACCOUNT_NUMBER}
             </Button>
           </CopyToClipboard>
         </div>
@@ -320,6 +333,8 @@ const CongratulatoryMoney = () => {
         poster={import.meta.env.BASE_URL + 'end-poster.png'}
         aria-label="추억 비디오"
         title="추억 비디오"
+        style={{ backgroundColor: 'transparent' }}
+        webkit-playsinline="true"
       >
         <source src={import.meta.env.BASE_URL + 'end.webm'} type="video/webm" />
         {/* 폴백: 비디오 미지원 환경 */}
@@ -328,7 +343,6 @@ const CongratulatoryMoney = () => {
           alt="추억 이미지"
         />
       </NeutralVideo>
-      
     </ExtendedWrapper>
   );
 };

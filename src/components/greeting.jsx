@@ -4,24 +4,6 @@ import { Divider } from 'antd';
 import { useEnvironmentVariables } from '../hooks/useEnvironmentVariables';
 import { Content, Title, Wrapper } from '../styles/common';
 
-// Content 스타일을 greeting에 맞게 확장
-const GreetingContent = styled(Content)`
-  font-size: 1rem;
-  margin-bottom: 16px;
-  width: 100%;
-  text-align: center;
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
-    margin-bottom: 14px;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.75rem;
-    margin-bottom: 12px;
-  }
-`;
-
 const GroomBride = styled.p`
   font-size: 0.9rem;
   line-height: 1.75;
@@ -56,7 +38,7 @@ const Greeting = () => {
       <Divider style={{ marginTop: 32, marginBottom: 32 }} plain>
         <Title>초대합니다</Title>
       </Divider>
-      <GreetingContent>
+      <Content>
         소망이 축복 속에서 기쁨으로 이루어지는 날,
         <br />
         <br />
@@ -69,7 +51,7 @@ const Greeting = () => {
         격려해 주시면 더없는 기쁨이 되겠습니다.
         <br />
         <br />
-      </GreetingContent>
+      </Content>
       <GroomBride>
         {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 아들{' '}
         <span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>

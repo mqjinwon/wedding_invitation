@@ -2,20 +2,20 @@ import styled from 'styled-components';
 
 // 공통 Content 스타일
 export const Content = styled.p`
-  font-size: 0.875rem;
+  font-size: 1.1rem;
   line-height: 1.75;
   opacity: 0.75;
   margin-bottom: 42px;
   text-align: center;
 
   @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     line-height: 1.8;
     margin-bottom: 32px;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     line-height: 1.9;
     margin-bottom: 24px;
   }
@@ -23,18 +23,18 @@ export const Content = styled.p`
 
 // 공통 Title 스타일
 export const Title = styled.p`
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--title-color);
   font-weight: bold;
   opacity: 0.85;
   margin-bottom: 0;
 
   @media screen and (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 0.85rem;
+    font-size: 1.0rem;
   }
 `;
 
