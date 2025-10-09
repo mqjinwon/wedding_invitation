@@ -255,7 +255,7 @@ const Location = () => {
         <br />
         <TitleSpan>지하철 이용시</TitleSpan>
         <br />
-        5호선 서대문역 5호선 출구에서
+        5호선 서대문역 5번 출구에서
         <br />
         경향신문사 방향으로 7분 거리
         <br />
@@ -467,16 +467,25 @@ const Location = () => {
         <br />
         <TitleSpan>축하 화환</TitleSpan>
         <br />
-        축하 화환은 정중히 사양합니다.
+        성당 내에는 축하 화환 반입이 제한되오니 양해 바랍니다.
         <br />
-        화환을 대신하여 어려운 이웃을 위해 쌀 ·성금으로
+        화환을 대신하여 어려운 이웃을 위해
         <br />
-        기부하실 수 있습니다.
+        쌀 또는 성금으로 기부하실 수 있습니다.
+        <br />
+        성금 기부는&nbsp;
+        <a
+          href="https://www.fec.or.kr/bbs/board.php?bo_table=pds&wr_id=29"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          본 양식
+        </a>
+        을 이용해 주시기 바랍니다.
         <br />
         (성금 기부 문의처 : 02) 6364-2245)
         <br />
         <br />
-        
       </LocationContent>
     </Wrapper>
   );
